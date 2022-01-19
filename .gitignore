@@ -1,0 +1,6 @@
+/node_modules/
+/public/build/
+/archive/
+/data_processing/
+TODO.md
+.DS_Store

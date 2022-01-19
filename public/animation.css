@@ -1,0 +1,16 @@
+
+
+/* transitions / animation for plots */
+
+/* barchart */
+/* .chart-bar {
+	border-top-width: 0px;
+} */
+/* when active, bars jumps up and color changes */
+.chart-bar.active {
+	transform: translateY(-5px);
+	fill: #ffa500;
+	/* transform-origin: bottom center; */
+	/* transition: all 500ms cubic-bezier(.47,1.64,.41,.8); */
+	transition: all 100ms;
+}
