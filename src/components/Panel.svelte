@@ -2,7 +2,7 @@
     import {currentStation, uiOptionPanel, currentStationPS} from "../scripts/appState"
     import SoundController from "./SoundController.svelte"
     import Plots from "./Plots.svelte"
-    import Options from "./options.svelte"
+    import Options from "./Options.svelte"
     // export let station=null
     let panel_opened = true
 
