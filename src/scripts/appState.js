@@ -81,4 +81,4 @@ export async function downloadDataset() {
 
 
 
-export const uiOptionPanel = writable(true)
+export const uiOptionPanel = writable(false)
