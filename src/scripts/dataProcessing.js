@@ -1,14 +1,13 @@
 import { BarChart } from "./plots";
 import { computeMeanMonthlyPart, computeMaxMonthlyPart, ARRANGEMENTS } from "./sounds";
 
+const MONTHS = [
+    "January", "February", "Marsh", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+]
 export function meanMonthlyPS(station, old_PS=null, arrangement_id) {
-    // FIXME: should data be formatted differently before use?
-    const data_raw = station.data.Q_month_mean
-    const data_to_plot = Array(data_raw.info.length).fill([null, null]).map((d, i)=>{
-        return [data_raw.data.month_index[i], data_raw.data.discharge[i]]
-    })
-    const discharge = station.data.Q_month_mean.data.discharge
-    const coeff_var = station.data.Q_month_cv.data.cv
+    const data_medium = station.data.monthly_medium
+    const data_volume = station.data.monthly_volume
+    const data_to_plot = data_medium.map((d, i)=>[MONTHS[i].slice(0, 3), d])
     const sound_scale_id = ARRANGEMENTS.find(a=>a.id===arrangement_id).piano
     if (!old_PS) {
         const chart = BarChart(data_to_plot, {
@@ -16,7 +15,7 @@ export function meanMonthlyPS(station, old_PS=null, arrangement_id) {
             y: (d, i) => d[1],
             color: "lightblue", height: 200,
         })
-        const part = computeMeanMonthlyPart(discharge, coeff_var, chart.highlight, sound_scale_id)
+        const part = computeMeanMonthlyPart(data_medium, data_volume, chart.highlight, sound_scale_id)
         return {
             plot: chart,
             part: part
@@ -24,17 +23,14 @@ export function meanMonthlyPS(station, old_PS=null, arrangement_id) {
     } else {
         old_PS.plot.update(data_to_plot)
         old_PS.part.dispose()
-        old_PS.part = computeMeanMonthlyPart(discharge, coeff_var, old_PS.plot.highlight, sound_scale_id)
+        old_PS.part = computeMeanMonthlyPart(data_medium, data_volume, old_PS.plot.highlight, sound_scale_id)
         return old_PS
     }
 }
 
 export function maxMonthlyPS(station, old_PS, arrangement_id) {
-    const data_raw = station.data.Q_monthly_freq_daily_max
-    const data_to_plot = Array(data_raw.info.length).fill([null, null]).map((d, i)=>{
-        return [data_raw.data.month_index[i], data_raw.data.freq_daily_max[i]]
-    })
-    const max_frequencies = station.data.Q_monthly_freq_daily_max.data.freq_daily_max
+    const data_max = station.data.monthly_max
+    const data_to_plot = data_max.map((d, i)=>[MONTHS[i].slice(0, 3), d])
     const sound_scale_id = ARRANGEMENTS.find(a=>a.id===arrangement_id).bass
     if (!old_PS) {
         const chart = BarChart(data_to_plot, {
@@ -42,7 +38,7 @@ export function maxMonthlyPS(station, old_PS, arrangement_id) {
             y: (d, i) => d[1],
             color: "lightblue", height: 200,
         })
-        const part = computeMaxMonthlyPart(max_frequencies, chart.highlight, sound_scale_id)
+        const part = computeMaxMonthlyPart(data_max, chart.highlight, sound_scale_id)
         return {
             plot: chart,
             part: part
@@ -50,7 +46,7 @@ export function maxMonthlyPS(station, old_PS, arrangement_id) {
     } else {
         old_PS.plot.update(data_to_plot)
         old_PS.part.dispose()
-        old_PS.part = computeMaxMonthlyPart(max_frequencies, old_PS.plot.highlight, sound_scale_id)
+        old_PS.part = computeMaxMonthlyPart(data_max, old_PS.plot.highlight, sound_scale_id)
         return old_PS
     }
 }

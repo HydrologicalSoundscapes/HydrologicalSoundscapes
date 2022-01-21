@@ -40,12 +40,6 @@ export const currentStationPS = derived([currentStation, configuration],
     },
 {})
 
-// export const fake = derived([currentStation, arrangement], ([$currentStation, $arrangement])=>{
-//     console.log("Fake Deriving plots and sounds...", $currentStation, $arrangement)
-//     // return `ARRANGEMENT => ${$arrangement} && ${$currentStation?.info?.label}`
-//     return `ARRANGEMENT => ${"BRETAGNE"} && ${$currentStation?.info?.label}`
-// }, "")
-
 /**
  * Contains the whole dataset.
  * The store includes two convenient functions:
@@ -73,10 +67,12 @@ export const datasetStore = buildDatasetStore()
 export async function downloadDataset() {
     // For large dataset, I might need to monitor the download 
     // to display a progress bar to the user...
-    const file = await fetch("./example_data_2.json")
+    const file = await fetch("./example_data_raw_new.json")
     const dataset = await file.json()
+    // convert the object into an array
+    const dataset_array = Object.keys(dataset).map(key=>dataset[key])
     // setTimeout(()=>
-    datasetStore.set(dataset)
+    datasetStore.set(dataset_array)
 }
 
 
