@@ -9,7 +9,7 @@ export function meanMonthlyPS(station, old_PS=null, arrangement_id) {
     })
     const discharge = station.data.Q_month_mean.data.discharge
     const coeff_var = station.data.Q_month_cv.data.cv
-    const sound_scale_id = ARRANGEMENTS.filter(a=>a.id===arrangement_id)[0].piano // FIXME: dangerous, assum filters will always word
+    const sound_scale_id = ARRANGEMENTS.find(a=>a.id===arrangement_id).piano
     if (!old_PS) {
         const chart = BarChart(data_to_plot, {
             x: (d, i) => d[0],
@@ -35,7 +35,7 @@ export function maxMonthlyPS(station, old_PS, arrangement_id) {
         return [data_raw.data.month_index[i], data_raw.data.freq_daily_max[i]]
     })
     const max_frequencies = station.data.Q_monthly_freq_daily_max.data.freq_daily_max
-    const sound_scale_id = ARRANGEMENTS.filter(a=>a.id===arrangement_id)[0].bass
+    const sound_scale_id = ARRANGEMENTS.find(a=>a.id===arrangement_id).bass
     if (!old_PS) {
         const chart = BarChart(data_to_plot, {
             x: (d, i) => d[0],
