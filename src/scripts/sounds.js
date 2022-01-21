@@ -135,7 +135,7 @@ const sampler_drum = new Tone.Sampler().toDestination()
 
 export async function initSampler() {
     Tone.start()
-    Tone.Transport.bpm.value = 325
+    Tone.Transport.bpm.value = 300
     Tone.Transport.loop=true;
     Tone.Transport.loopStart=0;
     Tone.Transport.loopEnd=`0:${12}`;
@@ -187,26 +187,30 @@ export async function loadSamples() {
     // } 
 }
 
-export function computeMeanMonthlyPart(discharge, coeff_var, highlight_function, sound_scale_id="Am") {
-    console.log("................................")
+function rescale(values, source, target) {
+    function rescaler(value) {
+        let p = (value - source[0])/(source[1]-source[0])
+        return p * (target[1] - target[0]) + target[0]
+    }
+    return values.map(v=>rescaler(v))
+}
+
+export function computeMeanMonthlyPart(data_medium, data_volume, highlight_function, sound_scale_id="Am") {
 
     // scale
     const sound_scale = SCALES[sound_scale_id]
 
     // data normalization
-    const discharge_sum = d3.sum(discharge)
-    const discharge_normalized = discharge.map(d=>(1-d/discharge_sum) - 0.25)
-    console.log("discharge_normalized", discharge_normalized)
 
-    const coeff_var_max = d3.max(coeff_var)
-    const coeff_var_min = d3.min(coeff_var)
-    const coeff_var_normalized = coeff_var.map(d=>(d-coeff_var_min)/(coeff_var_max-coeff_var_min)*0.8+0.1)
-    console.log("coeff_var_normalized", coeff_var_normalized)
+    data_medium = rescale(data_medium, [0, 1], [0.75, 0.25])
+
+    data_volume = rescale(data_volume, [d3.min(data_volume), d3.max(data_volume)], [0.05, 0.75])
+
 
     // mapping to a sound scale
     const n = sound_scale.length
     const steps = Array(n+1).fill(0).map((e, i)=> i * 1/n)
-    const parts = discharge_normalized.map((d, j)=>{
+    const parts = data_medium.map((d, j)=>{
         let note
         for (let i = 0; i < n; i++) {
             if (d > steps[i] && d <= steps[i+1]) {
@@ -214,7 +218,7 @@ export function computeMeanMonthlyPart(discharge, coeff_var, highlight_function,
                 break
             }
         }
-        return {time: `0:${j}`, note: note, velocity: coeff_var_normalized[j], index: j}
+        return {time: `0:${j}`, note: note, velocity: data_volume[j], index: j}
     })
     console.log("parts", parts)
 
@@ -228,26 +232,29 @@ export function computeMeanMonthlyPart(discharge, coeff_var, highlight_function,
 
     return part
 }
-export function computeMaxMonthlyPart(max_frequencies, highlight_function, sound_scale_id="A_E_bass") {
+export function computeMaxMonthlyPart(data_max, highlight_function, sound_scale_id="A_E_bass") {
     // scale
     const sound_scale = SCALES[sound_scale_id]
 
     // data normalization
     // const Q_sum = d3.sum(monthly_values)
-    const max_frequencies_normalized = max_frequencies.map(d=>{
-        let val = 1-d
-        if (val === 0) return null
-        if (val === 1) return null
-        return val
-    })
-    console.log("max_frequencies_normalized", max_frequencies_normalized)
+    // const max_frequencies_normalized = max_frequencies.map(d=>{
+    //     let val = 1-d
+    //     if (val === 0) return null
+    //     if (val === 1) return null
+    //     return val
+    // })
+    // console.log("max_frequencies_normalized", max_frequencies_normalized)
+    const volume = rescale(data_max, [0, 1], [0.2, 0.5]).map((d, i)=>data_max[i]===0?0:d)
+    data_max = rescale(data_max, [0, 1], [0.6,  0])
+    
 
     // mapping to a sound scale
     const n = sound_scale.length
     const steps = Array(n+1).fill(0).map((e, i)=> i * 1/n)
-    const parts = max_frequencies_normalized.map((d, j)=>{
+    const parts = data_max.map((d, j)=>{
         let note
-        if (!d) return null
+        // if (!d) return null
         for (let i = 0; i < n; i++) {
             if (d > steps[i] && d <= steps[i+1]) {
                 note = `${sound_scale[i]}`
@@ -255,13 +262,13 @@ export function computeMaxMonthlyPart(max_frequencies, highlight_function, sound
             }
         }
         // return {time: `0:${j}`, note: note, velocity: clamp((1-d)*0.5+0.5, 0.1, 0.5), index: j}
-        return {time: `0:${j}`, note: note, velocity: (1-d)*0.8+0.2, index: j}
+        return {time: `0:${j}`, note: note, velocity: volume[j], index: j}
     })
     console.log("parts", parts)
     // create Part
     // if (max_part) max_part.dispose()
     const part = new Tone.Part((time, value) => {
-        sampler_bass.triggerAttackRelease(value.note, 20, time, value.velocity);
+        sampler_bass.triggerAttackRelease(value.note, 30, time, value.velocity);
         highlight_function(value.index)
     }, parts.filter(p=>p)).start(0)
 
