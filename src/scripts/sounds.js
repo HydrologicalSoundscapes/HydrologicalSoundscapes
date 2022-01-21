@@ -109,8 +109,28 @@ NOTES_BASS.forEach(n=>{
 })
 
 
+/**
+ * Hang drum samples
+ * sampled notes ranges from C3 to C5
+ * Credits: 
+ * > Downloaded from 
+ * > Licence: Creative Commons 0
+ * > modified by B. Renard
+ */
+ const NOTES_DRUM = [
+                    "C3","Db3","D3","Eb3","E3","F3","Gb3","G3","Ab3",
+    "A3","Bb3","B3","C4","Db4","D4","Eb4","E4","F4","Gb4","G4","Ab4",
+    "A4","Bb4","B4","C5",
+]
+const notes_drum_files = {}
+NOTES_DRUM.forEach(n=>{
+    notes_drum_files[n] = `sounds/drum/${n}.ogg`
+})
+
+
 const sampler_bass = new Tone.Sampler().toDestination()
 const sampler_piano_loud = new Tone.Sampler().toDestination()
+const sampler_drum = new Tone.Sampler().toDestination()
 // const sampler_piano_med = new Tone.Sampler().toDestination()
 
 export async function initSampler() {
@@ -133,6 +153,7 @@ export async function loadSamples() {
     const all_files = [
         ...Object.values(notes_bass_files),
         ...Object.values(notes_piano_loud_files),
+        ...Object.values(notes_drum_files),
         // ...Object.values(notes_piano_med_files),
     ].reduce((obj, cur)=>({...obj, [cur]: "downloading"}), {})
     const n_total = Object.keys(all_files).length
@@ -152,6 +173,11 @@ export async function loadSamples() {
     for (let file in notes_piano_loud_files) {
         sampler_piano_loud.add(file, notes_piano_loud_files[file], ()=>{
             monitorProgress(notes_piano_loud_files[file])
+        })
+    } 
+    for (let file in notes_drum_files) {
+        sampler_drum.add(file, notes_drum_files[file], ()=>{
+            monitorProgress(notes_drum_files[file])
         })
     } 
     // for (let file in notes_piano_med_files) {
