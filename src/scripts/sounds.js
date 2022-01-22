@@ -20,13 +20,21 @@ const SCALES = {
         "A6", "B6", "Db7", "D7", "E7", "Gb7", "Ab7",
     ],
     Arabic_1_D: [
-        "D1", "Eb1", "Gb1", "G1", "A1", "Bb1", "C2",
-        "D2", "Eb2", "Gb2", "G2", "A2", "Bb2", "C3",
-        "D3", "Eb3", "Gb3", "G3", "A3", "Bb3", "C4",
-        "D4", "Eb4", "Gb4", "G4", "A4", "Bb4", "C5",
-        "D5", "Eb5", "Gb5", "G5", "A5", "Bb5", "C6",
-        "D6", "Eb6", "Gb6", "G6", "A6", "Bb6", "C7", "D7"
+        "D1", "Eb1", "Gb1", "G1", "A1",  "C2",
+        "D2", "Eb2", "Gb2", "G2", "A2",  "C3",
+        "D3", "Eb3", "Gb3", "G3", "A3",  "C4",
+        "D4", "Eb4", "Gb4", "G4", "A4", "C5",
+        "D5", "Eb5", "Gb5", "G5", "A5",  "C6",
+        "D6", "Eb6", "Gb6", "G6", "A6",  "C7", "D7"
     ],
+    // Arabic_1_D: [
+    //     "D1", "Eb1", "Gb1", "G1", "A1", "Bb1", "C2",
+    //     "D2", "Eb2", "Gb2", "G2", "A2", "Bb2", "C3",
+    //     "D3", "Eb3", "Gb3", "G3", "A3", "Bb3", "C4",
+    //     "D4", "Eb4", "Gb4", "G4", "A4", "Bb4", "C5",
+    //     "D5", "Eb5", "Gb5", "G5", "A5", "Bb5", "C6",
+    //     "D6", "Eb6", "Gb6", "G6", "A6", "Bb6", "C7", "D7"
+    // ],
     C_penta: [
         "C1", "D1", "E1", "G1", "A1", 
         "C2", "D2", "E2", "G2", "A2", 
@@ -36,27 +44,32 @@ const SCALES = {
         "C6", "D6", "E6", "G6", "A6", 
         "C7", "D7", "E7", "G7", "A7", 
     ],
-    C_G_bass: ["C2", "G2", "C3", "G3", "C4"],
-    A_E_bass: ["A1", "E2", "A2", "E3", "A3", "E4"],
-    D_A_bass: ["D2", "A2", "D3", "A3", "D4"]
+    C_G_bass: ["C2", "G2", "C3", "G3"],
+    A_E_bass: ["A1", "E2", "A2", "E3"],
+    D_A_bass: ["D2", "A2", "D3"],
+    // C_chord: ["C3", "Eb3", "G3", "C4", "Eb4", "G4", "C5"],
+    C_chord: ["C4", "E4", "G4", "C5"],
+    A_chord: ["A3", "Db4", "E4", "A4"],
+    Am_chord: ["A3", "C4", "E4", "A4", "C5"],
+    D_chord: ["A3", "D4", "F4", "A4"]
 }
 
 export const ARRANGEMENTS = [
     {
         id: "Am", label: "A minor",
-        piano: "Am", bass: "A_E_bass"
+        piano: "Am", bass: "A_E_bass", drum: "Am_chord"
     },
     {
         id: "A", label: "A major",
-        piano: "A", bass: "A_E_bass"
+        piano: "A", bass: "A_E_bass", drum: "A_chord"
     },
     {
         id: "C_penta", label: "Pentatonic in C",
-        piano: "C_penta", bass: "C_G_bass"
+        piano: "C_penta", bass: "C_G_bass", drum: "C_chord"
     },
     {
         id: "Arabic_1_D", label: "Arabic scale in D",
-        piano: "Arabic_1_D", bass: "D_A_bass"
+        piano: "Arabic_1_D", bass: "D_A_bass", drum: "D_chord"
     },
 ]
 
@@ -117,21 +130,30 @@ NOTES_BASS.forEach(n=>{
  * > Licence: Creative Commons 0
  * > modified by B. Renard
  */
- const NOTES_DRUM = [
+ const NOTES_HANGDRUM = [
                     "C3","Db3","D3","Eb3","E3","F3","Gb3","G3","Ab3",
     "A3","Bb3","B3","C4","Db4","D4","Eb4","E4","F4","Gb4","G4","Ab4",
     "A4","Bb4","B4","C5",
 ]
-const notes_drum_files = {}
-NOTES_DRUM.forEach(n=>{
-    notes_drum_files[n] = `sounds/drum/${n}.ogg`
+const notes_hangdrum_files = {}
+NOTES_HANGDRUM.forEach(n=>{
+    notes_hangdrum_files[n] = `sounds/hangdrum/${n}.ogg`
 })
 
 
 const sampler_bass = new Tone.Sampler().toDestination()
 const sampler_piano_loud = new Tone.Sampler().toDestination()
-const sampler_drum = new Tone.Sampler().toDestination()
+const sampler_hangdrum = new Tone.Sampler().toDestination()
 // const sampler_piano_med = new Tone.Sampler().toDestination()
+
+// const panner = new Tone.Panner(0).toDestination();
+// sampler_piano_loud.connect(panner)
+// panner.pan.setValueAtTime(-1, 0.25);
+
+// export function panPiano(target) {
+
+// }
+
 
 export async function initSampler() {
     Tone.start()
@@ -153,7 +175,7 @@ export async function loadSamples() {
     const all_files = [
         ...Object.values(notes_bass_files),
         ...Object.values(notes_piano_loud_files),
-        ...Object.values(notes_drum_files),
+        ...Object.values(notes_hangdrum_files),
         // ...Object.values(notes_piano_med_files),
     ].reduce((obj, cur)=>({...obj, [cur]: "downloading"}), {})
     const n_total = Object.keys(all_files).length
@@ -175,9 +197,9 @@ export async function loadSamples() {
             monitorProgress(notes_piano_loud_files[file])
         })
     } 
-    for (let file in notes_drum_files) {
-        sampler_drum.add(file, notes_drum_files[file], ()=>{
-            monitorProgress(notes_drum_files[file])
+    for (let file in notes_hangdrum_files) {
+        sampler_hangdrum.add(file, notes_hangdrum_files[file], ()=>{
+            monitorProgress(notes_hangdrum_files[file])
         })
     } 
     // for (let file in notes_piano_med_files) {
@@ -202,9 +224,9 @@ export function computeMeanMonthlyPart(data_medium, data_volume, highlight_funct
 
     // data normalization
 
-    data_medium = rescale(data_medium, [0, 1], [0.75, 0.25])
+    data_medium = rescale(data_medium, [0, 1], [0.6, 0.01])
 
-    data_volume = rescale(data_volume, [d3.min(data_volume), d3.max(data_volume)], [0.05, 0.75])
+    data_volume = rescale(data_volume, [d3.min(data_volume), d3.max(data_volume)], [0.05, 0.5])
 
 
     // mapping to a sound scale
@@ -223,10 +245,8 @@ export function computeMeanMonthlyPart(data_medium, data_volume, highlight_funct
     console.log("parts", parts)
 
     // create Part
-    // if (main_part) main_part.dispose()
     const part = new Tone.Part((time, value) => {
-        // console.log("time => ", time)
-        sampler_piano_loud.triggerAttackRelease(value.note, 0.5, time, value.velocity);
+        sampler_piano_loud.triggerAttackRelease(value.note, 12/Tone.Transport.bpm.value*4*4, time, value.velocity);
         highlight_function(value.index)
     }, parts).start(0)
 
@@ -236,19 +256,9 @@ export function computeMaxMonthlyPart(data_max, highlight_function, sound_scale_
     // scale
     const sound_scale = SCALES[sound_scale_id]
 
-    // data normalization
-    // const Q_sum = d3.sum(monthly_values)
-    // const max_frequencies_normalized = max_frequencies.map(d=>{
-    //     let val = 1-d
-    //     if (val === 0) return null
-    //     if (val === 1) return null
-    //     return val
-    // })
-    // console.log("max_frequencies_normalized", max_frequencies_normalized)
-    const volume = rescale(data_max, [0, 1], [0.2, 0.5]).map((d, i)=>data_max[i]===0?0:d)
-    data_max = rescale(data_max, [0, 1], [0.6,  0])
+    const volume = rescale(data_max, [d3.min(data_max), d3.max(data_max)], [0.1, 0.4]).map((d, i)=>data_max[i]===0?0:d)
+    data_max = rescale(data_max, [0, 1], [1,  0])
     
-
     // mapping to a sound scale
     const n = sound_scale.length
     const steps = Array(n+1).fill(0).map((e, i)=> i * 1/n)
@@ -266,9 +276,42 @@ export function computeMaxMonthlyPart(data_max, highlight_function, sound_scale_
     })
     console.log("parts", parts)
     // create Part
-    // if (max_part) max_part.dispose()
     const part = new Tone.Part((time, value) => {
-        sampler_bass.triggerAttackRelease(value.note, 30, time, value.velocity);
+        sampler_bass.triggerAttackRelease(value.note, 12/Tone.Transport.bpm.value*4*8, time, value.velocity);
+        highlight_function(value.index)
+    }, parts.filter(p=>p)).start(0)
+
+    return part
+}
+export function computeMinMonthlyPart(data_min, highlight_function, sound_scale_id="A_chord") {
+    console.log("data_min", data_min)
+    console.log("SCALES[sound_scale_id]", SCALES[sound_scale_id])
+    // scale
+    const sound_scale = SCALES[sound_scale_id]
+
+    const volume = rescale(data_min,  [d3.min(data_min), d3.max(data_min)], [0.1, 0.4]).map((d, i)=>data_min[i]===0?0:d)
+    data_min = rescale(data_min, [0, 1], [0.01, 1])
+    console.log("data_min", data_min)
+
+    // mapping to a sound scale
+    const n = sound_scale.length
+    const steps = Array(n+1).fill(0).map((e, i)=> i * 1/n)
+    console.log("steps", steps)
+    const parts = data_min.map((d, j)=>{
+        let note
+        for (let i = 0; i < n; i++) {
+            if (d > steps[i] && d <= steps[i+1]) {
+                note = `${sound_scale[i]}`
+                break
+            }
+        }
+        // return {time: `0:${j}`, note: note, velocity: clamp((1-d)*0.5+0.5, 0.1, 0.5), index: j}
+        return {time: `0:${j}`, note: note, velocity: volume[j], index: j}
+    })
+    console.log("parts", parts)
+    // create Part
+    const part = new Tone.Part((time, value) => {
+        sampler_hangdrum.triggerAttackRelease(value.note, 12/Tone.Transport.bpm.value*4*16, time, value.velocity);
         highlight_function(value.index)
     }, parts.filter(p=>p)).start(0)
 

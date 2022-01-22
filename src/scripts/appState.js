@@ -1,5 +1,5 @@
 import {writable, derived, get} from "svelte/store"
-import {meanMonthlyPS, maxMonthlyPS} from "./dataProcessing"
+import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS} from "./dataProcessing"
 import {setBPM} from "./sounds"
 
 /**
@@ -36,6 +36,7 @@ export const currentStationPS = derived([currentStation, configuration],
     setBPM($configuration.bpm)
     stationPS.meanMonthlyPS = meanMonthlyPS($currentStation, stationPS.meanMonthlyPS, $configuration.arrangement)
     stationPS.maxMonthlyPS = maxMonthlyPS($currentStation, stationPS.maxMonthlyPS, $configuration.arrangement)
+    stationPS.minMonthlyPS = minMonthlyPS($currentStation, stationPS.minMonthlyPS, $configuration.arrangement)
     return stationPS
     },
 {})
