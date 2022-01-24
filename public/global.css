@@ -1,5 +1,15 @@
+:root {
+	--color-primary: lightblue;
+	--color-secondary: rgb(233, 156, 14);
+	--color-background: rgba(255, 255, 255, 0.9);
+}
+
 * {
 	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Montserrat', sans-serif;
 }
 
 html, body {
@@ -15,3 +25,13 @@ body {
 }
 
 
+button {
+	all: unset;
+	cursor: pointer;
+}
+
+/* @media screen and (max-width: 1200px) {
+	body {
+		font-size: 10px;
+	}
+} */
