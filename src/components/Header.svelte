@@ -14,7 +14,6 @@
     <SoundController />
     <div class="right">
         <button on:click={()=>$uiOptionPanel=!$uiOptionPanel} class={$uiOptionPanel?"active":""} >
-            <!-- <img src="./images/options.svg" alt="stop sound" width="25px"> -->
             <svg width={svg_size} height={svg_size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                 <g stroke-width="100" stroke-linecap="round" class:active={$uiOptionPanel}>
                  <path d="m77.706 260.62h868.84"/>
@@ -27,15 +26,6 @@
             </svg> 
         </button>
         <button on:click={()=>$uiPlotPanel=!$uiPlotPanel}>
-            <!-- {#if $uiPlotPanel}
-                <svg width={svg_size} height={svg_size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m957.59 778.05-444.12-538.56-453.42 538.56z"  stroke-width="100"/>
-                  </svg>
-            {:else}
-                <svg width={svg_size} height={svg_size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m62.08 265.76 444.12 538.56 453.42-538.56z" stroke-width="100"/>
-                </svg>
-            {/if} -->
             <svg width={svg_size} height={svg_size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                 <g stroke-width="250" class:active={$uiPlotPanel}>
                     <path d="m215.55 957.62v-521.97"/>
@@ -57,22 +47,16 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         align-items: center;
-        /* display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap; */
         
         padding: 0 0.99rem;
 
         background-color: var(--color-background);
-        /* box-shadow: 2px -2px 5px 0 rgba(0, 0, 0, 0.5); */
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     }
     .title {
         color: var(--color-primary);
         font-size: 1.25rem;
         font-weight: bold;
-        /* text-align: center; */
         justify-self: start;
     }
     .right {
@@ -85,8 +69,7 @@
     g {
         fill: var(--color-primary);
         stroke: var(--color-primary);
-        stroke-linejoin:unset        ;
-        /* stroke-linecap: round; */
+        stroke-linejoin:unset;
     }
     g.active {
         fill: var(--color-secondary);
