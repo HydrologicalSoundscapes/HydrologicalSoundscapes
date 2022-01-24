@@ -1,22 +1,17 @@
 <script>
     import L from "leaflet"
-
     import {datasetStore, currentStation} from "../scripts/appState"
-
     import { onMount } from "svelte";
-    // const dispatch = createEventDispatcher();
-
-    // export let stations = []
 
     let current_station_index = null
 
     let map, markers=[], icon_default, icon_selected
     onMount(()=>{
-        map = L.map("map").setView([51.505, -0.09], 3)
+        map = L.map("map", {zoomControl: false}).setView([51.505, -0.09], 3)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-
+        new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
         icon_default = L.icon({
             iconUrl: "./images/map_marker_pin_blue.png",
             shadowUrl: "./images/map_marker_shadow.png",
