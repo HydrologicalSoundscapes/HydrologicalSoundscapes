@@ -1,14 +1,11 @@
 <script>
     import {ARRANGEMENTS} from "../scripts/sounds";
-    import {configuration, uiOptionPanel} from "../scripts/appState"
+    import {configuration} from "../scripts/appState"
 
 </script>
 
 <div class="container">
     <div class="options">
-        <button class="close" on:click={()=>$uiOptionPanel=false}>
-            <img src="/images/cross_thick.svg" alt="" width="30px">
-        </button>
         <label for="arrangement">Select the type of harmonics:</label>
         <div class="group"  id="arrangement">
             {#each ARRANGEMENTS as arr}
@@ -28,8 +25,19 @@
 
 <style>
     .container {
+        position: absolute;
+        z-index: 9998;
+        top: 60px;
+        max-height: calc(100vh - 60px); 
+        overflow-y: auto;
+        right: 0;
+        width: min(95%, 300px);
+
+        background-color: var(--color-background);
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+
         padding: 1rem;
-        width: 100%
+        font-size: 0.9rem;
     }
     .group {
         width: 100%;
@@ -43,21 +51,9 @@
         align-items: flex-start;
         width: 100%;
 
-        padding: 1rem;
-        /* margin: 1rem; */
-
-        border: 1px solid lightblue;
-        border-radius: 3px;
+        padding: 0.5rem;
     }
 
-    button.close {
-        all: unset;
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-        padding: 1rem;
-    }
     input[type="range"] {
         width: 100%;
     }
