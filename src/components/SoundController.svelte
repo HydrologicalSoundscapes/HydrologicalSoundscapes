@@ -1,23 +1,16 @@
 <script>
-    import { onMount } from "svelte";
     import { startSound, pauseSound, stopSound } from "../scripts/sounds";
-    import {soundDownloadProgress, uiOptionPanel, currentStation} from "../scripts/appState"
-    
-    let ready_steps = {"piano-loud": false, "piano-med": false, "bass": false}
-    let ready = false
-    onMount(()=>{
-        document.addEventListener("tone-ready", (e) => {
-            ready_steps[e.detail] = true
-            ready = Object.entries(ready_steps).reduce((a, c)=> a && c[1], true)
-        })
-    })
+    import {soundDownloadProgress, currentStation} from "../scripts/appState"
 
     let playing=false
     let paused=false
     let stopped=true
 
     function start() {
-        if (playing) return
+        if (playing) {
+            pause()
+            return
+        }
         startSound()
         playing=true
         paused=false
@@ -36,29 +29,39 @@
         paused=false
         stopped=true
     }
-    function options() {
-        // stop()
-        // options_panel = !options_panel
-        $uiOptionPanel = !$uiOptionPanel
-    }
-    let options_panel=false
-    let arrangement = "Am"
 
+    let size = 20
 </script>
 
 <div class="container">
 <div class={`controller${$soundDownloadProgress===1&&$currentStation?"":" not-ready"}`}>
     <button on:click={start} class={playing?"active":""}>
-        <img src="./images/play.svg" alt="play sound" width="25px">
+        {#if playing}
+            <svg width={size} height={size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <g stroke-width="200">
+                <path d="m299.85 62.593v901.48"/>
+                <path d="m724.15 62.593v901.48"/>
+            </g>
+            </svg>
+        {:else}
+            <svg width={size} height={size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" >
+                <path d="m63.971 961.77 893.87-449.81-893.81-452.54z" stroke-width="100"/>
+            </svg>
+        {/if}
+
     </button>
-    <button on:click={pause} class={paused?"active":""}>
-        <img src="./images/pause.svg" alt="pause sound" width="25px">
-    </button>
+    <!-- <button on:click={pause} class={paused?"active":""}>
+        <svg width={size} height={size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="lightblue" stroke-linecap="round" stroke-width="100">
+            <path d="m299.85 62.593v901.48"/>
+            <path d="m724.15 62.593v901.48"/>
+        </g>
+        </svg>
+    </button> -->
     <button on:click={stop} class={stopped?"active":""}>
-        <img src="./images/stop.svg" alt="stop sound" width="25px">
-    </button>
-    <button on:click={options} class={$uiOptionPanel?"active":""} >
-        <img src="./images/options.svg" alt="stop sound" width="25px">
+        <svg width={size} height={size} version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="m63.298 61.4h898.97v898.97h-898.97z" stroke-width="100"/>
+        </svg>
     </button>
 </div>
 {#if $soundDownloadProgress!==1}
@@ -70,6 +73,12 @@
 {/if}
 </div>
 <style>
+    g, path {
+        fill: var(--color-secondary);
+        stroke: var(--color-secondary);
+        stroke-linejoin:unset;
+        stroke-linecap: round;
+    }
     /* .container { */
         /* width: 100%; */
     /* } */
@@ -79,13 +88,7 @@
         gap: 3px;
         padding: 0.25rem;
     }
-    .not-ready > button {
-        pointer-events: none;
-        background-color: rgb(243, 243, 243);
-        border: 1px solid rgb(243, 243, 243);
-        color: grey;
-        cursor:not-allowed;
-    }
+
     button {
         position: relative;
         display: flex;
@@ -93,18 +96,26 @@
         align-items: center;
 
         padding: 0.5rem;
-        border: 1px solid #add8e6;
-        border-radius: 3px;
-        background-color: white;
+        border: none;
+        /* border: 1px solid #add8e6; */
+        /* border-radius: 3px; */
+        background-color: transparent;
 
         cursor: pointer;
     }
-    button:hover {
-        background-color: rgb(226, 242, 248);
+    .not-ready > button {
+        pointer-events: none;
+        /* background-color: rgb(243, 243, 243);
+        border: 1px solid rgb(243, 243, 243);
+        color: grey; */
+        cursor: not-allowed;
     }
-    button.active {
-        background-color: rgb(226, 242, 248);
+    /* button:hover > :global(svg) {
+        fill: red;
     }
+    button.active > :global(path) {
+        stroke: orange;
+    } */
     .progress-bar {
         position: relative;
         height: 2rem;
