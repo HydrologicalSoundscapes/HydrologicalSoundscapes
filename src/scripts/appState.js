@@ -1,6 +1,6 @@
 import {writable, derived, get} from "svelte/store"
 import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS, sizePS} from "./dataProcessing"
-import {setBPM} from "./sounds"
+import {setBPM, setVolume} from "./sounds"
 
 /**
  * Download state for all sound files (between 0 and 1)
@@ -20,6 +20,11 @@ export const configuration = writable({
     arrangement: "Am",
     bpm: 300,
     bpm_auto: true,
+    inverted_pitch: false,
+    volume: 1,
+    med: true,
+    max: true,
+    min: true,
 })
 
 /**
@@ -32,16 +37,16 @@ export const currentStationPS = derived([currentStation, configuration],
     const stationPS = get(currentStationPS)
     console.log("stationPS", stationPS)
 
-    stationPS.meanMonthlyPS = meanMonthlyPS($currentStation, stationPS.meanMonthlyPS, $configuration.arrangement)
-    stationPS.maxMonthlyPS = maxMonthlyPS($currentStation, stationPS.maxMonthlyPS, $configuration.arrangement)
-    stationPS.minMonthlyPS = minMonthlyPS($currentStation, stationPS.minMonthlyPS, $configuration.arrangement)
+    stationPS.meanMonthlyPS = meanMonthlyPS($currentStation, stationPS.meanMonthlyPS, $configuration)
+    stationPS.maxMonthlyPS = maxMonthlyPS($currentStation, stationPS.maxMonthlyPS, $configuration)
+    stationPS.minMonthlyPS = minMonthlyPS($currentStation, stationPS.minMonthlyPS, $configuration)
     stationPS.sizePS = sizePS($currentStation, stationPS.sizePS)
 
     if ($configuration.bpm_auto && stationPS.sizePS.bpm != $configuration.bpm) {
         configuration.update(c=>({...c, bpm: stationPS.sizePS.bpm}))
     }
     setBPM($configuration.bpm)
-
+    setVolume($configuration.volume)
     return stationPS
     },
 {})
@@ -95,5 +100,5 @@ export async function downloadDataset() {
 
 
 
-export const uiOptionPanel = writable(false)
+export const uiOptionPanel = writable(true)
 export const uiPlotPanel = writable(true)
