@@ -1,9 +1,8 @@
 <script>
     import { startSound, pauseSound, stopSound } from "../scripts/sounds";
-    import {soundDownloadProgress, currentStation} from "../scripts/appState"
+    import {soundDownloadProgress, currentStation, currentStationPS} from "../scripts/appState"
 
     let playing=false
-    let paused=false
     let stopped=true
 
     function start() {
@@ -13,21 +12,23 @@
         }
         startSound()
         playing=true
-        paused=false
         stopped=false
     }
     function pause() {
         if (stopped) return
         pauseSound()
         playing=false
-        paused=true
         stopped=false
     }
     function stop() {
-        if (!stopped) stopSound()
+        if (!stopped) {
+            stopSound()
+        }
         playing=false
-        paused=false
         stopped=true
+        $currentStationPS.meanMonthlyPS.plot.highlight(null)
+        $currentStationPS.minMonthlyPS.plot.highlight(null)
+        $currentStationPS.maxMonthlyPS.plot.highlight(null)
     }
 
     let size = 20
