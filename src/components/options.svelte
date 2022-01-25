@@ -9,7 +9,8 @@
         Parameters:
     </div>
     <div class="options">
-        <label for="arrangement">Select the type of musical scale:</label>
+
+        <label for="arrangement" class="main-label">Select the type of musical scale:</label>
         <div class="group"  id="arrangement">
             {#each ARRANGEMENTS as arr}
             <div class="option">
@@ -18,10 +19,19 @@
             </div>
             {/each}
         </div>
-        <br>
-        <label for="bpm">{`Select a BPM: ${$configuration.bpm}bpm`}</label>
-        <div class="group">
-            <input type="range" name="bpm" id="bpm" bind:value={$configuration.bpm} min="100" max="1000">
+
+        <label for="speed"  class="main-label">{`Playing speed: ${($configuration.bpm / 3).toFixed(0)}bpm`}</label>
+        <div class="group" id="speed">
+            <div class="group">
+                <input type="checkbox" name="bpm-auto" id="bpm-auto" bind:checked={$configuration.bpm_auto}>
+                <label for="bpm-auto">{`Should BPM be mapped to streamflow average?`}</label>
+            </div>
+            {#if !$configuration.bpm_auto}
+            <label for="bpm">{`Select a speed (beat per minutes, bpm):`}</label>
+            <div class="group">
+                <input type="range" name="bpm" id="bpm" bind:value={$configuration.bpm} min="30" max="900">
+            </div>
+            {/if}
         </div>
     </div>
 </div>
@@ -59,7 +69,9 @@
 
         padding: 0.5rem;
     }
-
+    .main-label {
+        margin-top: 0.25rem;
+    }
     input[type="range"] {
         width: 100%;
     }
