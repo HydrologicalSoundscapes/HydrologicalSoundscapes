@@ -2,6 +2,7 @@
 	--color-primary: lightblue;
 	--color-secondary: rgb(233, 156, 14);
 	--color-background: rgba(255, 255, 255, 0.9);
+	--color-background-secondary: rgba(173, 216, 230, 0.8);
 }
 
 * {
