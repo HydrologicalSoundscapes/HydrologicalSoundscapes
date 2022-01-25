@@ -13,22 +13,24 @@
         }).addTo(map);
         new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
         icon_default = L.icon({
-            iconUrl: "./images/map_marker_pin_blue.png",
-            shadowUrl: "./images/map_marker_shadow.png",
-            iconSize: [50, 50],
-            shadowSize: [50, 50],
-            iconAnchor: [15, 47],
-            shadowAnchor: [15, 47],
+            // iconUrl: "./images/map_marker_pin_blue.png",
+            // shadowUrl: "./images/map_marker_shadow.png",
+            iconUrl: "./images/pin_blue.png",
+            shadowUrl: "./images/shadow_pin_2.png",
+            iconSize: [25, 25],
+            shadowSize: [25, 25],
+            iconAnchor: [12.5, 25],
+            shadowAnchor: [1.125, 25],
             popupAnchor: [0, -50]
 
         })
         icon_selected = L.icon({
-            iconUrl: "./images/map_marker_pin_orange.png",
-            shadowUrl: "./images/map_marker_shadow.png",
-            iconSize: [50, 50],
-            shadowSize: [50, 50],
-            iconAnchor: [15, 47],
-            shadowAnchor: [15, 47],
+            iconUrl: "./images/pin_orange.png",
+            shadowUrl: "./images/shadow_pin_2.png",
+            iconSize: [25, 25],
+            shadowSize: [25, 25],
+            iconAnchor: [12.5, 25],
+            shadowAnchor: [1.125, 25],
             popupAnchor: [0, -50]
 
         })
