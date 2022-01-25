@@ -31,6 +31,7 @@ export function BarChart(data, {
     xPadding = 0.1, // amount of x-range to reserve to separate bars
     yFormat, // a format specifier string for the y-axis
     yLabel, // a label for the y-axis
+    xTicks = true, // whether the x axis/labels should be shown
     color = "currentColor", // bar fill color
     duration: initialDuration = 250, // transition duration, in milliseconds
     delay: initialDelay = (_, i) => i * 20 // per-element transition delay, in milliseconds
@@ -49,7 +50,7 @@ export function BarChart(data, {
   
     // Omit any data not present in the x-domain.
     const I = d3.range(X.length).filter(i => xDomain.has(X[i]));
-  
+    
     // Construct scales, axes, and formats.
     const xScale = d3.scaleBand(xDomain, xRange).padding(xPadding);
     const yScale = yType(yDomain, yRange);
@@ -67,7 +68,7 @@ export function BarChart(data, {
         .attr("transform", `translate(${marginLeft},0)`)
         .call(yAxis)
         .call(g => g.select(".domain").remove())
-        .call(g => g.selectAll(".tick").call(grid))
+        .call(g => g.selectAll(".tick").attr("stroke-opacity", 0.1).call(grid))
         .call(g => g.append("text")
             .attr("x", -marginLeft)
             .attr("y", 10)
@@ -75,7 +76,6 @@ export function BarChart(data, {
             .attr("text-anchor", "start")
             .text(yLabel));
   
-    // let swi
     let rect = svg.append("g")
         .attr("fill", color)
         .attr("id", "all-bars") // I added this.
@@ -89,17 +89,19 @@ export function BarChart(data, {
         .style("mix-blend-mode", "multiply")
         .call(rect => rect.append("title") // why do I need call here???
             .text(i => [X[i], format(Y[i])].join("\n"))) // svg title is used as tooltips in browsers
-  
+    
     const xGroup = svg.append("g")
         .attr("transform", `translate(0,${height - marginBottom})`)
-        .call(xAxis);
-  
+        .call(xAxis)
+        .call(g => g.selectAll(".tick").attr("stroke-opacity", xTicks?0:1))
+
     // A helper method for updating the position of bars.
     function position(rect, x, y) {
       return rect
           .attr("x", x)
           .attr("y", y)
-          .attr("height", typeof y === "function" ? i => yScale(0) - y(i) : i => yScale(0) - y)
+          // .attr("height", typeof y === "function" ? i => yScale(0) - y(i) : i => yScale(0) - y)
+          .attr("height", typeof y === "function" ? i => yScale(yDomain[0]) - y(i) : i => yScale(yDomain[0]) - y)
           .attr("width", xScale.bandwidth());
     }
   
@@ -112,9 +114,6 @@ export function BarChart(data, {
           .attr("stroke-opacity", 0.1);
     }
 
-    // console.log("svg.node", svg.node())
-    // console.log("svg.node().update", svg.node().update)
-  
     // The update method:
     function update(
       data, // the new data
@@ -128,8 +127,6 @@ export function BarChart(data, {
       // Compute values.
       const X = d3.map(data, x);
       const Y = d3.map(data, y);
-
-      // setupSound(Y)
 
       // Compute default domains, and unique the x-domain.
       if (xDomain === undefined) xDomain = X;
@@ -148,9 +145,7 @@ export function BarChart(data, {
 
       // here, the key is used to properly select the righ
       // rect associated with the data: rect.data(I, function(i){...})
-
       // Join the data, applying enter and exit.
-      rect.interrupt()
       rect = rect
           .data(I, function(i) { return this.tagName === "rect" ? this.key : X[i]; })
           .join(
@@ -210,5 +205,4 @@ export function BarChart(data, {
     // this function returns an svg node element to which an update() function has been attached.
     return Object.assign(svg.node(), {update, highlight})
   }
-  
   
