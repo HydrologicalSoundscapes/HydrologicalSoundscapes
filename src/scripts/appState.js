@@ -1,5 +1,5 @@
 import {writable, derived, get} from "svelte/store"
-import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS} from "./dataProcessing"
+import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS, sizePS} from "./dataProcessing"
 import {setBPM} from "./sounds"
 
 /**
@@ -19,6 +19,7 @@ export const currentStation = writable(null)
 export const configuration = writable({
     arrangement: "Am",
     bpm: 300,
+    bpm_auto: true,
 })
 
 /**
@@ -30,13 +31,17 @@ export const currentStationPS = derived([currentStation, configuration],
     if (!$currentStation) return {}
     const stationPS = get(currentStationPS)
     console.log("stationPS", stationPS)
-    // const a = $arrangement
-    // stationPS.a = a
-    // console.log("$configuration.arrangement.bpm", $configuration.arrangement.bpm)
-    setBPM($configuration.bpm)
+
     stationPS.meanMonthlyPS = meanMonthlyPS($currentStation, stationPS.meanMonthlyPS, $configuration.arrangement)
     stationPS.maxMonthlyPS = maxMonthlyPS($currentStation, stationPS.maxMonthlyPS, $configuration.arrangement)
     stationPS.minMonthlyPS = minMonthlyPS($currentStation, stationPS.minMonthlyPS, $configuration.arrangement)
+    stationPS.sizePS = sizePS($currentStation, stationPS.sizePS)
+
+    if ($configuration.bpm_auto && stationPS.sizePS.bpm != $configuration.bpm) {
+        configuration.update(c=>({...c, bpm: stationPS.sizePS.bpm}))
+    }
+    setBPM($configuration.bpm)
+
     return stationPS
     },
 {})
@@ -61,6 +66,7 @@ function buildDatasetStore() {
     return {subscribe, set, update, getStationById, getStationsInfo}
 }
 export const datasetStore = buildDatasetStore()
+// export const datasetSizes = writable(null)
 
 /**
  * Download dataset and initialize associated store
@@ -72,10 +78,22 @@ export async function downloadDataset() {
     const dataset = await file.json()
     // convert the object into an array
     const dataset_array = Object.keys(dataset).map(key=>dataset[key])
-    // setTimeout(()=>
-    datasetStore.set(dataset_array)
+    
+    const sizes = dataset_array.map(d=>d.data.size)
+    const max_size = Math.max(...sizes)
+    const min_size = Math.min(...sizes)
+
+    datasetStore.set(dataset_array.map(d=>{
+        d.data.size = {
+            min: min_size,
+            max: max_size,
+            val: d.data.size 
+        }
+        return d
+    }))
 }
 
 
 
 export const uiOptionPanel = writable(false)
+export const uiPlotPanel = writable(true)
