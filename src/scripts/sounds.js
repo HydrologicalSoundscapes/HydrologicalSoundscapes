@@ -1,6 +1,7 @@
 import * as Tone from "tone"
 import * as d3 from "d3"
 import {soundDownloadProgress} from "./appState"
+import {rescale} from "./dataProcessing"
 
 const SCALES = {
     Am: [
@@ -165,9 +166,7 @@ export async function initSampler() {
 
 export function setBPM(bpm) {
     console.log("setting the BPM", bpm)
-    // Tone.Transport.bpm.value = bpm
-    Tone.Transport.bpm.rampTo(bpm, 0.5);
-
+    Tone.Transport.bpm.set({value: bpm})
 }
 
 export async function loadSamples() {
@@ -209,13 +208,6 @@ export async function loadSamples() {
     // } 
 }
 
-function rescale(values, source, target) {
-    function rescaler(value) {
-        let p = (value - source[0])/(source[1]-source[0])
-        return p * (target[1] - target[0]) + target[0]
-    }
-    return values.map(v=>rescaler(v))
-}
 
 export function computeMeanMonthlyPart(data_medium, data_volume, highlight_function, sound_scale_id="Am") {
 
