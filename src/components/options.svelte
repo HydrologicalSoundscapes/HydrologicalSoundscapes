@@ -1,12 +1,15 @@
 <script>
     import {ARRANGEMENTS} from "../scripts/sounds";
     import {configuration} from "../scripts/appState"
-
+    import {slide} from "svelte/transition"
 </script>
 
-<div class="container">
+<div class="container" transition:slide>
+    <div class="title">
+        Parameters:
+    </div>
     <div class="options">
-        <label for="arrangement">Select the type of harmonics:</label>
+        <label for="arrangement">Select the type of musical scale:</label>
         <div class="group"  id="arrangement">
             {#each ARRANGEMENTS as arr}
             <div class="option">
@@ -33,7 +36,7 @@
         right: 0;
         width: min(95%, 300px);
 
-        background-color: var(--color-background);
+        background-color: var(--color-primary);
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 
         padding: 1rem;
@@ -42,7 +45,10 @@
     .group {
         width: 100%;
     }
-    
+    .title {
+        font-size: 1.2rem;
+        border-bottom: 1px solid white;
+    }
     .options {
         position: relative;
         display: flex;

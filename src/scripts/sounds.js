@@ -56,15 +56,15 @@ const SCALES = {
 
 export const ARRANGEMENTS = [
     {
-        id: "Am", label: "A minor",
+        id: "Am", label: "Minor scale in A",
         piano: "Am", bass: "A_E_bass", drum: "Am_chord"
     },
     {
-        id: "A", label: "A major",
+        id: "A", label: "Major scale in A",
         piano: "A", bass: "A_E_bass", drum: "A_chord"
     },
     {
-        id: "C_penta", label: "Pentatonic in C",
+        id: "C_penta", label: "Pentatonic scale in C",
         piano: "C_penta", bass: "C_G_bass", drum: "C_chord"
     },
     {
