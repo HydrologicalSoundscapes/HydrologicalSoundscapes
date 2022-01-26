@@ -94,8 +94,8 @@ export function sizePS(station, old_PS) {
         const chart = BarChart(data_to_plot, {
             x: (d, i) => d[0],
             y: (d, i) => d[1],
-            yType: scaleLog ,color: "lightblue", height: 700, width: 40, yDomain: [size.min, size.max],
-            marginLeft: 30, marginRight: 0,
+            yType: scaleLog ,color: "lightblue", height: 500, width: 40, yDomain: [size.min, size.max],
+            marginLeft: 30, marginRight: 0, marginBottom: 5,
         })
         const bpm = rescale([size_log.val], [size_log.min, size_log.max], rescale_target)[0]
         return {
