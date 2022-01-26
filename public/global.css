@@ -1,8 +1,9 @@
 :root {
-	--color-primary: lightblue;
-	--color-secondary: rgb(233, 156, 14);
+	/* --color-primary: #add8e6; */
+	--color-primary: #52badd;
+	--color-secondary: #e99c0e;
 	--color-background: rgba(255, 255, 255, 0.9);
-	--color-background-secondary: rgba(173, 216, 230, 0.8);
+	--color-background-secondary: rgba(160, 213, 231, 0.8);
 }
 
 * {
@@ -30,9 +31,3 @@ button {
 	all: unset;
 	cursor: pointer;
 }
-
-/* @media screen and (max-width: 1200px) {
-	body {
-		font-size: 10px;
-	}
-} */
