@@ -25,9 +25,9 @@
 
 <div class="container" transition:slide>
     {#if $currentStation}
-        <div class="header">
+        <!-- <div class="header">
             {$currentStation.info.label}
-        </div>
+        </div> -->
         <div class="plots">
         <div class="mean">
             <label for="mean">Monthly streamflow average (in % of annual streamflow)</label>
@@ -75,19 +75,19 @@
 
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         /* box-shadow: 5px -5px 20px 0 rgba(0, 0, 0, 0.5); */
     }
     .plots {
         display: grid;
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 1fr 6fr;
         grid-template-areas: 
         "size mean"
         "size max"
         "size min"
         ;
         align-items: center;
-        justify-items: center;
+        justify-items: end;
         padding: 0.5rem;
     }
     .mean {
@@ -108,26 +108,30 @@
         display: flex;
         position: relative
     }
+    label {
+        /* font-weight: bold; */
+        color: var(--color-secondary);
+        /* text-align: center; */
+    }
     .size > label {
         writing-mode: vertical-lr; 
         transform: rotate(180deg);
+        text-align: center;
     }
     @media screen and (max-width: 1200px) {
         .container {
             width: 100%;
             bottom: unset;
         }
+        label {
+            font-size: 0.8rem;
+        }
     }
-    label {
-        font-weight: bold;
-        color: var(--color-primary);
-        text-align: center;
-    }
-    .header {
+    /* .header {
         font-weight: bold;
         text-align: center;
         padding: 0.5rem;
-    }
+    } */
     .plot {
         margin-right: 1rem;
     }
