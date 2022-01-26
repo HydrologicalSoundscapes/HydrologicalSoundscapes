@@ -16,7 +16,7 @@
     .container {
         position: absolute;
         left: 0;
-        bottom: 0;
+        top: 60px;
         width: 100%;
         z-index: 10000;
         background-color: var(--color-background);
@@ -24,7 +24,8 @@
     .progress-bar {
         position: relative;
         height: 2rem;
-        border: 1px solid  var(--color-secondary);
+        border-bottom: 1px solid  var(--color-secondary);
+        border-top: 1px solid  var(--color-secondary);
     }
     .progress-bar > .text {
         position: absolute;
