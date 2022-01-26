@@ -5,6 +5,10 @@
 
     let current_station_index = null
 
+    const icon_anchor = [0.5, 1]
+    const shadow_anchor = [0.045, 1]
+    const icon_size = 35
+
     let map, markers=[], icon_default, icon_selected
     onMount(()=>{
         map = L.map("map", {zoomControl: false}).setView([51.505, -0.09], 3)
@@ -13,25 +17,23 @@
         }).addTo(map);
         new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
         icon_default = L.icon({
-            // iconUrl: "./images/map_marker_pin_blue.png",
-            // shadowUrl: "./images/map_marker_shadow.png",
-            iconUrl: "./images/pin_blue.png",
+            iconUrl: "./images/pin_bluedark.png",
             shadowUrl: "./images/shadow_pin_2.png",
-            iconSize: [25, 25],
-            shadowSize: [25, 25],
-            iconAnchor: [12.5, 25],
-            shadowAnchor: [1.125, 25],
-            popupAnchor: [0, -50]
+            iconSize: [icon_size, icon_size],
+            shadowSize: [icon_size, icon_size],
+            iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
+            shadowAnchor: [icon_size * shadow_anchor[0], icon_size * shadow_anchor[1]],
+            // popupAnchor: [0, -50]
 
         })
         icon_selected = L.icon({
             iconUrl: "./images/pin_orange.png",
             shadowUrl: "./images/shadow_pin_2.png",
-            iconSize: [25, 25],
-            shadowSize: [25, 25],
-            iconAnchor: [12.5, 25],
-            shadowAnchor: [1.125, 25],
-            popupAnchor: [0, -50]
+            iconSize: [icon_size, icon_size],
+            shadowSize: [icon_size, icon_size],
+            iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
+            shadowAnchor: [icon_size * shadow_anchor[0], icon_size * shadow_anchor[1]],
+            // popupAnchor: [0, -50]
 
         })
     })
