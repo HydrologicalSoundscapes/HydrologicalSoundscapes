@@ -1,6 +1,6 @@
 import {scaleLog} from "d3"
 import { BarChart } from "./plots";
-import { computeMeanMonthlyPart, computeMaxMonthlyPart, computeMinMonthlyPart, ARRANGEMENTS } from "./sounds";
+import { computeMeanMonthlyPart, computeMaxMonthlyPart, computeMinMonthlyPart, computeDrumMonthlyPart, ARRANGEMENTS } from "./sounds";
 
 const MONTHS = [
     "January", "February", "Marsh", "April", "May", "June", "July", "August", "September", "October", "November", "December"
@@ -108,6 +108,22 @@ export function sizePS(station, old_PS) {
         return old_PS
     }
 
+}
+
+export function drumPS(old_PS, configuration={drum_pattern: "arabic"}) {
+    if (!old_PS) {
+        
+        const part = computeDrumMonthlyPart(configuration.drum_pattern)
+        if (!configuration.drum) part.dispose()
+        return {
+            part: part
+        }
+    } else {
+        old_PS.part.dispose()
+        if (!configuration.drum) return old_PS
+        old_PS.part = computeDrumMonthlyPart(configuration.drum_pattern)
+        return old_PS
+    }
 }
 
 export function rescale(values, source, target) {

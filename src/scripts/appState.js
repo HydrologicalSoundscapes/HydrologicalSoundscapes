@@ -1,5 +1,5 @@
 import {writable, derived, get} from "svelte/store"
-import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS, sizePS} from "./dataProcessing"
+import {meanMonthlyPS, maxMonthlyPS, minMonthlyPS, sizePS, drumPS} from "./dataProcessing"
 import {setBPM, setVolume} from "./sounds"
 
 /**
@@ -18,13 +18,15 @@ export const currentStation = writable(null)
  */
 export const configuration = writable({
     arrangement: "Am",
-    bpm: 300,
-    bpm_auto: true,
+    bpm: 90,
+    bpm_auto: false,
     inverted_pitch: false,
     volume: 1,
     med: true,
     max: true,
     min: true,
+    drum: true,
+    drum_pattern: "blues",
 })
 
 /**
@@ -41,6 +43,7 @@ export const currentStationPS = derived([currentStation, configuration],
     stationPS.maxMonthlyPS = maxMonthlyPS($currentStation, stationPS.maxMonthlyPS, $configuration)
     stationPS.minMonthlyPS = minMonthlyPS($currentStation, stationPS.minMonthlyPS, $configuration)
     stationPS.sizePS = sizePS($currentStation, stationPS.sizePS)
+    stationPS.drumPS = drumPS(stationPS.drumPS, $configuration)
 
     if ($configuration.bpm_auto && stationPS.sizePS.bpm != $configuration.bpm) {
         configuration.update(c=>({...c, bpm: stationPS.sizePS.bpm}))

@@ -2,6 +2,7 @@ import * as Tone from "tone"
 import * as d3 from "d3"
 import {soundDownloadProgress} from "./appState"
 import {rescale} from "./dataProcessing"
+import {DrumSampler} from "./soundsUtils"
 
 const SCALES = {
     Am: [
@@ -74,6 +75,77 @@ export const ARRANGEMENTS = [
     },
 ]
 
+export const PATTERNS = [
+    {
+        id: "blues", label: "Blues", 
+        pattern: [
+            {hihatclose_low: 1, snare_hi: 0.66, ridebell: 0, kick_drum: 1},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0.66, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0.66, ridebell: 0, kick_drum: 0.66},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0.66, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+        ]
+    }, 
+    {
+        id: "arabic", label: "Arabic",
+        pattern: [
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 1, kick_drum: 1},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.33, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.66, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 1, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.33, kick_drum: 0},
+            {hihatclose_low: 1, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0.66, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+        ]
+    },
+    {
+        id: "flamenco", label: "Flamenco",
+        pattern: [
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 1, kick_drum: 1},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.33, ridebell: 0, kick_drum: 0},
+        ]
+    },
+    {
+        id: "funk", label: "Funk",
+        pattern: [
+            {hihatclose_low: 0, snare_hi: 1, ridebell: 1, kick_drum: 1},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0.66, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.33, kick_drum: 0},
+            {hihatclose_low: 0.66, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 1, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0.66},
+            {hihatclose_low: 0, snare_hi: 0.66, ridebell: 0.66, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 1, kick_drum: 0},
+            {hihatclose_low: 0.66, snare_hi: 0, ridebell: 0, kick_drum: 0},
+            {hihatclose_low: 0, snare_hi: 0, ridebell: 0.33, kick_drum: 0},
+            {hihatclose_low: 0.33, snare_hi: 0, ridebell: 0, kick_drum: 0},
+        ]
+    },
+]
+
 /**
  * Piano samples:
  * sampled notes range from A0 to C8:
@@ -141,31 +213,46 @@ NOTES_HANGDRUM.forEach(n=>{
     notes_hangdrum_files[n] = `sounds/hangdrum/${n}.ogg`
 })
 
-
-
-// const general_volume = new Tone.Volume(-100).toDestination()
+/**
+ * Drumkit samples
+ * Credits: 
+ * > Downloaded from https://freesound.org/people/jesterdyne/packs/5303/ on 2022-01-26
+ * > Licence: http://creativecommons.org/licenses/by/3.0/
+ * > File "kick-drum" is from https://freesound.org/people/ScreamStudio/sounds/410149/
+ */
+const NOTES_DRUMKIT = [
+    'bd1',               'bd2',
+    'bd3',               'bd4',
+    'bd5',               'bd6',
+    'china_hi',          'china_low',
+    'cowbell_hi',        'cowbell_hihi',
+    'crash1_hi',         'crash1_hihi',
+    'crash2_hi',         'crash2_hihi',
+    'hihatclose_hi',     'hihatclose_low',
+    'hihat_hi',          'hihat_low',
+    'hihat_mid',         'openhihat_hi',
+    'openhihat_mid',     'ride_hi',
+    'ride_mid',          'ridebell',
+    'snare_hi',          'snare_low_mid',
+    'snare_low',         'snare_mid',
+    'splash1_hi',        'splash1_hihi',
+    'splash2_hi',        'splash2_hihi',
+    'stahloverbassdrum', "kick_drum"
+  ]
+const notes_drumkit_files = {}
+NOTES_DRUMKIT.forEach(n=>{
+    notes_drumkit_files[n] = `sounds/drumkit/${n.replace(/\_/g, "-")}.ogg`
+})
 
 const sampler_bass = new Tone.Sampler().toDestination()
 const sampler_piano_loud = new Tone.Sampler().toDestination()
 const sampler_hangdrum = new Tone.Sampler().toDestination()
-
-// sampler_bass.connect(general_volume).toDestination()
-// sampler_piano_loud.connect(general_volume).toDestination()
-// sampler_hangdrum.connect(general_volume).toDestination()
-// const sampler_piano_med = new Tone.Sampler().toDestination()
-
-// const panner = new Tone.Panner(0).toDestination();
-// sampler_piano_loud.connect(panner)
-// panner.pan.setValueAtTime(-1, 0.25);
-
-// export function panPiano(target) {
-
-// }
+const sampler_drumkit = new DrumSampler()
 
 
 export async function initSampler() {
     Tone.start()
-    Tone.Transport.bpm.value = 300
+    Tone.Transport.bpm.value = 90
     Tone.Transport.loop=true;
     Tone.Transport.loopStart=0;
     Tone.Transport.loopEnd=`0:${12}`;
@@ -176,9 +263,12 @@ export function setBPM(bpm) {
     Tone.Transport.bpm.set({value: bpm})
 }
 
+function getDecibels(volume) {
+    return Math.log(volume**12)
+}
 export function setVolume(volume) {
     console.log("volume", volume)
-    volume = Math.log(volume**12)
+    volume = getDecibels(volume)
     console.log("volume", volume)
     Tone.getDestination().volume.set({value: volume})
 }
@@ -189,6 +279,8 @@ export async function loadSamples() {
         ...Object.values(notes_bass_files),
         ...Object.values(notes_piano_loud_files),
         ...Object.values(notes_hangdrum_files),
+        ...Object.values(notes_drumkit_files),
+        // ...Object.values(NOTES_DRUMKIT),
         // ...Object.values(notes_piano_med_files),
     ].reduce((obj, cur)=>({...obj, [cur]: "downloading"}), {})
     const n_total = Object.keys(all_files).length
@@ -215,11 +307,11 @@ export async function loadSamples() {
             monitorProgress(notes_hangdrum_files[file])
         })
     } 
-    // for (let file in notes_piano_med_files) {
-    //     sampler_piano_med.add(file, notes_piano_med_files[file], ()=>{
-    //         monitorProgress(notes_piano_med_files[file])
-    //     })
-    // } 
+    for (let file in notes_drumkit_files) {
+        sampler_drumkit.add(file, notes_drumkit_files[file], ()=>{
+            monitorProgress(notes_drumkit_files[file])
+        })
+    } 
 }
 
 
@@ -251,11 +343,18 @@ export function computeMeanMonthlyPart(data_medium, data_volume, highlight_funct
         }
         return {time: `0:${j}`, note: note, velocity: data_volume[j], index: j}
     })
-    // console.log("parts", parts)
 
+    // const pattern = PATTERNS.blues
+    // const pattern = PATTERNS.arabic
     // create Part
     const part = new Tone.Part((time, value) => {
-        sampler_piano_loud.triggerAttackRelease(value.note, 12/Tone.Transport.bpm.value*4*4, time, value.velocity);
+        const speed = 12/Tone.Transport.bpm.value*4*4
+        sampler_piano_loud.triggerAttackRelease(value.note, speed, time, value.velocity);
+
+        // Object.keys(pattern[value.index]).map(drum_element=>{
+        //     sampler_drumkit.triggerAttackRelease(drum_element, 20, time, pattern[value.index][drum_element])
+        // })
+
         highlight_function(value.index)
     }, parts).start(0)
 
@@ -323,6 +422,22 @@ export function computeMinMonthlyPart(data_min, highlight_function, sound_scale_
         sampler_hangdrum.triggerAttackRelease(value.note, 12/Tone.Transport.bpm.value*4*16, time, value.velocity);
         highlight_function(value.index)
     }, parts.filter(p=>p)).start(0)
+
+    return part
+}
+
+export function computeDrumMonthlyPart(drum_pattern_id) {
+    const pattern = PATTERNS.find(p=>p.id===drum_pattern_id).pattern
+    // parts 
+    const parts = Array(12).fill("").map((_, j)=>{
+        return {time: `0:${j}`, index: j}
+    })
+    // create Part
+    const part = new Tone.Part((time, value) => {
+        Object.keys(pattern[value.index]).map(drum_element=>{
+            sampler_drumkit.triggerAttackRelease(drum_element, 20, time, pattern[value.index][drum_element])
+        })
+    }, parts).start(0)
 
     return part
 }

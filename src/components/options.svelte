@@ -1,5 +1,5 @@
 <script>
-    import {ARRANGEMENTS} from "../scripts/sounds";
+    import {ARRANGEMENTS, PATTERNS} from "../scripts/sounds";
     import {configuration} from "../scripts/appState"
     import {slide} from "svelte/transition"
 </script>
@@ -13,7 +13,7 @@
         <label for="volume"  class="main-label">{`General volume:`}</label>
         <input type="range" name="volume" id="volume" bind:value={$configuration.volume} min="0" max="1" step="0.01">
 
-        <label for="arrangement" class="main-label">Select the type of musical scale:</label>
+        <label for="arrangement" class="main-label">{`Select a music scale:`}</label>
         <div class="section"  id="arrangement">
             {#each ARRANGEMENTS as arr}
             <div class="option">
@@ -23,11 +23,21 @@
             {/each}
         </div>
 
-        <label for="pitch"  class="main-label">{`Pitch:`}</label>
+        <label for="drum"  class="main-label">{`Select a drum pattern: `}</label>
+        <div class="section" id="drum">
+            {#each PATTERNS as pat}
+                <div class="group">
+                    <input type="radio" name="drum-pattern" id={pat.id} value={pat.id} bind:group={$configuration.drum_pattern}>
+                    <label for={pat.id}>{pat.label}</label>
+                </div>
+            {/each}
+        </div>
+
+        <label for="pitch"  class="main-label">{`Low/high pitch mapping:`}</label>
         <div class="section" id="pitch">
             <div class="group">
                 <input type="checkbox" name="inverted-pitch" id="inverted-pitch" bind:checked={$configuration.inverted_pitch}>
-                <label for="inverted-pitch">{`Inverted pitch`}</label>
+                <label for="inverted-pitch">{`Inverted pitch (piano only)`}</label>
             </div>
         </div>
 
@@ -59,9 +69,14 @@
                 <input type="checkbox" name="which-min" id="which-min" bind:checked={$configuration.min}>
                 <label for="which-min">{`Min streamflow (hang drum)`}</label>
             </div>
+            <div class="group">
+                <input type="checkbox" name="which-drum" id="which-drum" bind:checked={$configuration.drum}>
+                <label for="which-drum">{`Drums`}</label>
+            </div>
         </div>
+
+
     </div>
-    
 </div>
 
 <style>
