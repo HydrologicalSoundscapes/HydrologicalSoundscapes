@@ -1,5 +1,5 @@
 <script>
-    import {ARRANGEMENTS, PATTERNS} from "../scripts/sounds";
+    import {ARRANGEMENTS, PATTERNS} from "../scripts/soundsUtils";
     import {configuration} from "../scripts/appState"
     import {slide} from "svelte/transition"
 </script>
@@ -50,7 +50,7 @@
             {#if !$configuration.bpm_auto}
             <label for="bpm">{`Select a speed:`}</label>
             <div class="group">
-                <input type="range" name="bpm" id="bpm" bind:value={$configuration.bpm} min="90" max="900">
+                <input type="range" name="bpm" id="bpm" bind:value={$configuration.bpm} min="90" max="900" step="3">
             </div>
             {/if}
         </div>
