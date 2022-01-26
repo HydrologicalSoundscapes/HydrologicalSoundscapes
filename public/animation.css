@@ -7,9 +7,13 @@
 	border-top-width: 0px;
 } */
 /* when active, bars jumps up and color changes */
+.chart-bar {
+	fill: var(--color-primary);
+}
 .chart-bar.active {
 	transform: translateY(-5px);
-	fill: #ffa500;
+	/* fill: #ffa500; */
+	fill: var(--color-secondary);
 	/* transform-origin: bottom center; */
 	/* transition: all 500ms cubic-bezier(.47,1.64,.41,.8); */
 	transition: all 100ms;
