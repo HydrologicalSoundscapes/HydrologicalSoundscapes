@@ -14,7 +14,7 @@
         <input type="range" name="volume" id="volume" bind:value={$configuration.volume} min="0" max="1" step="0.01">
 
         <label for="arrangement" class="main-label">Select the type of musical scale:</label>
-        <div class="group"  id="arrangement">
+        <div class="section"  id="arrangement">
             {#each ARRANGEMENTS as arr}
             <div class="option">
                 <input type="radio" name="arrangement" id={arr.id} value={arr.id} bind:group={$configuration.arrangement}>
@@ -24,21 +24,21 @@
         </div>
 
         <label for="pitch"  class="main-label">{`Pitch:`}</label>
-        <div class="group" id="pitch">
+        <div class="section" id="pitch">
             <div class="group">
                 <input type="checkbox" name="inverted-pitch" id="inverted-pitch" bind:checked={$configuration.inverted_pitch}>
-                <label for="inverted-pitch">{`Should the pitch be inverted?`}</label>
+                <label for="inverted-pitch">{`Inverted pitch`}</label>
             </div>
         </div>
 
         <label for="speed"  class="main-label">{`Playing speed: ${($configuration.bpm / 3).toFixed(0)}bpm`}</label>
-        <div class="group" id="speed">
+        <div class="section" id="speed">
             <div class="group">
                 <input type="checkbox" name="bpm-auto" id="bpm-auto" bind:checked={$configuration.bpm_auto}>
-                <label for="bpm-auto">{`Should BPM be mapped to streamflow average?`}</label>
+                <label for="bpm-auto">{`Mapped to streamflow average`}</label>
             </div>
             {#if !$configuration.bpm_auto}
-            <label for="bpm">{`Select a speed (beat per minutes, bpm):`}</label>
+            <label for="bpm">{`Select a speed:`}</label>
             <div class="group">
                 <input type="range" name="bpm" id="bpm" bind:value={$configuration.bpm} min="90" max="900">
             </div>
@@ -46,7 +46,7 @@
         </div>
 
         <label for="which"  class="main-label">{`Toggle sounds origines: `}</label>
-        <div class="group" id="which">
+        <div class="section" id="which">
             <div class="group">
                 <input type="checkbox" name="which-med" id="which-med" bind:checked={$configuration.med}>
                 <label for="which-med">{`Average streamflow (piano)`}</label>
@@ -80,12 +80,20 @@
         padding: 1rem;
         font-size: 0.9rem;
     }
+    .section {
+        width: 100%;
+    }
     .group {
         width: 100%;
+        display: flex;
+        /* flex-direction: column; */
+        align-items: center;
     }
     .title {
         font-size: 1.2rem;
-        border-bottom: 1px solid white;
+        width: 100%;
+        text-align: center;
+        /* border-bottom: 1px solid white; */
     }
     .options {
         position: relative;
@@ -98,7 +106,21 @@
         padding: 0.5rem;
     }
     .main-label {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+        width: 100%;
+    }
+    .main-label::after {
+        content: '';
+        background-color: white;
+        width: 100%;
         margin-top: 0.25rem;
+        margin-left: 0.25rem;
+        height: 1px;
+        display: inline-block;
+        flex-shrink: 100000000000000000;
     }
     input[type="range"] {
         width: 100%;
