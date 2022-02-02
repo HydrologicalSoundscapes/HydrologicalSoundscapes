@@ -12,7 +12,7 @@ const sampler_drumkit = new DrumSampler()
 
 export async function initSampler() {
     Tone.start()
-    Tone.Transport.bpm.value = 90
+    // Tone.Transport.bpm.value = 90
     Tone.Transport.loop=true;
     Tone.Transport.loopStart=0;
     Tone.Transport.loopEnd=`0:${12}`;
