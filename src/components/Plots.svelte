@@ -16,11 +16,6 @@
             } 
         }
     }
-    $:{
-        console.log("*********************************")
-        console.log($currentStation?.data.size)
-        console.log(Math.log($currentStation?.data.size))
-    }
 </script>
 
 <div class="container" transition:slide>
