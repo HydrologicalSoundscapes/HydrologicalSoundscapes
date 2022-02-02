@@ -1,8 +1,8 @@
 <script>
-  import { uiPlotPanel, uiOptionPanel } from "../scripts/appState";
+  import { uiPlotPanel, uiOptionPanel, uiInfoPanel } from "../scripts/appState";
   import SoundController from "./SoundController.svelte";
 
-  let svg_size = 28;
+  let svg_size = 25;
 </script>
 
 <div class="container">
@@ -33,8 +33,8 @@
       </svg>
     </button>
     <button
+      id="toggle-options"
       on:click={() => ($uiOptionPanel = !$uiOptionPanel)}
-      class={$uiOptionPanel ? "active" : ""}
     >
       <svg
         width={svg_size}
@@ -63,6 +63,32 @@
         </g>
       </svg>
     </button>
+    <button on:click={() => ($uiInfoPanel = !$uiInfoPanel)}>
+      <svg
+        width={svg_size}
+        height={svg_size}
+        version="1.1"
+        viewBox="0 0 1024 1024"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g class:active={$uiInfoPanel}>
+          <path
+            d="m617.19 249.88a86.737 86.737 0 0 1-86.737 86.737 86.737 86.737 0 0 1-86.737-86.737 86.737 86.737 0 0 1 86.737-86.737 86.737 86.737 0 0 1 86.737 86.737z"
+          />
+          <path
+            d="m338.6 442.16 8.0452-40.743s94.176-41.74 134.56-39.08c40.384 2.6608 94.407 18.712 106.64 71.175 9.1494 39.246-13.157 126.27-30.288 189.25-12.304 45.233-29.657 114.74-24.609 137.36 5.048 22.616 23.02 27.087 38.175 28.27 17.037 1.3304 67.832-13.636 67.832-13.636l-9.4649 42.239s-65.623 27.273-85.815 32.594c-20.192 5.3215-100.64 10.31-130.93-23.947-30.115-34.062-38.491-59.202-22.085-128.38 16.406-69.179 32.496-122.06 43.854-168.62 11.358-46.563 11.831-81.485-5.5212-92.794-16.973-11.061-36.598-9.4789-56.474-4.9889-12.883 2.9103-33.916 11.308-33.916 11.308z"
+          />
+          <path
+            d="m977.14 512.57a465.71 465.71 0 0 1-465.71 465.71 465.71 465.71 0 0 1-465.71-465.71 465.71 465.71 0 0 1 465.71-465.71 465.71 465.71 0 0 1 465.71 465.71z"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="64"
+            style="paint-order:fill markers stroke"
+          />
+        </g>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -79,12 +105,12 @@
 
     padding: 0 1rem 0 0.5rem;
 
-    background-color: var(--color-background);
+    /* background-color: var(--color-background); */
+    background-color: white;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   }
   .title {
     color: var(--color-primary);
-    /* color:  black; */
     font-size: 1.5rem;
     font-weight: bold;
     justify-self: start;
@@ -92,14 +118,9 @@
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-    /* background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTUwMCIgaGVpZ2h0PSIxMDI0IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NTAwIDEwMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTk5YzBlIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxwYXRoIGQ9Im0zNTIuMzUgNzM1LjA5djIzNS42NSIgc3Ryb2tlLXdpZHRoPSIxMDAiLz48cGF0aCBkPSJtNTU0LjA5IDU5OS4ydjM3MS41NCIgc3Ryb2tlLXdpZHRoPSIxMDAiLz48ZyBzdHJva2Utd2lkdGg9IjEwMCI+PHBhdGggZD0ibTc2OS41OCAyODAuMDF2NjkwLjczIi8+PHBhdGggZD0ibTk4MC41IDE3MC45M3Y3OTkuOCIvPjxwYXRoIGQ9Im0xMTgyLjIgMzk5LjIzdjU3MS41MSIvPjxwYXRoIGQ9Im0xMzk3LjcgNjM1LjV2MzM1LjI0Ii8+PHBhdGggZD0ibTE2MDQuMSA4MDEuMTh2MTczLjA0Ii8+PHBhdGggZD0ibTE4MDUuOCA0NTYuMTV2NTE0LjU4Ii8+PHBhdGggZD0ibTIwMjEuMyA1NS44MzF2OTE0LjkxIi8+PHBhdGggZD0ibTIyMzIuMiAyNjMuODJ2NzA2LjkxIi8+PC9nPjxwYXRoIGQ9Im0yNDMzLjkgNDQwLjE0djUzMC42IiBzdHJva2Utd2lkdGg9IjEwMCIvPjxwYXRoIGQ9Im0yNjQ5LjQgNDg5LjY3djQ4MS4wNyIgc3Ryb2tlLXdpZHRoPSIxMDAiLz48cGF0aCBkPSJtMjg2MC4zIDUwNS45N3Y0NjQuNzYiIHN0cm9rZS13aWR0aD0iMTAwIi8+PHBhdGggZD0ibTMwNjIuMSA1MzQuMzF2NDM2LjQyIiBzdHJva2Utd2lkdGg9IjEwMCIvPjxnIHN0cm9rZS13aWR0aD0iMTAwIj48cGF0aCBkPSJtMzI3Ny42IDYyMy4wOHYzNDcuNjYiLz48cGF0aCBkPSJtMzQ4OC41IDcwOC4xNnYyNjIuNTgiLz48cGF0aCBkPSJtMzY5MC4yIDgyNy42NXYxNDMuMDgiLz48cGF0aCBkPSJtMzkwNS43IDg2OS4yOXYxMDEuNDUiLz48cGF0aCBkPSJtNDExMi4xIDkxMS45M3Y1OC44MDciLz48L2c+PHBhdGggZD0ibTQzMTMuOCA3MDkuMTZ2MjYxLjU4IiBzdHJva2Utd2lkdGg9IjEwMCIvPjxnIHN0cm9rZS13aWR0aD0iMTAwIj48cGF0aCBkPSJtNDUyOS4zIDI2Ny4ydjcwMy41NCIvPjxwYXRoIGQ9Im00NzQwLjIgOTYuODM1djg3My45Ii8+PHBhdGggZD0ibTQ5NDEuOSA0NDYuNTV2NTI0LjE5Ii8+PC9nPjxwYXRoIGQ9Im01MTU3LjQgNjgwLjM0djI5MC40IiBzdHJva2Utd2lkdGg9IjEwMCIvPjxwYXRoIGQ9Im01MzUwIDkxMS45M3Y1OC44MDciIHN0cm9rZS13aWR0aD0iMTAwIi8+PHBhdGggZD0ibTE0MS40NCA4MDEuMTh2MTczLjA0IiBzdHJva2Utd2lkdGg9IjEwMCIvPjwvZz48L3N2Zz4K');
-        background-size: contain;
-        background-repeat: no-repeat;
-        text-shadow: 0 0 5px black;
-        height: 50px;
-
-        display: flex;
-        align-items: flex-end; */
+  }
+  .title > span {
+    line-height: 1;
   }
   .title > img {
     height: 40px;
@@ -121,17 +142,21 @@
     stroke: var(--color-secondary);
   }
 
-  @media screen and (max-width: 1000px) {
-    .title {
-      font-size: 1rem;
+  @media screen and (max-width: 800px) {
+    .container {
+      padding: 0 0.5rem 0 0.25rem;
     }
+    .title {
+      font-size: 0.9rem;
+      gap: 0.125rem;
+    }
+
     .title > img {
-      height: 30px;
+      height: 25px;
+    }
+
+    .right {
+      gap: 0.5rem;
     }
   }
-  /* @media screen and (max-width: 950px) {
-        .title {
-            font-size: 1.25rem;
-        }
-    } */
 </style>

@@ -2,8 +2,14 @@
   import { onMount } from "svelte";
 
   import { loadSamples, initSampler } from "./scripts/sounds";
-  import { downloadDataset } from "./scripts/appState";
+  import {
+    downloadDataset,
+    uiWelcomePanel,
+    uiTutorial,
+  } from "./scripts/appState";
 
+  import Tutorial from "./components/Tutorial.svelte";
+  import Welcome from "./components/Welcome.svelte";
   import Map from "./components/Map.svelte";
   import Panel from "./components/Panel.svelte";
 
@@ -19,6 +25,12 @@
 </script>
 
 <main>
+  {#if $uiTutorial}
+    <Tutorial />
+  {/if}
+  {#if $uiWelcomePanel}
+    <Welcome />
+  {/if}
   <Panel />
   <Map />
 </main>

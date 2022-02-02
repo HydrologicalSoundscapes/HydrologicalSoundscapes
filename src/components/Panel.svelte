@@ -2,8 +2,10 @@
   import {
     uiOptionPanel,
     uiPlotPanel,
+    uiInfoPanel,
     currentStationPS,
   } from "../scripts/appState";
+  import Info from "./Info.svelte";
   import Plots from "./Plots.svelte";
   import Options from "./Options.svelte";
   import Header from "./Header.svelte";
@@ -23,6 +25,9 @@
   {/if}
   {#if $uiPlotPanel}
     <Plots />
+  {/if}
+  {#if $uiInfoPanel}
+    <Info />
   {/if}
 
   <Loading />
