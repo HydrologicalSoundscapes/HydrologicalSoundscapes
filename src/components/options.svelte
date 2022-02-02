@@ -5,7 +5,9 @@
 </script>
 
 <div class="container" transition:slide>
-  <div class="title">Parameters:</div>
+  <!-- <div class="title">Parameters:</div> -->
+  <h2 hidden>Options</h2>
+
   <div class="options">
     <label for="volume" class="main-label">{`General volume:`}</label>
     <input
@@ -158,14 +160,7 @@
   .group {
     width: 100%;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
-  }
-  .title {
-    font-size: 1.2rem;
-    width: 100%;
-    text-align: center;
-    /* border-bottom: 1px solid white; */
   }
   .options {
     position: relative;
@@ -175,7 +170,7 @@
     align-items: flex-start;
     width: 100%;
 
-    padding: 0.5rem;
+    /* padding: 0.5rem; */
   }
   .main-label {
     margin-top: 0.5rem;
