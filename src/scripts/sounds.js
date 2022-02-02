@@ -1,5 +1,4 @@
 import * as Tone from "tone";
-import * as d3 from "d3";
 import { soundDownloadProgress } from "./appState";
 import {
   DrumSampler,
@@ -131,15 +130,12 @@ export function computeMeanMonthlyPart(
   inverted_pitch = false
 ) {
   // data normalization
-  console.log("inverted_pitch", inverted_pitch);
   const target_range = inverted_pitch ? [0.5, 1] : [0.6, 0.1];
-  console.log("data_medium", data_medium);
-  console.log("target_range", target_range);
   data_medium = rescale(data_medium, [0, 1], target_range);
 
   data_volume = rescale(
     data_volume,
-    [d3.min(data_volume), d3.max(data_volume)],
+    [Math.min(...data_volume), Math.max(...data_volume)],
     [0.1, 0.4]
   );
 
@@ -182,7 +178,7 @@ export function computeMeanMonthlyPart(
 export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
   const volume = rescale(
     data_max,
-    [d3.min(data_max), d3.max(data_max)],
+    [Math.min(...data_max), Math.max(...data_max)],
     [0.3, 0.6]
   ).map((d, i) => (data_max[i] === 0 ? 0 : d));
   data_max = rescale(data_max, [0, 1], [1, 0]);
@@ -233,7 +229,7 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
 export function computeMinMonthlyPart(data_min, highlight_function, scale) {
   const volume = rescale(
     data_min,
-    [d3.min(data_min), d3.max(data_min)],
+    [Math.min(...data_min), Math.max(...data_min)],
     [0.2, 0.3]
   ).map((d, i) => (data_min[i] === 0 ? 0 : d));
   data_min = rescale(data_min, [0, 1], [0.01, 1]);
