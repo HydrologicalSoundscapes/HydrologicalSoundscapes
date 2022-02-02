@@ -170,6 +170,7 @@
     align-items: flex-start;
     width: 100%;
 
+<<<<<<< HEAD:src/components/options.svelte
     /* padding: 0.5rem; */
   }
   .main-label {
@@ -192,4 +193,28 @@
   input[type="range"] {
     width: 100%;
   }
+=======
+        padding: 0.5rem;
+    }
+    .main-label {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+        width: 100%;
+    }
+    .main-label::after {
+        content: '';
+        background-color: white;
+        width: 100%;
+        margin-top: 0.25rem;
+        margin-left: 0.25rem;
+        height: 1px;
+        display: inline-block;
+        flex-shrink: 100000000000000000;
+    }
+    input[type="range"] {
+        width: 100%;
+    }
+>>>>>>> ba5cecb88e8aefba95bc227ea2ef49adf26ed8fd:src/components/Options.svelte
 </style>
