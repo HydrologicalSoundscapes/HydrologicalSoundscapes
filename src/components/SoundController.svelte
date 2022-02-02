@@ -96,8 +96,10 @@
   .controller {
     display: flex;
     justify-content: center;
-    gap: 3px;
+    /* gap: 3px;
     padding: 0.25rem;
+    gap: 3px;
+    padding: 0.25rem; */
   }
 
   button {
@@ -117,4 +119,10 @@
     pointer-events: none;
     cursor: not-allowed;
   }
+  /* @media screen and (max-width: 800px) {
+    .controller {
+      gap: 0px;
+      padding: 0;
+    }
+  } */
 </style>
