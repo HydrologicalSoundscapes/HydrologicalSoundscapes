@@ -3,7 +3,8 @@ import {
   uiOptionPanel,
   uiInfoPanel,
   currentStation,
-  datasetStore,
+  centerStation,
+  mapStore,
 } from "./appState";
 
 import { get } from "svelte/store";
@@ -34,7 +35,24 @@ const STEPS = [
     highlight: { selector: "#map-pin-example", circle: true },
     action: () => {
       togglePanels(false, false, false);
-      return null;
+      let zoom, center;
+      let station = get(centerStation);
+      mapStore.update((map) => {
+        map.panBy(L.point(-window.innerWidth / 4, 0), { animate: false });
+        // zoom = map.getZoom();
+        // center = map.getCenter();
+
+        // map.setView([center.lat, center.lng], 6, { animate: false });
+        // map.setZoom(6, );
+        return map;
+      });
+      return () => {
+        mapStore.update((map) => {
+          // map.setView(center, zoom);
+          // map.setZoom(zoom);
+          return map;
+        });
+      };
     },
     text: `A click on a hydrometric station (one of the pin on the map) will select it an load
      the associated data you can then visually and musically explore.`,
@@ -43,7 +61,7 @@ const STEPS = [
     highlight: { selector: "#plots-panel", circle: false },
     action: () => {
       togglePanels(true, false, false);
-      currentStation.set(get(datasetStore)[2]);
+      currentStation.set(get(centerStation));
       return null;
     },
     text: `Here is the bar charts panel where you can see average/max/min monthly
@@ -64,12 +82,12 @@ const STEPS = [
     action: () => {
       togglePanels(true, false, false);
       let opened = false;
-      let i = setInterval(() => {
-        togglePanels(opened, false, false);
-        opened = !opened;
-      }, 2000);
+      // let i = setInterval(() => {
+      //   togglePanels(opened, false, false);
+      //   opened = !opened;
+      // }, 2000);
       return () => {
-        clearInterval(i);
+        // clearInterval(i);
         togglePanels(false, false, false);
       };
     },
@@ -80,12 +98,12 @@ const STEPS = [
     action: () => {
       togglePanels(false, true, false);
       let opened = false;
-      let i = setInterval(() => {
-        togglePanels(false, opened, false);
-        opened = !opened;
-      }, 2000);
+      // let i = setInterval(() => {
+      //   togglePanels(false, opened, false);
+      //   opened = !opened;
+      // }, 2000);
       return () => {
-        clearInterval(i);
+        // clearInterval(i);
         togglePanels(false, false, false);
       };
     },
@@ -96,12 +114,12 @@ const STEPS = [
     action: () => {
       togglePanels(false, false, true);
       let opened = false;
-      let i = setInterval(() => {
-        togglePanels(false, false, opened);
-        opened = !opened;
-      }, 2000);
+      // let i = setInterval(() => {
+      //   togglePanels(false, false, opened);
+      //   opened = !opened;
+      // }, 2000);
       return () => {
-        clearInterval(i);
+        // clearInterval(i);
         togglePanels(false, false, false);
       };
     },
@@ -164,6 +182,7 @@ export class Tutorial {
   constructor(
     highlighting_element,
     explaination_element,
+    nohighlight_element,
     on_change = () => {}
   ) {
     this.on_change = on_change;
@@ -175,6 +194,7 @@ export class Tutorial {
     });
     this.highlighting_element = highlighting_element;
     this.explaination_element = explaination_element;
+    this.nohighlight_element = nohighlight_element;
     const onResize = () => {
       highlightElement(
         this.current_element,
@@ -251,7 +271,7 @@ export class Tutorial {
       );
     } else {
       highlightElement(
-        this.explaination_element,
+        this.nohighlight_element,
         this.highlighting_element,
         true
       );
