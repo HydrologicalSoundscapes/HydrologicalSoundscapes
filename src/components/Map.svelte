@@ -1,6 +1,11 @@
 <script>
   import L from "leaflet";
-  import { datasetStore, currentStation } from "../scripts/appState";
+  import {
+    datasetStore,
+    currentStation,
+    centerStation,
+    mapStore,
+  } from "../scripts/appState";
   import { onMount } from "svelte";
 
   let current_station_index = null;
@@ -14,7 +19,11 @@
     icon_default,
     icon_selected;
   onMount(() => {
+    initMap();
+  });
+  function initMap() {
     map = L.map("map", { zoomControl: false }).setView([51.505, -0.09], 3);
+    $mapStore = map;
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -44,8 +53,7 @@
       ],
       // popupAnchor: [0, -50]
     });
-  });
-  let current_station;
+  }
   function populateMap(stations) {
     stations.forEach((station, i) => {
       let marker = L.marker([station.info.lat, station.info.lon], {
@@ -70,10 +78,16 @@
     });
   }
   $: {
-    populateMap($datasetStore);
-    let icons = document.querySelectorAll(".leaflet-marker-icon");
-    if (icons.length !== 0) {
-      icons[2].id = "map-pin-example";
+    if ($centerStation && $datasetStore) {
+      map.setView([$centerStation.info.lat, $centerStation.info.lon], 4, {
+        animate: false,
+      });
+      console.log(map);
+      populateMap($datasetStore);
+      let icons = document.querySelectorAll(".leaflet-marker-icon");
+      if (icons.length !== 0) {
+        icons[$centerStation.info.index].id = "map-pin-example";
+      }
     }
   }
 </script>
