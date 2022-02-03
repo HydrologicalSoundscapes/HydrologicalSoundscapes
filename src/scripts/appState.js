@@ -129,6 +129,6 @@ export async function downloadDataset() {
 
 export const uiOptionPanel = writable(false);
 export const uiPlotPanel = writable(true);
-export const uiWelcomePanel = writable(false);
-export const uiTutorial = writable(true);
+export const uiWelcomePanel = writable(true);
+export const uiTutorial = writable(false);
 export const uiInfoPanel = writable(false);

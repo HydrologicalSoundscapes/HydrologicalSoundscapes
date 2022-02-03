@@ -1,5 +1,5 @@
 <script>
-  import { uiWelcomePanel } from "../scripts/appState";
+  import { uiWelcomePanel, uiTutorial } from "../scripts/appState";
   import About from "./About.svelte";
 </script>
 
@@ -25,7 +25,12 @@
   </div>
 
   <div class="actions">
-    <button on:click={() => ($uiWelcomePanel = false)}>Tutorial</button>
+    <button
+      on:click={() => {
+        $uiWelcomePanel = false;
+        $uiTutorial = true;
+      }}>Tutorial</button
+    >
     <button on:click={() => ($uiWelcomePanel = false)}>Get started</button>
   </div>
 </div>
