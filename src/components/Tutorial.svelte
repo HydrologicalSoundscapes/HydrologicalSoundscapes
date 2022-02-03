@@ -106,6 +106,6 @@
     background-color: var(--color-secondary);
   }
   button[disabled] {
-    background-color: grey;
+    background-color: var(--color-disabled);
   }
 </style>

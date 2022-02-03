@@ -66,10 +66,12 @@
         viewBox="0 0 1024 1024"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="m63.971 961.77 893.87-449.81-893.81-452.54z"
-          stroke-width="100"
-        />
+        <g>
+          <path
+            d="m63.971 961.77 893.87-449.81-893.81-452.54z"
+            stroke-width="100"
+          />
+        </g>
       </svg>
     {/if}
   </button>
@@ -81,14 +83,15 @@
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="m63.298 61.4h898.97v898.97h-898.97z" stroke-width="100" />
+      <g>
+        <path d="m63.298 61.4h898.97v898.97h-898.97z" stroke-width="100" />
+      </g>
     </svg>
   </button>
 </div>
 
 <style>
-  g,
-  path {
+  g {
     fill: var(--color-secondary);
     stroke: var(--color-secondary);
     stroke-linejoin: unset;
@@ -119,6 +122,11 @@
   .not-ready > button {
     pointer-events: none;
     cursor: not-allowed;
+  }
+
+  .not-ready g {
+    fill: var(--color-disabled);
+    stroke: var(--color-disabled);
   }
   /* @media screen and (max-width: 800px) {
     .controller {
