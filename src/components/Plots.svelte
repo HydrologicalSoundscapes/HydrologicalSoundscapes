@@ -10,7 +10,9 @@
     console.log("$currentStation", $currentStation);
     if (
       plot_mean_container &&
+      plot_min_container &&
       plot_max_container &&
+      plot_size_container &&
       $currentStation &&
       $currentStationPS
     ) {
@@ -22,11 +24,17 @@
         plot_min_container.append($currentStationPS.minMonthlyPS.plot);
         plot_size_container.append($currentStationPS.sizePS.plot);
       }
+    } else {
+      initialized = false;
+      if (plot_mean_container) plot_mean_container.innerHTML = "";
+      if (plot_max_container) plot_max_container.innerHTML = "";
+      if (plot_min_container) plot_min_container.innerHTML = "";
+      if (plot_size_container) plot_size_container.innerHTML = "";
     }
   }
 </script>
 
-<div class="container" transition:slide>
+<div class="container" transition:slide id="plots-panel">
   {#if $currentStation}
     <!-- <div class="header">
             {$currentStation.info.label}
