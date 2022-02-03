@@ -22,9 +22,10 @@
   .container {
     position: absolute;
     left: 0;
-    top: 60px;
+    /* top: 60px; */
+    bottom: 0;
     width: 100%;
-    z-index: 10000;
+    z-index: 10005;
     background-color: var(--color-background);
   }
   .progress-bar {
