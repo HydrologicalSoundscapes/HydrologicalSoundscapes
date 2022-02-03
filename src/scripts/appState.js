@@ -111,15 +111,24 @@ export async function downloadDataset() {
   const dataset = await file.json();
   // convert the object into an array
   let dataset_array = Object.keys(dataset).map((key) => dataset[key]);
-  // if number of station exceeds a maximum of 100, select random element
+  // if number of station exceeds a maximum of 200, select random element
   // to optimize performance
   console.log("dataset_array.length", dataset_array.length);
-  if (dataset_array.length > 100) {
+  if (dataset_array.length > 200) {
     // shuffle the array
     dataset_array.sort(() => 0.5 - Math.random());
-    // takes the 100 first element of the shuffled array
-    dataset_array = dataset_array.slice(0, 100);
+    // takes the 200 first element of the shuffled array
+    dataset_array = dataset_array.slice(0, 200);
   }
+  // adding an index in the info of all stations
+  dataset_array = dataset_array.map((d, i) => {
+    d.info.index = i;
+    return d;
+  });
+  // selecting a random station
+  centerStation.set(
+    dataset_array[Math.floor(Math.random() * dataset_array.length)]
+  );
   const sizes = dataset_array.map((d) => d.data.size);
   const max_size = Math.max(...sizes);
   const min_size = Math.min(...sizes);
@@ -136,8 +145,19 @@ export async function downloadDataset() {
   );
 }
 
+export const centerStation = writable(null);
+export const mapStore = writable(null);
+
 export const uiOptionPanel = writable(false);
 export const uiPlotPanel = writable(true);
 export const uiWelcomePanel = writable(true);
 export const uiTutorial = writable(false);
 export const uiInfoPanel = writable(false);
+
+export const uiTutorialReady = derived(
+  [centerStation, mapStore],
+  ([$centerStation, $mapStore]) => {
+    return $centerStation && $mapStore;
+  },
+  false
+);

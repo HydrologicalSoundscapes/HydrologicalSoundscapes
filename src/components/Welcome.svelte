@@ -1,5 +1,9 @@
 <script>
-  import { uiWelcomePanel, uiTutorial } from "../scripts/appState";
+  import {
+    uiWelcomePanel,
+    uiTutorial,
+    uiTutorialReady,
+  } from "../scripts/appState";
   import About from "./About.svelte";
 </script>
 
@@ -29,7 +33,8 @@
       on:click={() => {
         $uiWelcomePanel = false;
         $uiTutorial = true;
-      }}>Tutorial</button
+      }}
+      disabled={!$uiTutorialReady}>Tutorial</button
     >
     <button on:click={() => ($uiWelcomePanel = false)}>Get started</button>
   </div>
@@ -90,8 +95,11 @@
     color: white;
     font-weight: bold;
   }
-  button:hover {
+  button:not([disabled]):hover {
     border: 1px solid var(--color-secondary);
     background-color: var(--color-secondary);
+  }
+  button[disabled] {
+    background-color: var(--color-disabled);
   }
 </style>
