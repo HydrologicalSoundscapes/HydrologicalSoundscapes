@@ -106,11 +106,20 @@ export const datasetStore = buildDatasetStore();
 export async function downloadDataset() {
   // For large dataset, I might need to monitor the download
   // to display a progress bar to the user...
-  const file = await fetch("./example_data_raw_new.json");
+  // const file = await fetch("./example_data_raw_new.json");
+  const file = await fetch("./GSIM.json");
   const dataset = await file.json();
   // convert the object into an array
-  const dataset_array = Object.keys(dataset).map((key) => dataset[key]);
-
+  let dataset_array = Object.keys(dataset).map((key) => dataset[key]);
+  // if number of station exceeds a maximum of 100, select random element
+  // to optimize performance
+  console.log("dataset_array.length", dataset_array.length);
+  if (dataset_array.length > 100) {
+    // shuffle the array
+    dataset_array.sort(() => 0.5 - Math.random());
+    // takes the 100 first element of the shuffled array
+    dataset_array = dataset_array.slice(0, 100);
+  }
   const sizes = dataset_array.map((d) => d.data.size);
   const max_size = Math.max(...sizes);
   const min_size = Math.min(...sizes);
