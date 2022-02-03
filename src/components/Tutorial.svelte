@@ -6,14 +6,20 @@
 
   let highlight_element;
   let explaination_element;
+  let nohighlight_element;
   let tutorial;
   let has_previous_step = false,
     has_next_step = true;
   onMount(() => {
-    tutorial = new Tutorial(highlight_element, explaination_element, () => {
-      has_previous_step = !tutorial.hasPreviousStep();
-      has_next_step = !tutorial.hasNextStep();
-    });
+    tutorial = new Tutorial(
+      highlight_element,
+      explaination_element,
+      nohighlight_element,
+      () => {
+        has_previous_step = !tutorial.hasPreviousStep();
+        has_next_step = !tutorial.hasNextStep();
+      }
+    );
     tutorial.setupStep();
   });
 </script>
@@ -24,6 +30,7 @@
   }}
 /> -->
 <div class="container">
+  <div id="no-highlight" bind:this={nohighlight_element} />
   <div class="highlight" bind:this={highlight_element} />
   <div class="details">
     <div>
@@ -67,6 +74,13 @@
     /* box-shadow: 0 0 0 2px var(--color-secondary), 0 0 0 4px var(--color-primary),
       0 0 0 100000px rgba(0, 0, 0, 0.5); */
   }
+  #no-highlight {
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 0;
+    height: 0;
+  }
   .details {
     position: absolute;
     inset: 0;
@@ -78,7 +92,7 @@
   }
 
   .details > div {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.75);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     padding: 1rem;
   }
