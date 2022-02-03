@@ -45,18 +45,21 @@
       // popupAnchor: [0, -50]
     });
   });
+  let current_station;
   function populateMap(stations) {
     stations.forEach((station, i) => {
-      console.log("station", station);
       let marker = L.marker([station.info.lat, station.info.lon], {
         icon: icon_default,
       });
-
       markers.push(marker);
       marker.addTo(map).on("click", (e) => {
         if (i !== current_station_index) {
+          if (current_station_index !== null) {
+            markers[current_station_index].setIcon(icon_default);
+          }
+
           current_station_index = i;
-          markers.forEach((m) => m.setIcon(icon_default));
+          // markers.forEach((m) => m.setIcon(icon_default));
           marker.setIcon(icon_selected);
           console.log("########################################");
           console.log("selecting a new station ==>", station);
