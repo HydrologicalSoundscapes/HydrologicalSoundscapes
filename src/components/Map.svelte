@@ -51,6 +51,7 @@
       let marker = L.marker([station.info.lat, station.info.lon], {
         icon: icon_default,
       });
+
       markers.push(marker);
       marker.addTo(map).on("click", (e) => {
         if (i !== current_station_index) {
@@ -59,13 +60,18 @@
           marker.setIcon(icon_selected);
           console.log("########################################");
           console.log("selecting a new station ==>", station);
-          currentStation.update((prev) => station);
+          // currentStation.update((prev) => station);
+          $currentStation = station;
         }
       });
     });
   }
   $: {
     populateMap($datasetStore);
+    let icons = document.querySelectorAll(".leaflet-marker-icon");
+    if (icons.length !== 0) {
+      icons[2].id = "map-pin-example";
+    }
   }
 </script>
 

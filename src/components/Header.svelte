@@ -7,7 +7,7 @@
 
 <div class="container">
   <div class="left">
-    <div class="title">
+    <div class="title" id="logo-title">
       <img
         src="/images/hydrosound_icon_96.png"
         alt="Hydrological soundscapes icon"
@@ -19,6 +19,7 @@
   <div class="right">
     <button on:click={() => ($uiPlotPanel = !$uiPlotPanel)}>
       <svg
+        id="toggle-plots"
         width={svg_size}
         height={svg_size}
         version="1.1"
@@ -32,11 +33,9 @@
         </g>
       </svg>
     </button>
-    <button
-      id="toggle-options"
-      on:click={() => ($uiOptionPanel = !$uiOptionPanel)}
-    >
+    <button on:click={() => ($uiOptionPanel = !$uiOptionPanel)}>
       <svg
+        id="toggle-options"
         width={svg_size}
         height={svg_size}
         version="1.1"
@@ -65,6 +64,7 @@
     </button>
     <button on:click={() => ($uiInfoPanel = !$uiInfoPanel)}>
       <svg
+        id="toggle-about"
         width={svg_size}
         height={svg_size}
         version="1.1"

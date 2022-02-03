@@ -42,6 +42,7 @@
   class={`controller${
     $soundDownloadProgress === 1 && $currentStation ? "" : " not-ready"
   }`}
+  id="sound-controller"
 >
   <button on:click={start} class={playing ? "active" : ""}>
     {#if playing}
