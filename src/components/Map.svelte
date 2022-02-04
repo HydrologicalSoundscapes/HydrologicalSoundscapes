@@ -22,7 +22,10 @@
     initMap();
   });
   function initMap() {
-    map = L.map("map", { zoomControl: false }).setView([51.505, -0.09], 3);
+    map = L.map("map", { zoomControl: false, zoomAnimation: true }).setView(
+      [51.505, -0.09],
+      3
+    );
     $mapStore = map;
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
