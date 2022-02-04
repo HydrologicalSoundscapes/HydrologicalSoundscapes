@@ -54,8 +54,8 @@ export function meanMonthlyPS(station, old_PS = null, configuration) {
       part: part,
     };
   } else {
-    old_PS.plot.update(data_to_plot, { yDomain: [0, 0.5] });
     old_PS.part.dispose();
+    old_PS.plot.update(data_to_plot, { yDomain: [0, 0.5] });
     old_PS.plot.highlight(null);
     if (!configuration.med) return old_PS;
     old_PS.part = computeMeanMonthlyPart(
@@ -94,8 +94,9 @@ export function maxMonthlyPS(station, old_PS, configuration) {
       part: part,
     };
   } else {
-    old_PS.plot.update(data_to_plot, { yDomain: [0, 1] });
     old_PS.part.dispose();
+    old_PS.plot.update(data_to_plot, { yDomain: [0, 1] });
+
     old_PS.plot.highlight(null);
     if (!configuration.max) return old_PS;
     old_PS.part = computeMaxMonthlyPart(
@@ -131,8 +132,9 @@ export function minMonthlyPS(station, old_PS, configuration) {
       part: part,
     };
   } else {
-    old_PS.plot.update(data_to_plot, { yDomain: [0, 1] });
     old_PS.part.dispose();
+    old_PS.plot.update(data_to_plot, { yDomain: [0, 1] });
+
     old_PS.plot.highlight(null);
     if (!configuration.min) return old_PS;
     old_PS.part = computeMinMonthlyPart(
