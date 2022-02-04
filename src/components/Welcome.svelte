@@ -17,7 +17,12 @@
   </div>
   <div class="content">
     <p>
-      Here, not only will you be able to <span class="highlight"> see </span>
+      This is a sonification app that enables listening to hydrolgical regimes
+      from all around the world. Here, not only will you be able to <span
+        class="highlight"
+      >
+        see
+      </span>
       hydrological regimes in bar charts but also
       <span class="highlight"> listen </span> to their music.
     </p>
@@ -43,9 +48,12 @@
 <style>
   .container {
     position: absolute;
-    inset: 0;
+    inset: auto 0 0 0;
     max-height: 100vh;
     background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    max-height: calc(100vh - 60px - 5px);
+
     z-index: 10001;
     padding: 1rem;
     overflow-y: auto;
@@ -83,7 +91,7 @@
   }
   .actions {
     padding-top: 1rem;
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
     display: flex;
     justify-content: center;
     gap: 5%;
