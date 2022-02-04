@@ -186,6 +186,13 @@ function tryGetElement(selector) {
   });
 }
 
+function windowResize() {
+  console.log("window resizing");
+  requestAnimationFrame(() => {
+    onResize();
+  });
+}
+
 export class Tutorial {
   constructor(
     highlighting_element,
@@ -214,12 +221,7 @@ export class Tutorial {
     this.resize_observer = new ResizeObserver((e) => {
       onResize();
     });
-    window.addEventListener("resize", () => {
-      console.log("window resizing");
-      requestAnimationFrame(() => {
-        onResize();
-      });
-    });
+    window.addEventListener("resize", windowResize);
     this.current_element = null;
     this.cleanup_function = null;
   }
@@ -232,6 +234,14 @@ export class Tutorial {
   stop() {
     this.panels();
     currentStation.set(this.station);
+    if (this.cleanup_function) {
+      this.cleanup_function();
+      this.cleanup_function = null;
+    }
+    if (this.current_element) {
+      this.resize_observer.unobserve(this.current_element);
+    }
+    window.removeEventListener("resize", windowResize);
     this.on_change();
   }
   hasNextStep() {
