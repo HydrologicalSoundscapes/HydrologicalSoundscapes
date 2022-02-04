@@ -46,8 +46,17 @@ export const currentStationPS = derived(
       $currentStation,
       $configuration
     );
-    if (!$currentStation) return {};
     const stationPS = get(currentStationPS);
+    if (!$currentStation) {
+      if (stationPS) {
+        if (stationPS.meanMonthlyPS) stationPS.meanMonthlyPS.part.dispose();
+        if (stationPS.maxMonthlyPS) stationPS.maxMonthlyPS.part.dispose();
+        if (stationPS.minMonthlyPS) stationPS.minMonthlyPS.part.dispose();
+        if (stationPS.drumPS) stationPS.drumPS.part.dispose();
+      }
+      return {};
+    }
+
     console.log("stationPS", stationPS);
 
     stationPS.meanMonthlyPS = meanMonthlyPS(
