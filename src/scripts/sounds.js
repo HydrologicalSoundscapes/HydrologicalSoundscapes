@@ -310,17 +310,17 @@ export function computeDrumMonthlyPart(pattern) {
  * Start Tone
  */
 export function startSound() {
-  if (Tone.Transport.state !== "started") Tone.Transport.start();
+  if (Tone.Transport.state !== "started") Tone.Transport.start("+0.05");
 }
 /**
  * Pause Tone
  */
 export function pauseSound() {
-  if (Tone.Transport.state === "started") Tone.Transport.pause();
+  if (Tone.Transport.state === "started") Tone.Transport.pause("+0.05");
 }
 /**
  * Stop Tone
  */
 export function stopSound() {
-  if (Tone.Transport.state !== "stopped") Tone.Transport.stop();
+  if (Tone.Transport.state !== "stopped") Tone.Transport.stop("+0.05");
 }
