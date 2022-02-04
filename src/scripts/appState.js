@@ -123,7 +123,7 @@ export async function downloadDataset() {
   console.log("Actual size of dataset: ", dataset_array.length);
   // if number of station exceeds a maximum of N, select random element
   // to optimize performance
-  const N = 500;
+  const N = 200;
   console.log("dataset_array.length", dataset_array.length);
   if (dataset_array.length > N) {
     // shuffle the array
