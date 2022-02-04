@@ -7,8 +7,11 @@
 <div class="container" transition:slide>
   <button />
   <h2>About</h2>
-  <h3 hidden>Information</h3>
+  <h3 hidden>Description</h3>
   <About />
+  <!-- <div class="tutorial">
+    <button>Do the tutorial</button>
+  </div> -->
   <h3>Acknowledgment</h3>
   <Credits />
 </div>
@@ -21,13 +24,13 @@
     /* background-color: var(--color-background); */
     background-color: white;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    max-height: calc(100vh - 60px - 5px);
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem;
 
-    max-height: calc(100vh - 60px - 5px);
     overflow-y: auto;
   }
 
