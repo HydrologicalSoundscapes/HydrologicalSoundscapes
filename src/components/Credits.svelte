@@ -14,11 +14,14 @@
   </div>
   <div class="src">
     Source code is available on <a
-      href="https://github.com/IvanHeriver/HydrologicalSoundscapes">Github</a
+      href="https://github.com/IvanHeriver/HydrologicalSoundscapes"
+      target="_blank">Github</a
     >
   </div>
   <div class="ihdev">
-    App created by Ivan Horner - <a href="https://ihdev.fr">ihdev.fr</a>
+    App created by Ivan Horner - <a href="https://ihdev.fr" target="_blank"
+      >ihdev.fr</a
+    >
   </div>
 </div>
 
