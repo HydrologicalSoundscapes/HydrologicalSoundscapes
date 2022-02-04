@@ -136,7 +136,7 @@ export function computeMeanMonthlyPart(
   data_volume = rescale(
     data_volume,
     [Math.min(...data_volume), Math.max(...data_volume)],
-    [0.0, 0.4]
+    [0.03, 0.3]
   );
 
   // mapping to a sound scale
