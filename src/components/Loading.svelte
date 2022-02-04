@@ -22,7 +22,6 @@
   .container {
     position: absolute;
     left: 0;
-    /* top: 60px; */
     bottom: 0;
     width: 100%;
     z-index: 10005;
@@ -30,7 +29,7 @@
   }
   .progress-bar {
     position: relative;
-    height: 2rem;
+    height: 1.5rem;
     border-bottom: 1px solid var(--color-secondary);
     border-top: 1px solid var(--color-secondary);
   }
@@ -40,7 +39,8 @@
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
-    padding: 0.25rem;
+    padding: 0.125rem;
+    font-size: 0.8rem;
   }
   .progress-bar > .progress {
     position: absolute;
