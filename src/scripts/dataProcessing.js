@@ -153,7 +153,7 @@ export function sizePS(station, old_PS) {
     min: Math.log(size.min),
     max: Math.log(size.max),
   };
-  const rescale_target = [500, 120];
+  const rescale_target = [480, 240];
   const data_to_plot = [["", size.val]];
   if (!old_PS) {
     const chart = BarChart(data_to_plot, {
