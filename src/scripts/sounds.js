@@ -25,11 +25,13 @@ const sampler_drumkit = new DrumSampler();
  * clicking, touching, etc.. (scroll is not enough)
  */
 export async function initSampler() {
-  Tone.start();
+  await Tone.start();
   // Tone.Transport.bpm.value = 90
   Tone.Transport.loop = true;
   Tone.Transport.loopStart = 0;
   Tone.Transport.loopEnd = `0:${12}`;
+
+  console.log("Tone is ready");
 }
 
 /**
@@ -159,7 +161,9 @@ export function computeMeanMonthlyPart(
   const part = new Tone.Part((time, value) => {
     const speed = (12 / Tone.Transport.bpm.value) * 4 * 4;
     sampler_piano.triggerAttackRelease(value.note, speed, time, value.velocity);
-    highlight_function(value.index);
+    Tone.Draw.schedule(() => {
+      highlight_function(value.index);
+    });
   }, parts).start(0);
 
   return part;
@@ -208,7 +212,9 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
         time,
         value.velocity
       );
-      highlight_function(value.index);
+      Tone.Draw.schedule(() => {
+        highlight_function(value.index);
+      });
     },
     parts.filter((p) => p)
   ).start(0);
@@ -262,7 +268,9 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
         time,
         value.velocity
       );
-      highlight_function(value.index);
+      Tone.Draw.schedule(() => {
+        highlight_function(value.index);
+      });
     },
     parts.filter((p) => p)
   ).start(0);
