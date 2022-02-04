@@ -15,7 +15,9 @@
       <span>Hydrological Soundscapes</span>
     </div>
   </div>
-  <SoundController />
+  <div class="center">
+    <SoundController />
+  </div>
   <div class="right">
     <button on:click={() => ($uiPlotPanel = !$uiPlotPanel)}>
       <svg
@@ -109,6 +111,13 @@
     background-color: white;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   }
+  .container > .center {
+    justify-self: center;
+  }
+  .container > .right {
+    justify-self: end;
+  }
+
   .title {
     color: var(--color-primary);
     font-size: 1.5rem;
