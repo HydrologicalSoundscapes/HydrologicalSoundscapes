@@ -32,24 +32,24 @@ function togglePanels(plots = false, options = false, info = false) {
 
 const STEPS = [
   {
+    highlight: { selector: "#map", circle: false, offset: { top: 60 } },
+    action: () => {
+      togglePanels(false, false, false);
+      return null;
+    },
+    text: `On this map, the pin represent hydrometric stations monitoring
+     catchment from all around the world.`,
+  },
+  {
     highlight: { selector: "#map-pin-example", circle: true },
     action: () => {
       togglePanels(false, false, false);
-      let zoom, center;
-      let station = get(centerStation);
       mapStore.update((map) => {
         map.panBy(L.point(-window.innerWidth / 4, 0), { animate: false });
-        // zoom = map.getZoom();
-        // center = map.getCenter();
-
-        // map.setView([center.lat, center.lng], 6, { animate: false });
-        // map.setZoom(6, );
         return map;
       });
       return () => {
         mapStore.update((map) => {
-          // map.setView(center, zoom);
-          // map.setZoom(zoom);
           return map;
         });
       };
@@ -68,16 +68,6 @@ const STEPS = [
      streamflow values as well as the overall average streamflow.`,
   },
   {
-    highlight: { selector: "#sound-controller", circle: false },
-    action: () => {
-      togglePanels(true, false, false);
-      return null;
-    },
-    text: `Here you can play/pause and stop the music at all time.
-     As the music plays, the bar charts will update to highlight which
-      month you're currently listening to.`,
-  },
-  {
     highlight: { selector: "#toggle-plots", circle: true },
     action: () => {
       togglePanels(true, false, false);
@@ -91,7 +81,17 @@ const STEPS = [
         togglePanels(false, false, false);
       };
     },
-    text: `A click here shows/hides the bar charts panel.`,
+    text: `You can click here to show/hide the bar charts panel.`,
+  },
+  {
+    highlight: { selector: "#sound-controller", circle: false },
+    action: () => {
+      togglePanels(true, false, false);
+      return null;
+    },
+    text: `Here you can play/pause and stop the music once a station is selected.
+     As the music plays, the bar charts will update to highlight which
+      month you're currently listening to.`,
   },
   {
     highlight: { selector: "#toggle-options", circle: true },
@@ -107,33 +107,41 @@ const STEPS = [
         togglePanels(false, false, false);
       };
     },
-    text: `A click here shows/hides the options panel.`,
+    text: `There are different parameters that you can adjust. 
+    A click here shows/hides the panel with all the options you can tweak.`,
   },
-  {
-    highlight: { selector: "#toggle-about", circle: true },
-    action: () => {
-      togglePanels(false, false, true);
-      let opened = false;
-      // let i = setInterval(() => {
-      //   togglePanels(false, false, opened);
-      //   opened = !opened;
-      // }, 2000);
-      return () => {
-        // clearInterval(i);
-        togglePanels(false, false, false);
-      };
-    },
-    text: `A click here shows/hides the information panel.`,
-  },
+  // {
+  //   highlight: { selector: "#toggle-about", circle: true },
+  //   action: () => {
+  //     togglePanels(false, false, true);
+  //     let opened = false;
+  //     // let i = setInterval(() => {
+  //     //   togglePanels(false, false, opened);
+  //     //   opened = !opened;
+  //     // }, 2000);
+  //     return () => {
+  //       // clearInterval(i);
+  //       togglePanels(false, false, false);
+  //     };
+  //   },
+  //   text: `A click here shows/hides the information panel.`,
+  // },
   {
     text: "All done! You're good to go!",
   },
 ];
 
-function highlightElement(element_to_highlight, highlighting_element, circle) {
+function highlightElement(
+  element_to_highlight,
+  highlighting_element,
+  circle,
+  offset = null
+) {
+  offset = offset ? offset : {};
+  const o = { top: 0, right: 0, bottom: 0, left: 0, ...offset };
   const box = element_to_highlight.getBoundingClientRect();
-  const w = box.width;
-  const h = box.height;
+  const w = box.width - o.left - o.right;
+  const h = box.height - o.top - o.bottom;
   let margin;
   if (circle) {
     margin = 10;
@@ -147,8 +155,8 @@ function highlightElement(element_to_highlight, highlighting_element, circle) {
     highlighting_element.style.height = `${h + margin * 2}px`;
     highlighting_element.style.borderRadius = "0";
   }
-  highlighting_element.style.top = `${box.y - margin}px`;
-  highlighting_element.style.left = `${box.x - margin}px`;
+  highlighting_element.style.top = `${box.y + o.top - margin}px`;
+  highlighting_element.style.left = `${box.x + o.left - margin}px`;
 }
 
 function tryGetElement(selector) {
@@ -199,7 +207,8 @@ export class Tutorial {
       highlightElement(
         this.current_element,
         this.highlighting_element,
-        STEPS[this.step].highlight.circle
+        STEPS[this.step].highlight.circle,
+        STEPS[this.step].highlight.offset
       );
     };
     this.resize_observer = new ResizeObserver((e) => {
@@ -213,6 +222,12 @@ export class Tutorial {
     });
     this.current_element = null;
     this.cleanup_function = null;
+  }
+  length() {
+    return STEPS.length;
+  }
+  current() {
+    return this.step;
   }
   stop() {
     this.panels();
@@ -262,12 +277,12 @@ export class Tutorial {
       this.current_element = await tryGetElement(
         STEPS[this.step].highlight.selector
       );
-      console.log("this.current_element", this.current_element);
       this.resize_observer.observe(this.current_element);
       highlightElement(
         this.current_element,
         this.highlighting_element,
-        STEPS[this.step].highlight.circle
+        STEPS[this.step].highlight.circle,
+        STEPS[this.step].highlight.offset
       );
     } else {
       highlightElement(
