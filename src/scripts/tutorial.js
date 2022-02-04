@@ -38,7 +38,7 @@ const STEPS = [
       return null;
     },
     text: `On this map, the pin represent hydrometric stations monitoring
-     catchment from all around the world.`,
+     catchments from all around the world.`,
   },
   {
     highlight: { selector: "#map-pin-example", circle: true },
