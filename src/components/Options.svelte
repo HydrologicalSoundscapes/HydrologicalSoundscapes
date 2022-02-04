@@ -94,8 +94,8 @@
             name="bpm"
             id="bpm"
             bind:value={$configuration.bpm}
-            min="90"
-            max="900"
+            min="180"
+            max="600"
             step="3"
           />
         </div>
