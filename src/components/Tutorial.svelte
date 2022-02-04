@@ -10,6 +10,7 @@
   let tutorial;
   let has_previous_step = false,
     has_next_step = true;
+  let steps = [];
   onMount(() => {
     tutorial = new Tutorial(
       highlight_element,
@@ -20,7 +21,9 @@
         has_next_step = !tutorial.hasNextStep();
       }
     );
+    steps = Array(tutorial.length()).fill(false);
     tutorial.setupStep();
+    steps[0] = true;
   });
 </script>
 
@@ -40,12 +43,16 @@
         <button
           on:click={() => {
             tutorial.previousStep();
+            let step = tutorial.current();
+            steps = steps.map((e, i) => i <= step);
           }}
           disabled={has_previous_step}>Previous</button
         >
         <button
           on:click={() => {
             tutorial.nextStep();
+            let step = tutorial.current();
+            steps = steps.map((e, i) => i <= step);
           }}
           disabled={has_next_step}>Next</button
         >
@@ -53,8 +60,13 @@
           on:click={() => {
             tutorial.stop();
             $uiTutorial = false;
-          }}>Exit</button
+          }}>Quit</button
         >
+      </div>
+      <div class="progress">
+        {#each steps as step}
+          <div class:done={step} />
+        {/each}
       </div>
     </div>
   </div>
@@ -67,12 +79,25 @@
     overflow: hidden;
     z-index: 10001;
   }
+  .progress {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .progress > div {
+    margin-top: 2rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+  }
+  .progress > div.done {
+    background-color: var(--color-secondary);
+  }
   .highlight {
     position: absolute;
     box-shadow: 0 0 0 4px var(--color-secondary),
       0 0 0 100000px rgba(0, 0, 0, 0.5);
-    /* box-shadow: 0 0 0 2px var(--color-secondary), 0 0 0 4px var(--color-primary),
-      0 0 0 100000px rgba(0, 0, 0, 0.5); */
   }
   #no-highlight {
     position: absolute;
@@ -113,7 +138,7 @@
     border: 1px solid var(--color-primary);
     background-color: var(--color-primary);
     color: white;
-    font-weight: bold;
+    /* font-weight: normal; */
   }
   button:not([disabled]):hover {
     border: 1px solid var(--color-secondary);
