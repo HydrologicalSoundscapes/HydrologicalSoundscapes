@@ -120,14 +120,16 @@ export async function downloadDataset() {
   const dataset = await file.json();
   // convert the object into an array
   let dataset_array = Object.keys(dataset).map((key) => dataset[key]);
-  // if number of station exceeds a maximum of 200, select random element
+  console.log("Actual size of dataset: ", dataset_array.length);
+  // if number of station exceeds a maximum of N, select random element
   // to optimize performance
+  const N = 500;
   console.log("dataset_array.length", dataset_array.length);
-  if (dataset_array.length > 200) {
+  if (dataset_array.length > N) {
     // shuffle the array
     dataset_array.sort(() => 0.5 - Math.random());
-    // takes the 200 first element of the shuffled array
-    dataset_array = dataset_array.slice(0, 200);
+    // takes the N first element of the shuffled array
+    dataset_array = dataset_array.slice(0, N);
   }
   // adding an index in the info of all stations
   dataset_array = dataset_array.map((d, i) => {
