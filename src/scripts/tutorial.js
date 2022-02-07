@@ -150,7 +150,7 @@ function highlightElement(
     highlighting_element.style.height = `${s + margin * 2}px`;
     highlighting_element.style.borderRadius = "50%";
   } else {
-    margin = 1;
+    margin = -4;
     highlighting_element.style.width = `${w + margin * 2}px`;
     highlighting_element.style.height = `${h + margin * 2}px`;
     highlighting_element.style.borderRadius = "0";
