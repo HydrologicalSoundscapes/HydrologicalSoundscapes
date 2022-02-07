@@ -1,10 +1,15 @@
 <div class="container">
   <p>
+    This is a sonification app that enables listening to hydrolgical regimes
+    from all around the world.
+  </p>
+  <p>
     <!-- More than a thousand hydrometric stations from around the world are
     displayed on a map. They monitor the streamflow of a wide variety of
     catchments in terms of hydrological regimes. -->
     By clicking on one of the thousand hydrometric stations from around the world
-    you can visualize its hydrological regime in bar charts and listen to its corresponding
+    you can <span class="highlight"> visualize </span> its hydrological regime
+    in bar charts and <span class="highlight">listen to </span> its corresponding
     melody created from the data.
   </p>
   <p>
@@ -26,13 +31,13 @@
       <span class="highlight">
         Monthly frequency of annual daily maxima (in %)
       </span>
-      <span> mapped to the note/pitch of bass. </span>
+      <span> mapped to the note/pitch of a bass. </span>
     </li>
     <li>
       <span class="highlight">
         Monthly frequency of annual 30-days averaged minima (in %)
       </span>
-      <span> mapped to the note/pitch of a hand drum instrument. </span>
+      <span> mapped to the note/pitch of a hang drum instrument. </span>
     </li>
   </ul>
 </div>

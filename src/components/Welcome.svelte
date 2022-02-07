@@ -7,6 +7,7 @@
   import About from "./About.svelte";
 </script>
 
+<div class="disable-page" />
 <div class="container">
   <div class="header">
     <img
@@ -15,40 +16,35 @@
     />
     <h2>Welcome to Hydrological Soundscapes!</h2>
   </div>
-  <div class="content">
-    <p>
-      This is a sonification app that enables listening to hydrolgical regimes
-      from all around the world.
-    </p>
-
-    <!-- Here, not only will you be able to <span
-        class="highlight"
-      >
-        see
-      </span>
-      hydrological regimes in bar charts but also
-      <span class="highlight"> listen </span> to their music.
-    </p> -->
+  <div>
     <About />
+  </div>
+  <div class="actions">
     <p>
       You can go through a quick tutorial on how to use the app or get started
       immediatly.
     </p>
-  </div>
 
-  <div class="actions">
-    <button
-      on:click={() => {
-        $uiWelcomePanel = false;
-        $uiTutorial = true;
-      }}
-      disabled={!$uiTutorialReady}>Tutorial</button
-    >
-    <button on:click={() => ($uiWelcomePanel = false)}>Get started</button>
+    <div class="buttons">
+      <button
+        on:click={() => {
+          $uiWelcomePanel = false;
+          $uiTutorial = true;
+        }}
+        disabled={!$uiTutorialReady}>Tutorial</button
+      >
+      <button on:click={() => ($uiWelcomePanel = false)}>Get started</button>
+    </div>
   </div>
 </div>
 
 <style>
+  .disable-page {
+    position: absolute;
+    inset: 0;
+    z-index: 10000;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
   .container {
     position: absolute;
     inset: auto 0 0 0;
@@ -89,25 +85,11 @@
   .header img {
     height: 40px;
   }
-  .actions {
+  .buttons {
     padding-top: 1rem;
     padding-bottom: 2rem;
     display: flex;
     justify-content: center;
     gap: 5%;
-  }
-  button {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--color-primary);
-    background-color: var(--color-primary);
-    color: white;
-    /* font-weight: bold; */
-  }
-  button:not([disabled]):hover {
-    border: 1px solid var(--color-secondary);
-    background-color: var(--color-secondary);
-  }
-  button[disabled] {
-    background-color: var(--color-disabled);
   }
 </style>

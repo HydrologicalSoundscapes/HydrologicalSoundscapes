@@ -2,21 +2,51 @@
   import About from "./About.svelte";
   import Credits from "./Credits.svelte";
   import { slide } from "svelte/transition";
+  import { uiTutorial, uiTutorialReady } from "../scripts/appState";
 </script>
 
 <div class="container" transition:slide>
-  <button />
-  <h2>About</h2>
+  <div class="header">
+    <img
+      src="/images/hydrosound_icon_96.png"
+      alt="Hydrological soundscapes icon"
+    />
+    <h2>Hydrological Soundscapes!</h2>
+  </div>
   <h3 hidden>Description</h3>
+
   <About />
-  <!-- <div class="tutorial">
-    <button>Do the tutorial</button>
-  </div> -->
+  <div class="tutorial">
+    <p />
+    <button
+      on:click={() => {
+        $uiTutorial = true;
+      }}
+      disabled={!$uiTutorialReady}>Tutorial</button
+    >
+  </div>
   <h3>Acknowledgment</h3>
   <Credits />
 </div>
 
 <style>
+  h2 {
+    font-size: 1.2rem;
+    padding: 0;
+    margin: 0;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+  }
+  .header img {
+    height: 40px;
+  }
   .container {
     position: absolute;
     z-index: 9999;
