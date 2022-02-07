@@ -18,14 +18,17 @@
   <div class="content">
     <p>
       This is a sonification app that enables listening to hydrolgical regimes
-      from all around the world. Here, not only will you be able to <span
+      from all around the world.
+    </p>
+
+    <!-- Here, not only will you be able to <span
         class="highlight"
       >
         see
       </span>
       hydrological regimes in bar charts but also
       <span class="highlight"> listen </span> to their music.
-    </p>
+    </p> -->
     <About />
     <p>
       You can go through a quick tutorial on how to use the app or get started
@@ -67,9 +70,6 @@
     width: 100%;
     margin: 0;
     padding: 0.5rem 0;
-  }
-  p,
-  span {
     font-size: 0.8rem;
   }
   h2 {
