@@ -168,4 +168,18 @@
       gap: 0.5rem;
     }
   }
+
+  button,
+  button:hover {
+    background: none;
+    border: none;
+  }
+  button:hover g {
+    fill: var(--color-secondary);
+    stroke: var(--color-secondary);
+  }
+  button:hover g.active {
+    fill: var(--color-primary);
+    stroke: var(--color-primary);
+  }
 </style>
