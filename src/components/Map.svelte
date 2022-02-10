@@ -53,7 +53,7 @@
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
     });
   }
-  function populateMap(stations) {
+  function populateMap(stations, selected_index) {
     stations.forEach((station, i) => {
       let marker = L.marker([station.info.lat, station.info.lon], {
         icon: icon_default,
@@ -66,15 +66,14 @@
           }
 
           current_station_index = i;
-          // markers.forEach((m) => m.setIcon(icon_default));
           marker.setIcon(icon_selected);
           console.log("########################################");
           console.log("selecting a new station ==>", station);
-          // currentStation.update((prev) => station);
           $currentStation = station;
         }
       });
     });
+    markers[selected_index]._icon.id = "map-pin-example";
   }
   $: {
     if ($centerStation && $datasetStore) {
@@ -82,11 +81,7 @@
         animate: false,
       });
       console.log(map);
-      populateMap($datasetStore);
-      // let icons = document.querySelectorAll(".leaflet-marker-icon");
-      // if (icons.length !== 0) {
-      //   icons[$centerStation.info.index].id = "map-pin-example";
-      // }
+      populateMap($datasetStore, $centerStation.info.index);
     }
   }
 </script>
@@ -98,10 +93,6 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""
   />
-  <script
-    src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
 </svelte:head>
 
 <div id="map" />
