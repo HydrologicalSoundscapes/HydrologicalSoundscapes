@@ -36,26 +36,24 @@
 
 <div class="container" transition:slide id="plots-panel">
   {#if $currentStation}
-    <!-- <div class="header">
-            {$currentStation.info.label}
-        </div> -->
+    <div class="header">
+      {$currentStation.info.label}
+    </div>
     <div class="plots">
       <div class="mean">
-        <label for="mean"
-          >Monthly streamflow average (in % of annual streamflow)</label
-        >
+        <label for="mean">Monthly flow (in % of total annual flow)</label>
         <div id="mean" class="plot" bind:this={plot_mean_container} />
       </div>
       <div class="max">
-        <label for="mean">Frequency of annual daily maxima</label>
+        <label for="mean">Annual largest flood falls in ...</label>
         <div id="max" class="plot" bind:this={plot_max_container} />
       </div>
       <div class="min">
-        <label for="mean">Frequency of annual minima</label>
+        <label for="mean">Annual lowest flow falls in ...</label>
         <div id="min" class="plot" bind:this={plot_min_container} />
       </div>
       <div class="size">
-        <label for="size">Average streamflow (in m<sup>3</sup>/s)</label>
+        <label for="size">Average flow (in m<sup>3</sup>/s)</label>
         <div id="size" class="plot" bind:this={plot_size_container} />
       </div>
     </div>
@@ -67,6 +65,15 @@
 </div>
 
 <style>
+  .header {
+    /* position: absolute;
+    inset: 0 auto auto auto; */
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: bold;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0 0 5px 5px;
+  }
   .container {
     position: absolute;
     z-index: 9997;
@@ -80,7 +87,7 @@
 
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     /* box-shadow: 5px -5px 20px 0 rgba(0, 0, 0, 0.5); */
   }
   .plots {
