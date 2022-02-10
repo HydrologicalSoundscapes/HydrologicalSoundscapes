@@ -105,7 +105,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
 
-    padding: 0 1rem 0 0.5rem;
+    padding: 0 0.5rem 0 0.25rem;
 
     /* background-color: var(--color-background); */
     background-color: white;
@@ -120,26 +120,28 @@
 
   .title {
     color: var(--color-primary);
-    font-size: 1.5rem;
+
     font-weight: bold;
     justify-self: start;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 0.5rem;
+
+    font-size: 0.9rem;
+    gap: 0.125rem;
   }
   .title > span {
     line-height: 1;
   }
   .title > img {
-    height: 40px;
+    height: 25px;
   }
   .right {
     justify-self: end;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0rem;
   }
   g {
     fill: var(--color-primary);
@@ -151,35 +153,34 @@
     stroke: var(--color-secondary);
   }
 
-  @media screen and (max-width: 800px) {
-    .container {
-      padding: 0 0.5rem 0 0.25rem;
-    }
-    .title {
-      font-size: 0.9rem;
-      gap: 0.125rem;
-    }
-
-    .title > img {
-      height: 25px;
-    }
-
-    .right {
-      gap: 0.5rem;
-    }
-  }
-
   button,
   button:hover {
     background: none;
     border: none;
   }
-  button:hover g {
-    fill: var(--color-secondary);
-    stroke: var(--color-secondary);
-  }
-  button:hover g.active {
-    fill: var(--color-primary);
-    stroke: var(--color-primary);
+  @media screen and (min-width: 800px) {
+    .container {
+      padding: 0 1rem 0 0.5rem;
+    }
+    .title {
+      font-size: 1.5rem;
+      gap: 0.5rem;
+    }
+
+    .title > img {
+      height: 40px;
+    }
+
+    .right {
+      gap: 1rem;
+    }
+    button:hover g {
+      fill: var(--color-secondary);
+      stroke: var(--color-secondary);
+    }
+    button:hover g.active {
+      fill: var(--color-primary);
+      stroke: var(--color-primary);
+    }
   }
 </style>
