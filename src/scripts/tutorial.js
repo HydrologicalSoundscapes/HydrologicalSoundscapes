@@ -44,15 +44,7 @@ const STEPS = [
     highlight: { selector: "#map-pin-example", circle: true },
     action: () => {
       togglePanels(false, false, false);
-      mapStore.update((map) => {
-        map.panBy(L.point(-window.innerWidth / 4, 0), { animate: false });
-        return map;
-      });
-      return () => {
-        mapStore.update((map) => {
-          return map;
-        });
-      };
+      return null;
     },
     text: `A click on a hydrometric station (one of the pin on the map) will select it an load
      the associated data you can then visually and musically explore.`,
@@ -71,20 +63,14 @@ const STEPS = [
     highlight: { selector: "#toggle-plots", circle: true },
     action: () => {
       togglePanels(true, false, false);
-      let opened = false;
-      // let i = setInterval(() => {
-      //   togglePanels(opened, false, false);
-      //   opened = !opened;
-      // }, 2000);
       return () => {
-        // clearInterval(i);
         togglePanels(false, false, false);
       };
     },
     text: `You can click here to show/hide the bar charts panel.`,
   },
   {
-    highlight: { selector: "#sound-controller", circle: false },
+    highlight: { selector: "#sound-controller", circle: true },
     action: () => {
       togglePanels(true, false, false);
       return null;
@@ -97,35 +83,13 @@ const STEPS = [
     highlight: { selector: "#toggle-options", circle: true },
     action: () => {
       togglePanels(false, true, false);
-      let opened = false;
-      // let i = setInterval(() => {
-      //   togglePanels(false, opened, false);
-      //   opened = !opened;
-      // }, 2000);
       return () => {
-        // clearInterval(i);
         togglePanels(false, false, false);
       };
     },
     text: `There are different parameters that you can adjust. 
     A click here shows/hides the panel with all the options you can tweak.`,
   },
-  // {
-  //   highlight: { selector: "#toggle-about", circle: true },
-  //   action: () => {
-  //     togglePanels(false, false, true);
-  //     let opened = false;
-  //     // let i = setInterval(() => {
-  //     //   togglePanels(false, false, opened);
-  //     //   opened = !opened;
-  //     // }, 2000);
-  //     return () => {
-  //       // clearInterval(i);
-  //       togglePanels(false, false, false);
-  //     };
-  //   },
-  //   text: `A click here shows/hides the information panel.`,
-  // },
   {
     text: "All done! You're good to go!",
   },
@@ -148,15 +112,21 @@ function highlightElement(
     const s = Math.max(w, h);
     highlighting_element.style.width = `${s + margin * 2}px`;
     highlighting_element.style.height = `${s + margin * 2}px`;
+    highlighting_element.style.top = `${
+      box.y + o.top - margin - (s - h) / 2
+    }px`;
+    highlighting_element.style.left = `${
+      box.x + o.left - margin - (s - w) / 2
+    }px`;
     highlighting_element.style.borderRadius = "50%";
   } else {
     margin = -4;
     highlighting_element.style.width = `${w + margin * 2}px`;
     highlighting_element.style.height = `${h + margin * 2}px`;
+    highlighting_element.style.top = `${box.y + o.top - margin}px`;
+    highlighting_element.style.left = `${box.x + o.left - margin}px`;
     highlighting_element.style.borderRadius = "0";
   }
-  highlighting_element.style.top = `${box.y + o.top - margin}px`;
-  highlighting_element.style.left = `${box.x + o.left - margin}px`;
 }
 
 function tryGetElement(selector) {
@@ -186,13 +156,6 @@ function tryGetElement(selector) {
   });
 }
 
-function windowResize() {
-  console.log("window resizing");
-  requestAnimationFrame(() => {
-    onResize();
-  });
-}
-
 export class Tutorial {
   constructor(
     highlighting_element,
@@ -210,20 +173,20 @@ export class Tutorial {
     this.highlighting_element = highlighting_element;
     this.explaination_element = explaination_element;
     this.nohighlight_element = nohighlight_element;
-    const onResize = () => {
-      highlightElement(
-        this.current_element,
-        this.highlighting_element,
-        STEPS[this.step].highlight.circle,
-        STEPS[this.step].highlight.offset
-      );
-    };
+
     this.resize_observer = new ResizeObserver((e) => {
-      onResize();
+      this.onResize();
     });
-    window.addEventListener("resize", windowResize);
     this.current_element = null;
     this.cleanup_function = null;
+  }
+  onResize() {
+    highlightElement(
+      this.current_element,
+      this.highlighting_element,
+      STEPS[this.step].highlight.circle,
+      STEPS[this.step].highlight.offset
+    );
   }
   length() {
     return STEPS.length;
@@ -241,7 +204,6 @@ export class Tutorial {
     if (this.current_element) {
       this.resize_observer.unobserve(this.current_element);
     }
-    window.removeEventListener("resize", windowResize);
     this.on_change();
   }
   hasNextStep() {

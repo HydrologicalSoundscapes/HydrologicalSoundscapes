@@ -27,11 +27,11 @@
   });
 </script>
 
-<!-- <svelte:window
+<svelte:window
   on:resize={() => {
-    setupStep(step);
+    tutorial.onResize();
   }}
-/> -->
+/>
 <div class="container">
   <div id="no-highlight" bind:this={nohighlight_element} />
   <div class="highlight" bind:this={highlight_element} />
