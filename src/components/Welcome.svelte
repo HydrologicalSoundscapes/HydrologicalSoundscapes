@@ -50,7 +50,7 @@
     inset: auto 0 0 0;
     max-height: 100vh;
     background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
     max-height: calc(100vh - 60px - 5px);
 
     z-index: 10001;

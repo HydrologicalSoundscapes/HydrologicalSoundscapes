@@ -109,7 +109,7 @@
 
     /* background-color: var(--color-background); */
     background-color: white;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
   }
   .container > .center {
     justify-self: center;

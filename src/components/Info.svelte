@@ -53,7 +53,7 @@
     inset: auto 0 0 0;
     /* background-color: var(--color-background); */
     background-color: white;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
     max-height: calc(100vh - 60px - 5px);
 
     display: flex;

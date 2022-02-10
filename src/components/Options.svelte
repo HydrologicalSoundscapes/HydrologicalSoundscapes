@@ -149,7 +149,7 @@
     width: min(95%, 300px);
 
     background-color: var(--color-background-secondary);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
 
     padding: 1rem;
     font-size: 0.9rem;
