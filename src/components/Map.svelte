@@ -1,5 +1,6 @@
 <script>
   import L from "leaflet";
+  import LM from "leaflet.markercluster";
   import {
     datasetStore,
     currentStation,
@@ -13,10 +14,11 @@
   const icon_anchor = [0.5, 1];
   const icon_size = 30;
 
-  let map,
-    markers = [],
-    icon_default,
-    icon_selected;
+  let map;
+  let marker_cluster;
+  let markers = [];
+  let icon_default;
+  let icon_selected;
   onMount(() => {
     initMap();
     map.on("zoomend", () => {
@@ -54,12 +56,14 @@
     });
   }
   function populateMap(stations, selected_index) {
+    console.log(LM);
+    marker_cluster = new LM.MarkerClusterGroup({ maxClusterRadius: 50 });
     stations.forEach((station, i) => {
       let marker = L.marker([station.info.lat, station.info.lon], {
         icon: icon_default,
       });
       markers.push(marker);
-      marker.addTo(map).on("click", (e) => {
+      marker.on("click", (e) => {
         if (i !== current_station_index) {
           if (current_station_index !== null) {
             markers[current_station_index].setIcon(icon_default);
@@ -72,12 +76,16 @@
           $currentStation = station;
         }
       });
+      marker_cluster.addLayer(marker);
+      // marker.addTo(map)
     });
-    markers[selected_index]._icon.id = "map-pin-example";
+    // console.log("markers[selected_index]", markers[selected_index]);
+    // markers[selected_index]._icon.id = "map-pin-example";
+    map.addLayer(marker_cluster);
   }
   $: {
     if ($centerStation && $datasetStore) {
-      map.setView([$centerStation.info.lat, $centerStation.info.lon], 4, {
+      map.setView([$centerStation.info.lat, $centerStation.info.lon], 3, {
         animate: false,
       });
       console.log(map);
@@ -91,6 +99,16 @@
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
     crossorigin=""
   />
 </svelte:head>
