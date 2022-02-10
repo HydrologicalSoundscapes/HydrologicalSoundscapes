@@ -11,7 +11,7 @@
       src="/images/hydrosound_icon_96.png"
       alt="Hydrological soundscapes icon"
     />
-    <h2>Hydrological Soundscapes!</h2>
+    <h2>Hydrological Soundscapes</h2>
   </div>
   <h3 hidden>Description</h3>
 
