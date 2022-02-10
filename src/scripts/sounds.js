@@ -30,7 +30,6 @@ export async function initSampler() {
   Tone.Transport.loop = true;
   Tone.Transport.loopStart = 0;
   Tone.Transport.loopEnd = `0:${12}`;
-
   console.log("Tone is ready");
 }
 
@@ -39,7 +38,6 @@ export async function initSampler() {
  * @param {number} bpm beats per minute
  */
 export function setBPM(bpm) {
-  console.log("setting the BPM", bpm);
   Tone.Transport.bpm.set({ value: bpm });
 }
 
@@ -60,9 +58,7 @@ function getDecibels(volume) {
  * @param {number} volume a value between 0 and 1
  */
 export function setVolume(volume) {
-  console.log("volume", volume);
   volume = getDecibels(volume);
-  console.log("volume", volume);
   Tone.getDestination().volume.set({ value: volume });
 }
 
@@ -239,14 +235,12 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
     [0.2, 0.3]
   ).map((d, i) => (data_min[i] === 0 ? 0 : d));
   data_min = rescale(data_min, [0, 1], [0.01, 1]);
-  // console.log("data_min", data_min)
 
   // mapping to a sound scale
   const n = scale.length;
   const steps = Array(n + 1)
     .fill(0)
     .map((e, i) => (i * 1) / n);
-  // console.log("steps", steps)
   const parts = data_min.map((d, j) => {
     let note;
     for (let i = 0; i < n; i++) {
@@ -255,10 +249,8 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
         break;
       }
     }
-    // return {time: `0:${j}`, note: note, velocity: clamp((1-d)*0.5+0.5, 0.1, 0.5), index: j}
     return { time: `0:${j}`, note: note, velocity: volume[j], index: j };
   });
-  // console.log("parts", parts)
   // create Part
   const part = new Tone.Part(
     (time, value) => {

@@ -41,11 +41,6 @@ export const configuration = writable({
 export const currentStationPS = derived(
   [currentStation, configuration],
   ([$currentStation, $configuration]) => {
-    console.log(
-      "Deriving plots and sounds...",
-      $currentStation,
-      $configuration
-    );
     const stationPS = get(currentStationPS);
     if (!$currentStation) {
       if (stationPS) {
@@ -56,9 +51,6 @@ export const currentStationPS = derived(
       }
       return {};
     }
-
-    console.log("stationPS", stationPS);
-
     stationPS.meanMonthlyPS = meanMonthlyPS(
       $currentStation,
       stationPS.meanMonthlyPS,
@@ -76,7 +68,6 @@ export const currentStationPS = derived(
     );
     stationPS.sizePS = sizePS($currentStation, stationPS.sizePS);
     stationPS.drumPS = drumPS(stationPS.drumPS, $configuration);
-
     if ($configuration.bpm_auto && stationPS.sizePS.bpm != $configuration.bpm) {
       configuration.update((c) => ({ ...c, bpm: stationPS.sizePS.bpm }));
     }
@@ -121,16 +112,6 @@ export async function downloadDataset() {
   // convert the object into an array
   let dataset_array = Object.keys(dataset).map((key) => dataset[key]);
   console.log("Actual size of dataset: ", dataset_array.length);
-  // if number of station exceeds a maximum of N, select random element
-  // to optimize performance
-  // const N = 200;
-  // console.log("dataset_array.length", dataset_array.length);
-  // if (dataset_array.length > N) {
-  //   // shuffle the array
-  //   dataset_array.sort(() => 0.5 - Math.random());
-  //   // takes the N first element of the shuffled array
-  //   dataset_array = dataset_array.slice(0, N);
-  // }
   // adding an index in the info of all stations
   dataset_array = dataset_array.map((d, i) => {
     d.info.index = i;

@@ -21,9 +21,9 @@
   let icon_selected;
   onMount(() => {
     initMap();
-    map.on("zoomend", () => {
-      console.log(map);
-    });
+    // map.on("zoomend", () => {
+    //   console.log(map);
+    // });
   });
   function initMap() {
     map = L.map("map", { zoomControl: false, zoomAnimation: true }).setView(
@@ -56,7 +56,6 @@
     });
   }
   function populateMap(stations, selected_index) {
-    console.log(LM);
     marker_cluster = new LM.MarkerClusterGroup({ maxClusterRadius: 50 });
     stations.forEach((station, i) => {
       let marker = L.marker([station.info.lat, station.info.lon], {

@@ -23,7 +23,6 @@ const MONTHS = [
   "December",
 ];
 export function meanMonthlyPS(station, old_PS = null, configuration) {
-  console.log("configuration", configuration);
   const data_medium = station.data.monthly_medium;
   const data_volume = station.data.monthly_volume;
   const data_to_plot = data_medium.map((d, i) => [MONTHS[i].slice(0, 3), d]);
@@ -31,7 +30,6 @@ export function meanMonthlyPS(station, old_PS = null, configuration) {
     (a) => a.id === configuration.arrangement
   ).piano;
   const sound_scale = SCALES[sound_scale_id];
-  console.log("sound_scale piano", sound_scale);
   if (!old_PS) {
     const chart = BarChart(data_to_plot, {
       x: (d, i) => d[0],
@@ -77,7 +75,6 @@ export function maxMonthlyPS(station, old_PS, configuration) {
   ).bass;
 
   const sound_scale = SCALES[sound_scale_id];
-  console.log("sound_scale bass", sound_scale);
   if (!old_PS) {
     const chart = BarChart(data_to_plot, {
       x: (d, i) => d[0],
@@ -115,7 +112,6 @@ export function minMonthlyPS(station, old_PS, configuration) {
     (a) => a.id === configuration.arrangement
   ).drum;
   const sound_scale = SCALES[sound_scale_id];
-  console.log("sound_scale drum", sound_scale);
   if (!old_PS) {
     const chart = BarChart(data_to_plot, {
       x: (d, i) => d[0],
@@ -192,7 +188,6 @@ export function drumPS(old_PS, configuration) {
   const pattern = PATTERNS.find(
     (p) => p.id === configuration.drum_pattern
   ).pattern;
-  console.log("pattern", pattern);
   if (!old_PS) {
     const part = computeDrumMonthlyPart(pattern);
     if (!configuration.drum) part.dispose(part);

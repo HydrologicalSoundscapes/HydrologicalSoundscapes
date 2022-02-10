@@ -13,7 +13,7 @@
 
   $: {
     // this is needed to enforce change in sounds when plots are hidden
-    console.log("$currentStationPS", $currentStationPS);
+    $currentStationPS;
   }
 </script>
 
