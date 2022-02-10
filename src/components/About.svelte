@@ -40,6 +40,10 @@
       <span> mapped to the note/pitch of a hang drum instrument. </span>
     </li>
   </ul>
+  <p>
+    It is strongly recommended to be equipped with good headphones to fully
+    enjoy this app!
+  </p>
 </div>
 
 <style>
