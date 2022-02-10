@@ -37,16 +37,17 @@ const STEPS = [
       togglePanels(false, false, false);
       return null;
     },
-    text: `On this map, the pin represent hydrometric stations monitoring
+    text: `On this map, the pins represent hydrometric stations monitoring
      catchments from all around the world.`,
   },
   {
-    highlight: { selector: "#map-pin-example", circle: true },
+    // highlight: { selector: "#map-pin-example", circle: true },
+    highlight: { selector: "#map", circle: false, offset: { top: 60 } },
     action: () => {
       togglePanels(false, false, false);
       return null;
     },
-    text: `A click on a hydrometric station (one of the pin on the map) will select it an load
+    text: `A click on a hydrometric station (one of the pins) will select it an load
      the associated data you can then visually and musically explore.`,
   },
   {
@@ -57,7 +58,7 @@ const STEPS = [
       return null;
     },
     text: `Here is the bar charts panel where you can see average/max/min monthly
-     streamflow values as well as the overall average streamflow.`,
+     flows as well as the overall average flow.`,
   },
   {
     highlight: { selector: "#toggle-plots", circle: true },
@@ -75,7 +76,7 @@ const STEPS = [
       togglePanels(true, false, false);
       return null;
     },
-    text: `Here you can play/pause and stop the music once a station is selected.
+    text: `Here, you can play/pause and stop the music once a station is selected.
      As the music plays, the bar charts will update to highlight which
       month you're currently listening to.`,
   },
@@ -87,8 +88,8 @@ const STEPS = [
         togglePanels(false, false, false);
       };
     },
-    text: `There are different parameters that you can adjust. 
-    A click here shows/hides the panel with all the options you can tweak.`,
+    text: `There are different options you can adjust. 
+    A click here shows/hides the panel with all the options.`,
   },
   {
     text: "All done! You're good to go!",
@@ -135,18 +136,18 @@ function tryGetElement(selector) {
     interval;
   return new Promise((resolve, reject) => {
     elem = document.querySelector(selector);
-    console.log(elem);
     if (!elem) {
       interval = setInterval(() => {
         count++;
         elem = document.querySelector(selector);
-        console.log(count, elem);
+        // console.log(count, elem);
         if (elem) {
           clearInterval(interval);
           resolve(elem);
         } else {
-          if (count > 1000) {
-            reject(null);
+          if (count > 500) {
+            clearInterval(interval);
+            resolve(null);
           }
         }
       }, 10);
@@ -246,9 +247,16 @@ export class Tutorial {
       this.resize_observer.unobserve(this.current_element);
     }
     if (STEPS[this.step].highlight) {
-      this.current_element = await tryGetElement(
-        STEPS[this.step].highlight.selector
-      );
+      const element = await tryGetElement(STEPS[this.step].highlight.selector);
+      if (element) {
+        this.current_element = element;
+      } else {
+        console.error(
+          `No match found for element with id ${
+            STEPS[this.step].highlight.selector
+          }`
+        );
+      }
       this.resize_observer.observe(this.current_element);
       highlightElement(
         this.current_element,
