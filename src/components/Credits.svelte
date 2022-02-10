@@ -19,9 +19,9 @@
     >
   </div>
   <div class="ihdev">
-    App created by Ivan Horner - <a href="https://ihdev.fr" target="_blank"
-      >ihdev.fr</a
-    >
+    This app was developed by <a href="https://ihdev.fr" target="_blank">
+      Ivan Horner (ihdev.fr)
+    </a> and imagined/designed in its core concepts by Benjamin Renard
   </div>
 </div>
 
