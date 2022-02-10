@@ -120,6 +120,13 @@
     background-color: rgba(255, 255, 255, 0.75);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     padding: 1rem;
+    width: 500px;
+    /* min-height: 225px; */
+    max-width: calc(100% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .actions {
@@ -128,7 +135,7 @@
     gap: 5%;
   }
   .explaination {
-    padding: 1rem;
+    padding-bottom: 1rem;
 
     max-width: 400px;
     text-align: center;
