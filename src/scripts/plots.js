@@ -19,7 +19,7 @@ export function BarChart(
   {
     x = (d, i) => i, // given d in data, returns the (ordinal) x-value
     y = (d) => d, // given d in data, returns the (quantitative) y-value
-    marginTop = 20, // the top margin, in pixels
+    marginTop = 10, // the top margin, in pixels
     marginRight = 0, // the right margin, in pixels
     marginBottom = 30, // the bottom margin, in pixels
     marginLeft = 60, // the left margin, in pixels

@@ -160,12 +160,13 @@ export function sizePS(station, old_PS) {
       x: (d, i) => d[0],
       y: (d, i) => d[1],
       yType: scaleLog,
-      height: 500,
-      width: 40,
+      height: 700,
+      width: 60,
       yDomain: [size.min, size.max],
-      marginLeft: 30,
+      marginLeft: 40,
       marginRight: 0,
-      marginBottom: 5,
+      marginBottom: 30,
+      marginTop: 40,
     });
     const bpm = rescale(
       [size_log.val],

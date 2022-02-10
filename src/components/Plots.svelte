@@ -7,7 +7,6 @@
     plot_size_container;
   let initialized = false;
   $: {
-    console.log("$currentStation", $currentStation);
     if (
       plot_mean_container &&
       plot_min_container &&
@@ -16,7 +15,6 @@
       $currentStation &&
       $currentStationPS
     ) {
-      console.log("$currentStationPlots", $currentStationPS);
       if (!initialized) {
         initialized = true;
         plot_mean_container.append($currentStationPS.meanMonthlyPS.plot);
@@ -34,10 +32,16 @@
   }
 </script>
 
-<div class="container" transition:slide id="plots-panel">
-  {#if $currentStation}
+<div
+  class="container"
+  class:station={!!$currentStation}
+  transition:slide
+  id="plots-panel"
+>
+  <!-- {#if $currentStation} -->
+  <div class="data">
     <div class="header">
-      {$currentStation.info.label}
+      {$currentStation ? $currentStation.info.label : ""}
     </div>
     <div class="plots">
       <div class="mean">
@@ -57,11 +61,12 @@
         <div id="size" class="plot" bind:this={plot_size_container} />
       </div>
     </div>
-  {:else}
-    <div class="no-data">
-      <p>Click on a hydrometric station on the map</p>
-    </div>
-  {/if}
+  </div>
+  <!-- {:else} -->
+  <div class="no-data">
+    <p>Click on a hydrometric station on the map</p>
+  </div>
+  <!-- {/if} -->
 </div>
 
 <style>
@@ -73,7 +78,15 @@
     font-weight: bold;
     padding: 0.125rem 0.25rem;
     border-radius: 0 0 5px 5px;
+    text-align: center;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
   }
+  /* .container > div {
+    display: none;
+  }
+  .container.station div:not(.no-data) {
+    display: none;
+  } */
   .container {
     position: absolute;
     z-index: 9997;
@@ -81,18 +94,34 @@
     bottom: 0;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
-    width: min(50%, 700px);
+    /* width: min(50%, 700px); */
+    width: 700px;
     background-color: var(--color-background);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
 
     display: flex;
     flex-direction: column;
     align-items: center;
     /* box-shadow: 5px -5px 20px 0 rgba(0, 0, 0, 0.5); */
   }
+  .container > div {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container > .no-data {
+    visibility: visible;
+  }
+  .container.station > .data {
+    visibility: visible;
+  }
+  .container.station > .no-data {
+    visibility: hidden;
+  }
   .plots {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 13% 87%;
     grid-template-areas:
       "size mean"
       "size max"
@@ -122,41 +151,38 @@
     position: relative;
   }
   label {
-    /* font-weight: bold; */
     color: var(--color-secondary);
-    /* text-align: center; */
   }
   .size > label {
     writing-mode: vertical-lr;
     transform: rotate(180deg);
     text-align: center;
   }
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 950px) {
     .container {
       width: 100%;
       bottom: unset;
     }
+  }
+  @media screen and (max-width: 700px) {
+    .header {
+      font-size: 3vw;
+    }
     label {
-      font-size: 0.8rem;
+      /* font-size: 0.8rem; */
+      font-size: 2.5vw;
     }
   }
-  /* .header {
-        font-weight: bold;
-        text-align: center;
-        padding: 0.5rem;
-    } */
   .plot {
-    margin-right: 1rem;
+    margin-right: 5%;
+  }
+  .plot#size {
+    margin-right: 10%;
   }
   .no-data {
-    width: 100%;
-    height: 100%;
-    display: flex;
+    position: absolute;
+    inset: 0;
     justify-content: center;
-    align-items: center;
     font-size: 0.9rem;
-  }
-  .no-data > p {
-    text-align: center;
   }
 </style>
