@@ -11,8 +11,7 @@
   let current_station_index = null;
 
   const icon_anchor = [0.5, 1];
-  const shadow_anchor = [0.045, 1];
-  const icon_size = 35;
+  const icon_size = 30;
 
   let map,
     markers = [],
@@ -20,6 +19,9 @@
     icon_selected;
   onMount(() => {
     initMap();
+    map.on("zoomend", () => {
+      console.log(map);
+    });
   });
   function initMap() {
     map = L.map("map", { zoomControl: false, zoomAnimation: true }).setView(
@@ -30,31 +32,25 @@
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      updateWhenZooming: false,
     }).addTo(map);
     new L.Control.Zoom({ position: "bottomright" }).addTo(map);
-    icon_default = L.icon({
-      iconUrl: "./images/pin_bluedark.png",
-      shadowUrl: "./images/shadow_pin_2.png",
+    icon_default = L.divIcon({
+      html: ` <svg width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="#5790db" stroke="#000" stroke-linecap="square"/>
+</svg>
+`,
       iconSize: [icon_size, icon_size],
-      shadowSize: [icon_size, icon_size],
+      className: "",
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
-      shadowAnchor: [
-        icon_size * shadow_anchor[0],
-        icon_size * shadow_anchor[1],
-      ],
-      // popupAnchor: [0, -50]
     });
-    icon_selected = L.icon({
-      iconUrl: "./images/pin_orange.png",
-      shadowUrl: "./images/shadow_pin_2.png",
+    icon_selected = L.divIcon({
+      html: `<svg width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="#e99c0e" stroke="#000" stroke-linecap="square"/>
+</svg>`,
       iconSize: [icon_size, icon_size],
-      shadowSize: [icon_size, icon_size],
+      className: "",
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
-      shadowAnchor: [
-        icon_size * shadow_anchor[0],
-        icon_size * shadow_anchor[1],
-      ],
-      // popupAnchor: [0, -50]
     });
   }
   function populateMap(stations) {
@@ -87,10 +83,10 @@
       });
       console.log(map);
       populateMap($datasetStore);
-      let icons = document.querySelectorAll(".leaflet-marker-icon");
-      if (icons.length !== 0) {
-        icons[$centerStation.info.index].id = "map-pin-example";
-      }
+      // let icons = document.querySelectorAll(".leaflet-marker-icon");
+      // if (icons.length !== 0) {
+      //   icons[$centerStation.info.index].id = "map-pin-example";
+      // }
     }
   }
 </script>
