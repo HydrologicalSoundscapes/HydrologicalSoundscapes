@@ -18,13 +18,11 @@
   </p>
   <ul>
     <li>
-      <span class="highlight"> Average streamflow (in m<sup>3</sup>/s) </span>
+      <span class="highlight"> Average flow (in m<sup>3</sup>/s) </span>
       <span> mapped to the speed of the music (beat per minute, bpm). </span>
     </li>
     <li>
-      <span class="highlight">
-        Mean monthly streamflow (in % of the sum of the 12 monthly values)
-      </span>
+      <span class="highlight"> Monthly flow (in % of total annual flow) </span>
       <span> mapped to the note/pich of a piano. </span>
     </li>
     <li>
