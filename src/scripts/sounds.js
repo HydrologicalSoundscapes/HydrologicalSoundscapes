@@ -7,6 +7,11 @@ import {
   hangdrum_files,
   drumkit_files,
   rescale,
+  multiply_array_by,
+  multiply_arrays,
+  add_arrays,
+  clamp,
+  get_duration_from_volumes,
 } from "./soundsUtils";
 
 /**
@@ -131,11 +136,10 @@ export function computeMeanMonthlyPart(
   const target_range = inverted_pitch ? [0.5, 1] : [0.6, 0.1];
   data_medium = rescale(data_medium, [0, 1], target_range);
 
-  data_volume = rescale(
-    data_volume,
-    [Math.min(...data_volume), Math.max(...data_volume)],
-    [0.03, 0.3]
-  );
+  data_volume = rescale(data_volume, null, [0.02, 0.15]);
+
+  const unit_duration = (12 / Tone.Transport.bpm.value) * 16;
+  const duration = multiply_array_by(data_volume, 16);
 
   // mapping to a sound scale
   const n = scale.length;
@@ -150,12 +154,18 @@ export function computeMeanMonthlyPart(
         break;
       }
     }
-    return { time: `0:${j}`, note: note, velocity: data_volume[j], index: j };
+    return {
+      time: `0:${j}`,
+      note: note,
+      velocity: data_volume[j],
+      index: j,
+      duration: duration[j] * unit_duration,
+    };
   });
 
   // create Part
   const part = new Tone.Part((time, value) => {
-    const speed = (12 / Tone.Transport.bpm.value) * 4 * 4;
+    const speed = value.duration;
     sampler_piano.triggerAttackRelease(value.note, speed, time, value.velocity);
     Tone.Draw.schedule(() => {
       highlight_function(value.index);
@@ -176,11 +186,36 @@ export function computeMeanMonthlyPart(
  * @returns A Tone.Part object containing the bass sound sequence.
  */
 export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
-  const volume = rescale(
-    data_max,
-    [Math.min(...data_max), Math.max(...data_max)],
-    [0.3, 0.6]
-  ).map((d, i) => (data_max[i] === 0 ? 0 : d));
+  // console.log("***********************************");
+  let relative_var = rescale(data_max, null, [0, 1]);
+  let absolute_var = data_max;
+  const relative_weight = 1;
+  const absolute_weight = 1;
+  // console.log(relative_var);
+  // console.log(absolute_var);
+  absolute_var = rescale(
+    multiply_array_by(absolute_var, absolute_weight),
+    [0, 1],
+    [0.02, 0.4]
+  ); // give the volume of each note
+  relative_var = rescale(
+    multiply_array_by(relative_var, relative_weight),
+    null,
+    [-0.1, 0]
+  ); // modulated by the relative variation
+  const combined_var = clamp(add_arrays(relative_var, absolute_var), [0.02, 1]);
+
+  // console.log("data_max", data_max);
+  // console.log("absolute_var", absolute_var);
+  // console.log("relative_var", relative_var);
+  // console.log("combined_var", combined_var);
+
+  const unit_duration = (12 / Tone.Transport.bpm.value) * 6;
+  // const unit_duration = (12 / Tone.Transport.bpm.value) * 4;
+  const duration = get_duration_from_volumes(combined_var, 0.5);
+  // console.log("duration", duration);
+  const volume = combined_var.map((d, i) => (data_max[i] === 0 ? 0 : d));
+
   data_max = rescale(data_max, [0, 1], [1, 0]);
 
   // mapping to a sound scale
@@ -197,14 +232,22 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
         break;
       }
     }
-    return { time: `0:${j}`, note: note, velocity: volume[j], index: j };
+    console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
+    return {
+      time: `0:${j}`,
+      note: note,
+      velocity: volume[j],
+      index: j,
+      duration: duration[j] * unit_duration,
+    };
   });
   // create Part
   const part = new Tone.Part(
     (time, value) => {
       sampler_bass.triggerAttackRelease(
         value.note,
-        (12 / Tone.Transport.bpm.value) * 4 * 4,
+        // (12 / Tone.Transport.bpm.value) * 4 * 4,
+        value.duration,
         time,
         value.velocity
       );
@@ -229,12 +272,32 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
  * @returns A Tone.Part object containing the hang drum sound sequence.
  */
 export function computeMinMonthlyPart(data_min, highlight_function, scale) {
-  const volume = rescale(
-    data_min,
-    [Math.min(...data_min), Math.max(...data_min)],
-    [0.2, 0.3]
-  ).map((d, i) => (data_min[i] === 0 ? 0 : d));
+  let relative_var = rescale(data_min, null, [0, 1]);
+  let absolute_var = data_min;
+  const relative_weight = 1;
+  const absolute_weight = 1;
+  // console.log(relative_var);
+  // console.log(absolute_var);
+  absolute_var = rescale(
+    multiply_array_by(absolute_var, absolute_weight),
+    [0, 1],
+    [0.02, 0.3]
+  ); // give the volume of each note
+  relative_var = rescale(
+    multiply_array_by(relative_var, relative_weight),
+    null,
+    [-0.1, 0]
+  ); // modulated by the relative variation
+  const combined_var = clamp(add_arrays(relative_var, absolute_var), [0.03, 1]);
+
+  const volume = combined_var.map((d, i) => (data_min[i] === 0 ? 0 : d));
   data_min = rescale(data_min, [0, 1], [0.01, 1]);
+
+  // const unit_duration = (12 / Tone.Transport.bpm.value) * 4 * 16
+  const unit_duration = (12 / Tone.Transport.bpm.value) * 16;
+  // const duration = get_duration_from_volumes(combined_var, 0.5);
+  const duration = multiply_array_by(data_min, 12);
+  console.log(duration);
 
   // mapping to a sound scale
   const n = scale.length;
@@ -249,14 +312,21 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
         break;
       }
     }
-    return { time: `0:${j}`, note: note, velocity: volume[j], index: j };
+    console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
+    return {
+      time: `0:${j}`,
+      note: note,
+      velocity: volume[j],
+      index: j,
+      duration: duration[j] * unit_duration,
+    };
   });
   // create Part
   const part = new Tone.Part(
     (time, value) => {
       sampler_hangdrum.triggerAttackRelease(
         value.note,
-        (12 / Tone.Transport.bpm.value) * 4 * 16,
+        value.duration,
         time,
         value.velocity
       );
@@ -277,6 +347,7 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
  * @returns A Tone.Part object containing the drum sequence
  */
 export function computeDrumMonthlyPart(pattern) {
+  const volume_factor = 0.7;
   // parts
   const parts = Array(12)
     .fill("")
@@ -290,7 +361,7 @@ export function computeDrumMonthlyPart(pattern) {
         drum_element,
         20,
         time,
-        pattern[value.index][drum_element]
+        pattern[value.index][drum_element] * volume_factor
       );
     });
   }, parts).start(0);

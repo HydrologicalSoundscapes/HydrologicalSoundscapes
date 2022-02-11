@@ -36,7 +36,10 @@ export class DrumSampler{
 
 }
 
-export function rescale(values, source, target) {
+export function rescale(values, source=null, target) {
+    if (source === null) {
+        source = [Math.min(...values), Math.max(...values)]
+    }
     function rescaler(value) {
         let p = (value - source[0])/(source[1]-source[0])
         return p * (target[1] - target[0]) + target[0]
@@ -44,7 +47,54 @@ export function rescale(values, source, target) {
     return values.map(v=>rescaler(v))
 }
 
+export function clamp(values, minmax) {
+    return values.map(v=>Math.min(Math.max(v, minmax[0]), minmax[1]))
+}
 
+export function multiply_arrays(arr_1, arr_2) {
+    if (arr_1.length !== arr_2.length) throw new Error("The two arrays must have the same length to be multiplied!")
+    const result = Array(arr_1.length)
+    for (let k = 0; k < arr_1.length; k++) {
+        result[k]  = arr_1[k] * arr_2[k]
+    }
+    return result
+}
+export function add_arrays(arr_1, arr_2) {
+    if (arr_1.length !== arr_2.length) throw new Error("The two arrays must have the same length to be multiplied!")
+    const result = Array(arr_1.length)
+    for (let k = 0; k < arr_1.length; k++) {
+        result[k]  = arr_1[k] + arr_2[k]
+    }
+    return result
+}
+
+export function multiply_array_by(arr, scalar) {
+    return arr.map(v=>v * scalar)
+}
+
+export function get_duration_from_volumes(arr_vol, threshold) {
+  const n = arr_vol.length;
+  const results = Array(n);
+  for (let i = 0; i < n; i++) {
+    let below_threhold = Array(n - 1);
+    let k = i;
+    for (let j = 1; j < n; j++) {
+      if (i + j >= n) k = i - n;
+      let v = arr_vol[k + j] / arr_vol[i];
+      below_threhold[j - 1] = !isFinite(v) || isNaN(v) ? null : v < threshold;
+    }
+    let duration = 1;
+    for (let j = 0; j < n - 1; j++) {
+      if (below_threhold[j]) {
+        duration++;
+      } else {
+        break;
+      }
+    }
+    results[i] = duration;
+  }
+  return results;
+}
 
 export const SCALES = {
     Am: [
@@ -80,7 +130,7 @@ export const SCALES = {
         "C6", "D6", "E6", "G6", "A6", 
         "C7", "D7", "E7", "G7", "A7", 
     ],
-    C_G_bass: ["C2", "G2", "C3", "G3"],
+    C_G_bass: ["C2", "G2", "C3"],
     A_E_bass: ["A1", "E2", "A2", "E3"],
     D_A_bass: ["D2", "A2", "D3"],
     C_chord: ["C4", "E4", "G4", "C5"],
