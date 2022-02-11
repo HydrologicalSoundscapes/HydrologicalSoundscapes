@@ -186,13 +186,11 @@ export function computeMeanMonthlyPart(
  * @returns A Tone.Part object containing the bass sound sequence.
  */
 export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
-  // console.log("***********************************");
   let relative_var = rescale(data_max, null, [0, 1]);
   let absolute_var = data_max;
   const relative_weight = 1;
   const absolute_weight = 1;
-  // console.log(relative_var);
-  // console.log(absolute_var);
+
   absolute_var = rescale(
     multiply_array_by(absolute_var, absolute_weight),
     [0, 1],
@@ -205,15 +203,8 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
   ); // modulated by the relative variation
   const combined_var = clamp(add_arrays(relative_var, absolute_var), [0.02, 1]);
 
-  // console.log("data_max", data_max);
-  // console.log("absolute_var", absolute_var);
-  // console.log("relative_var", relative_var);
-  // console.log("combined_var", combined_var);
-
   const unit_duration = (12 / Tone.Transport.bpm.value) * 6;
-  // const unit_duration = (12 / Tone.Transport.bpm.value) * 4;
   const duration = get_duration_from_volumes(combined_var, 0.5);
-  // console.log("duration", duration);
   const volume = combined_var.map((d, i) => (data_max[i] === 0 ? 0 : d));
 
   data_max = rescale(data_max, [0, 1], [1, 0]);
@@ -232,7 +223,7 @@ export function computeMaxMonthlyPart(data_max, highlight_function, scale) {
         break;
       }
     }
-    console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
+    // console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
     return {
       time: `0:${j}`,
       note: note,
@@ -276,8 +267,7 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
   let absolute_var = data_min;
   const relative_weight = 1;
   const absolute_weight = 1;
-  // console.log(relative_var);
-  // console.log(absolute_var);
+
   absolute_var = rescale(
     multiply_array_by(absolute_var, absolute_weight),
     [0, 1],
@@ -297,7 +287,6 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
   const unit_duration = (12 / Tone.Transport.bpm.value) * 16;
   // const duration = get_duration_from_volumes(combined_var, 0.5);
   const duration = multiply_array_by(data_min, 12);
-  console.log(duration);
 
   // mapping to a sound scale
   const n = scale.length;
@@ -312,7 +301,7 @@ export function computeMinMonthlyPart(data_min, highlight_function, scale) {
         break;
       }
     }
-    console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
+    // console.log(`Duration for month ${j} is ${duration[j] * unit_duration}`);
     return {
       time: `0:${j}`,
       note: note,
