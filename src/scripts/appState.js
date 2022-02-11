@@ -112,9 +112,10 @@ export async function downloadDataset() {
   // convert the object into an array
   let dataset_array = Object.keys(dataset).map((key) => dataset[key]);
   console.log("Actual size of dataset: ", dataset_array.length);
-  // adding an index in the info of all stations
+  // adding an index and a "has_been_selected" attribute in the info of all stations
   dataset_array = dataset_array.map((d, i) => {
     d.info.index = i;
+    d.info.has_been_selected = false;
     return d;
   });
   // selecting a random station

@@ -19,6 +19,7 @@
   let markers = [];
   let icon_default;
   let icon_selected;
+  let icon_already_selected;
   onMount(() => {
     initMap();
     // map.on("zoomend", () => {
@@ -54,6 +55,14 @@
       className: "",
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
     });
+    icon_already_selected = L.divIcon({
+      html: `<svg width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="#c8dbf3ff" stroke="#000" stroke-linecap="square"/>
+</svg>`,
+      iconSize: [icon_size, icon_size],
+      className: "",
+      iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
+    });
   }
   function populateMap(stations, selected_index) {
     marker_cluster = new LM.MarkerClusterGroup({ maxClusterRadius: 50 });
@@ -65,14 +74,21 @@
       marker.on("click", (e) => {
         if (i !== current_station_index) {
           if (current_station_index !== null) {
-            markers[current_station_index].setIcon(icon_default);
+            let icon = icon_default;
+            if ($datasetStore[current_station_index].info.has_been_selected) {
+              icon = icon_already_selected;
+            }
+            markers[current_station_index].setIcon(icon);
           }
 
           current_station_index = i;
           marker.setIcon(icon_selected);
           console.log("########################################");
           console.log("selecting a new station ==>", station);
+          station.info.has_been_selected = true;
           $currentStation = station;
+          marker_cluster.removeLayer(marker);
+          marker.addTo(map);
         }
       });
       marker_cluster.addLayer(marker);
