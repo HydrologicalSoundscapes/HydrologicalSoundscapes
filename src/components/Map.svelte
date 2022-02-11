@@ -8,6 +8,7 @@
     mapStore,
   } from "../scripts/appState";
   import { onMount } from "svelte";
+  import { zip } from "d3";
 
   let current_station_index = null;
 
@@ -22,9 +23,6 @@
   let icon_already_selected;
   onMount(() => {
     initMap();
-    // map.on("zoomend", () => {
-    //   console.log(map);
-    // });
   });
   function initMap() {
     map = L.map("map", { zoomControl: false, zoomAnimation: true }).setView(
@@ -64,8 +62,19 @@
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
     });
   }
+  function computeMaxClusterRadius(z) {
+    console.log("zoom_level", z);
+    if (z < 6) {
+      return 80;
+    }
+    return 1;
+  }
+
   function populateMap(stations, selected_index) {
-    marker_cluster = new LM.MarkerClusterGroup({ maxClusterRadius: 50 });
+    marker_cluster = new LM.MarkerClusterGroup({
+      maxClusterRadius: computeMaxClusterRadius,
+      showCoverageOnHover: false,
+    });
     stations.forEach((station, i) => {
       let marker = L.marker([station.info.lat, station.info.lon], {
         icon: icon_default,
@@ -92,10 +101,7 @@
         }
       });
       marker_cluster.addLayer(marker);
-      // marker.addTo(map)
     });
-    // console.log("markers[selected_index]", markers[selected_index]);
-    // markers[selected_index]._icon.id = "map-pin-example";
     map.addLayer(marker_cluster);
   }
   $: {
