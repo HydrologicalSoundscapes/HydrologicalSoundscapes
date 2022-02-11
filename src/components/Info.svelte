@@ -69,4 +69,23 @@
     margin: 0;
     padding: 0.5rem 0;
   }
+
+  h3 {
+    font-size: 1rem;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    width: 100%;
+  }
+
+  h3::after {
+    content: "";
+    background-color: black;
+    width: 100%;
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+    height: 1px;
+    display: inline-block;
+    flex-shrink: 100000000000000000;
+  }
 </style>
