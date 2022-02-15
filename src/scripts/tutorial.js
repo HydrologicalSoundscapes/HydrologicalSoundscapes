@@ -30,21 +30,56 @@ function togglePanels(plots = false, options = false, info = false) {
   };
 }
 
+let memory = {};
 const STEPS = [
   {
     highlight: { selector: "#map", circle: false, offset: { top: 60 } },
     action: () => {
       togglePanels(false, false, false);
+      let map = get(mapStore);
+      let station = get(centerStation);
+      memory.zoom = map.getZoom();
+      memory.center = map.getCenter();
+      memory.station = get(currentStation);
+      mapStore.update((m) =>
+        m.panTo(
+          { lat: station.info.lat, lng: station.info.lon },
+          { animate: true, duration: 1 }
+        )
+      );
       return null;
+    },
+    cleanup: () => {
+      currentStation.set(memory.station);
+      mapStore.update((m) => {
+        m.setView(memory.center, memory.zoom, {
+          animate: true,
+          duration: 1,
+        });
+        console.log(m.$example_pin.marker);
+        m.$example_pin.marker.setIcon(m.$example_pin.icon_default);
+        return m;
+      });
     },
     text: `On this map, the pins represent hydrometric stations monitoring
      catchments from all around the world.`,
   },
   {
-    // highlight: { selector: "#map-pin-example", circle: true },
-    highlight: { selector: "#map", circle: false, offset: { top: 60 } },
+    highlight: { selector: "#pin-example", circle: true },
+    // highlight: { selector: "#map", circle: false, offset: { top: 60 } },
     action: () => {
       togglePanels(false, false, false);
+      let station = get(centerStation);
+      currentStation.set(station);
+      mapStore.update((m) => {
+        m.setView({ lat: station.info.lat, lng: station.info.lon }, 6, {
+          animate: true,
+          duration: 1,
+        });
+        m.$example_pin.marker.setIcon(m.$example_pin.icon_selected);
+        return m;
+      });
+      console.log("memory", memory);
       return null;
     },
     text: `A click on a hydrometric station (one of the pins) will select it an load
@@ -54,7 +89,6 @@ const STEPS = [
     highlight: { selector: "#plots-panel", circle: false },
     action: () => {
       togglePanels(true, false, false);
-      currentStation.set(get(centerStation));
       return null;
     },
     text: `Here is the bar charts panel where you can see average/max/min monthly
@@ -205,6 +239,9 @@ export class Tutorial {
     if (this.current_element) {
       this.resize_observer.unobserve(this.current_element);
     }
+    for (let step of STEPS) {
+      if (step.cleanup) step.cleanup();
+    }
     this.on_change();
   }
   hasNextStep() {
@@ -248,6 +285,7 @@ export class Tutorial {
     }
     if (STEPS[this.step].highlight) {
       const element = await tryGetElement(STEPS[this.step].highlight.selector);
+      console.log(element);
       if (element) {
         this.current_element = element;
       } else {

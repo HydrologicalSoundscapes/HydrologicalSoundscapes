@@ -8,7 +8,6 @@
     mapStore,
   } from "../scripts/appState";
   import { onMount } from "svelte";
-  import { zip } from "d3";
 
   let current_station_index = null;
 
@@ -21,6 +20,7 @@
   let icon_default;
   let icon_selected;
   let icon_already_selected;
+  let icon_hidden;
   onMount(() => {
     initMap();
   });
@@ -53,9 +53,17 @@
       className: "",
       iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
     });
+    icon_hidden = L.divIcon({
+      html: `<svg id="pin-example" width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="transparent" stroke="transparent" stroke-linecap="square"/>
+</svg>`,
+      iconSize: [icon_size, icon_size],
+      className: "",
+      iconAnchor: [icon_size * icon_anchor[0], icon_size * icon_anchor[1]],
+    });
     icon_already_selected = L.divIcon({
-      html: `<svg width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="#c8dbf3ff" stroke="#000" stroke-linecap="square"/>
+      html: `<svg id="pin-example" width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="m26.551 1.2067-11.722 26.703-11.838-26.705z" fill="#1b487eff" stroke="#000" stroke-linecap="square"/>
 </svg>`,
       iconSize: [icon_size, icon_size],
       className: "",
@@ -100,6 +108,13 @@
           marker.addTo(map);
         }
       });
+      if (selected_index === i) {
+        map.$example_pin = {
+          marker: marker,
+          icon_default,
+          icon_selected,
+        };
+      }
       marker_cluster.addLayer(marker);
     });
     map.addLayer(marker_cluster);
@@ -111,6 +126,14 @@
       });
       console.log(map);
       populateMap($datasetStore, $centerStation.info.index);
+      const example_pin = L.marker(
+        [$centerStation.info.lat, $centerStation.info.lon],
+        {
+          icon: icon_hidden,
+        }
+      ).addTo(map);
+      console.log(example_pin);
+      example_pin._icon.id = "pin-example";
     }
   }
 </script>
