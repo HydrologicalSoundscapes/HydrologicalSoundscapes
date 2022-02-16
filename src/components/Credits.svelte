@@ -27,13 +27,6 @@
         >http://theremin.music.uiowa.edu/
       </a>
     </div>
-    <div class="src">
-      This app is Open Source and available under the MIT (?) licence. Source
-      code is available on <a
-        href="https://github.com/IvanHeriver/HydrologicalSoundscapes"
-        target="_blank">Github</a
-      >
-    </div>
     <div class="designed">
       {$_("app_credits.designed.1")}
       Ivan Horner
