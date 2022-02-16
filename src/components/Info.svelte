@@ -1,4 +1,5 @@
 <script>
+  import LocaleSwitcher from "./LocaleSwitcher.svelte";
   import About from "./About.svelte";
   import Credits from "./Credits.svelte";
   import { slide } from "svelte/transition";
@@ -13,7 +14,8 @@
     />
     <h2>Hydrological Soundscapes</h2>
   </div>
-  <h3 hidden>Description</h3>
+  <LocaleSwitcher />
+  <h3>Description</h3>
 
   <About />
   <div class="tutorial">

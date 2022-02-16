@@ -1,4 +1,11 @@
 {
+  "title": "Hydrological Soundscapes",
+  "app_welcome": {
+    "header": "Bienvenue dans Hydrological Soundscapes!",
+    "tutorial_invite": "Vous pouvez suivre un tutoriel rapide expliquant comment utiliser l'application ou démarrer immédiatement.",
+    "tutorial_btn": "Tutoriel",
+    "start_btn": "Démarrer"
+  },
   "app_description": {
     "why": "Cette application permet d'explorer la diversité des régimes hydrologiques grâce à de la visualization et de la sonification de données.",
     "how": {

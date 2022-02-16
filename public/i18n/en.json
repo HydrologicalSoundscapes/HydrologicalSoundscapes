@@ -1,6 +1,16 @@
 {
   "title": "Hydrological Soundscapes",
-  "welcome": "Welcome to",
+  "languages": {
+    "select": "Select a language:",
+    "en": "English",
+    "fr": "French"
+  },
+  "app_welcome": {
+    "header": "Welcome to Hydrological Soundscapes!",
+    "tutorial_invite": "You can go through a quick tutorial on how to use the app or get started immediatly.",
+    "tutorial_btn": "Tutorial",
+    "start_btn": "Get started"
+  },
   "app_description": {
     "why": "This app allows exploring the diversity of river hydrological regimes thanks to data visualisation and sonification.",
     "how": {
