@@ -106,7 +106,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
 
-    padding: 0 0.5rem 0 0.25rem;
+    padding: 0 0 0 0.25rem;
 
     /* background-color: var(--color-background); */
     background-color: white;
@@ -153,7 +153,9 @@
     fill: var(--color-secondary);
     stroke: var(--color-secondary);
   }
-
+  button {
+    padding: 0.25rem;
+  }
   button,
   button:hover {
     background: none;
@@ -161,7 +163,7 @@
   }
   @media screen and (min-width: 800px) {
     .container {
-      padding: 0 1rem 0 0.5rem;
+      padding: 0 1rem 0 1rem;
     }
     .title {
       font-size: 1.5rem;
