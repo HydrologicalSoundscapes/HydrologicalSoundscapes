@@ -12,13 +12,13 @@
     "start_btn": "Démarrer"
   },
   "app_description": {
-    "why": "Cette application permet d'explorer la diversité des régimes hydrologiques grâce à de la visualization et de la sonification de données.",
+    "why": "Cette application permet d'explorer la diversité des régimes hydrologiques grâce à de la visualisation et de la sonification de données.",
     "how": {
-      "1": "En cliquant sur une des stations hydrometriques qui mesurent le débit des rivières dans le monde entier, vous pouvez",
+      "1": "En cliquant sur une des stations hydrométriques qui mesurent le débit des rivières dans le monde entier, vous pouvez",
       "2": "visualiser",
-      "3": "le régime hydrologique dans des graphiques à barres et",
+      "3": "le régime hydrologique et",
       "4": "écouter",
-      "5": "sa musique créée à partir des données."
+      "5": "la musique créée à partir des données."
     },
     "what": "Quatre variables hydrologiques sont utilisées pour caractériser le régime hydrologique:",
     "average_flow": {
@@ -30,82 +30,82 @@
       "2": "contrôlent la hauteur et le volume des notes du piano."
     },
     "monthly_max_flow": {
-      "1": "Les fréquences des maximums annuels",
-      "2": "contrôlent de façon similaire les notes de la basse."
+      "1": "La saisonnalité des maximums annuels",
+      "2": "contrôle de façon similaire les notes de la basse."
     },
     "monthly_min_flow": {
-      "1": "Les fréquences des minimums annuels",
-      "2": "contrôlent les notes du",
+      "1": "La saisonnalité des minimums annuels",
+      "2": "contrôle les notes du",
       "3": "hang.",
       "4": "https://fr.wikipedia.org/wiki/Hang"
     },
-    "headphone": "Des écouteurs ou un casque sont recommendés pour profiter pleinnement de cette application!"
+    "headphone": "Des écouteurs ou un casque sont recommandés pour profiter pleinement de cette application!"
   },
   "app_credits": {
     "funding": {
-      "1": "This project has received funding from from the European Union’s Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No",
+      "1": "Ce projet a reçu un financement du programme européen Horizon2020 pour la recherche et l'innovation, sous la convention de financement Marie Sklodowska-Curie No",
       "2": "835496"
     },
     "data": {
-      "1": "The hydrological data used in this app are part of the",
-      "2": "GSIM dataset",
+      "1": "Les données hydrologiques utilisées dans cette application sont issues du jeu de données",
+      "2": "GSIM",
       "3": "https://doi.org/10.1594/PANGAEA.887470"
     },
-    "samples": "Piano and bass samples sounds are from",
-    "source": "Source code is available on",
+    "samples": "Les sons de piano et de basse proviennent de",
+    "source": "Le code source de l'application est disponible sur",
     "designed": {
-      "1": "Designed by",
-      "2": "and"
+      "1": "Conçu par",
+      "2": "et"
     },
-    "coded": "Coded by"
+    "coded": "Codé par"
   },
   "tutorial": {
-    "1": "On this map, the pins represent hydrometric stations monitoring river flow  all around the world.",
-    "2": "A click on a hydrometric station will load the associated data that you can explore visually and musically.",
-    "3": "Here is the bar charts panel where you can see the seasonality of average, high and low flows as well as the overall average flow.",
-    "4": "You can click here to show/hide the bar charts panel.",
-    "5": "Here, you can play/pause and stop the music once a station is selected. As the music plays, the bar charts will animate to highlight which month you're currently listening to.",
-    "6": "There are different options you can play with to modify the melody. A click here shows/hides the panel with all the options.",
-    "7": "All done! You're good to go!"
+    "1": "Sur cette carte, les marqueurs représentent des stations hydrométriques qui mesurent le débit des rivières partout dans le monde.",
+    "2": "Un clic sur une station charge les données associées que vous pouvez explorer visuellement et musicalement.",
+    "3": "Ceci est le panneau graphique qui permet de visualiser la saisonnalité des débits mensuels, des crues et des étiages, ainsi que le débit moyen à cette station.",
+    "4": "Vous pouvez montrer ou cacher ce panneau en cliquant ici.",
+    "5": "Avec ces boutons, vous pouvez jouer, mettre en pause et arrêter la musique une fois qu'une station a été sélectionnée. Les diagrammes s'animent avec la musique pour mettre en avant le mois qui est joué.",
+    "6": "Vous pouvez jouer avec plusieurs options pour modifier la mélodie. Un clic sur ce bouton montre ou cache les panneau des options musicales.",
+    "7": "C'est tout! Vous pouvez commencer à explorer les régimes hydrologiques."
   },
   "options": {
-    "volume": "General volume",
+    "volume": "Volume général",
     "toggle_instruments": {
-      "label": "Toggle instruments:",
-      "piano": "Piano (monthly flows)",
-      "bass": "Bass (High flows)",
-      "hang": "Hang drum (Low flows)",
-      "drum": "Drums"
+      "label": "Instruments",
+      "piano": "Piano (débits mensuels)",
+      "bass": "Basse (crues)",
+      "hang": "Hang (étiages)",
+      "drum": "Batterie"
     },
     "music_scales": {
-      "label": "Select a music scale",
-      "Am": "Minor scale in A",
-      "A": "Major scale in A",
-      "C_penta": "Pentatonic scale in C",
-      "Arabic_1_D": "Arabic scale in D"
+      "label": "Choisissez une gamme",
+      "Am": "La mineur",
+      "A": "La majeur",
+      "C_penta": "Do pentatonique",
+      "Arabic_1_D": "Ré oriental"
     },
     "drum_pattern": {
-      "label": "Select a drum pattern",
+      "label": "Choisisse un rythme",
       "blues": "Blues",
-      "arabic": "Arabic",
+      "arabic": "Arabe",
       "flamenco": "Flamenco",
       "funk": "Funk"
     },
     "tempo": {
       "label": "Tempo",
-      "mapped": "Mapped to average flow",
-      "select": "Choose a tempo"
+      "mapped": "Contrôlé par le débit moyen",
+      "select": "Choisir un tempo"
     },
     "pitch_invert": {
-      "1": "Pitch mapping of monthly flow",
-      "2": "Invert mapping (piano only)"
+      "1": "Fort debit = note grave",
+      "2": "Inverser (piano seulement)"
     }
   },
   "charts": {
-    "average_flow": "Average flow (m&#179;/s)",
-    "monthly_mean_flow": "Monthly flow (% of total annual flow)",
-    "monthly_max_flow": "Annual largest flood falls in ...",
-    "monthly_min_flow": "Annual lowest flow falls in ...",
-    "select_station": "Click on a hydrometric station on the map"
+    "average_flow": "Débit moyen (m&#179;/s)",
+    "monthly_mean_flow": "Débit mensuel (% du débit annuel total)",
+    "monthly_max_flow": "La crue la plus forte de l’année tombe en ...",
+    "monthly_min_flow": "Le débit le plus faible de l’année tombe en ...",
+    "select_station": "Cliquez sur une station dans la carte"
   }
 }

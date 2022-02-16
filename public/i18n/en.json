@@ -71,7 +71,7 @@
   "options": {
     "volume": "General volume",
     "toggle_instruments": {
-      "label": "Toggle instruments:",
+      "label": "Toggle instruments",
       "piano": "Piano (monthly flows)",
       "bass": "Bass (High flows)",
       "hang": "Hang drum (Low flows)",
@@ -82,7 +82,7 @@
       "Am": "Minor scale in A",
       "A": "Major scale in A",
       "C_penta": "Pentatonic scale in C",
-      "Arabic_1_D": "Arabic scale in D"
+      "Arabic_1_D": "Oriental scale in D"
     },
     "drum_pattern": {
       "label": "Select a drum pattern",
@@ -97,8 +97,8 @@
       "select": "Choose a tempo"
     },
     "pitch_invert": {
-      "1": "Pitch mapping of monthly flow",
-      "2": "Invert mapping (piano only)"
+      "1": "High monthly flow = low note",
+      "2": "Invert this (piano only)"
     }
   },
   "charts": {
