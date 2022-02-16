@@ -1,4 +1,5 @@
 <script>
+  import { _ } from "svelte-i18n";
   import { uiPlotPanel, uiOptionPanel, uiInfoPanel } from "../scripts/appState";
   import SoundController from "./SoundController.svelte";
 
@@ -12,7 +13,7 @@
         src="/images/hydrosound_icon_96.png"
         alt="Hydrological soundscapes icon"
       />
-      <span>Hydrological Soundscapes</span>
+      <span>{$_("title")}</span>
     </div>
   </div>
   <div class="center">

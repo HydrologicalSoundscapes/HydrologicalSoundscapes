@@ -1,0 +1,34 @@
+{
+  "title": "Hydrological Soundscapes",
+  "welcome": "Welcome to",
+  "app_description": {
+    "why": "This app allows exploring the diversity of river hydrological regimes thanks to data visualisation and sonification.",
+    "how": {
+      "1": "By clicking on one of the thousand hydrometric stations measuring river flow all around the world, you can",
+      "2": "visualise",
+      "3": "the hydrological regime in bar charts and",
+      "4": "listen to",
+      "5": "the corresponding melody created from the data."
+    },
+    "what": "Four hydrological variables are used to characterise the hydrological regime:",
+    "average_flow": {
+      "1": "The average flow",
+      "2": "controls the tempo of the music."
+    },
+    "monthly_mean_flow": {
+      "1": "Monthly flows",
+      "2": "control the pitch and the volume of the piano."
+    },
+    "monthly_max_flow": {
+      "1": "Monthly frequency of annual daily maxima",
+      "2": "similarly control the bass notes."
+    },
+    "monthly_min_flow": {
+      "1": "Monthly frequency of annual 30-days averaged minima",
+      "2": "control the notes of the",
+      "3": "hang drum.",
+      "4": "https://en.wikipedia.org/wiki/Hang_(instrument)"
+    },
+    "headphone": "Headphones are recommended to fully enjoy this app!"
+  }
+}

@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
+  import { init_i18n } from "./scripts/i18n";
   import { loadSamples, initSampler } from "./scripts/sounds";
   import {
     downloadDataset,
@@ -17,22 +18,30 @@
     initSampler();
     document.removeEventListener("click", initToneJS);
   }
-  onMount(() => {
+  onMount(async () => {
     downloadDataset();
     loadSamples();
     document.addEventListener("click", initToneJS);
+    await init_i18n();
+    is_ready = true;
   });
+
+  let is_ready = false;
 </script>
 
 <main>
-  {#if $uiTutorial}
-    <Tutorial />
+  {#if !is_ready}
+    loading...
+  {:else}
+    {#if $uiTutorial}
+      <Tutorial />
+    {/if}
+    {#if $uiWelcomePanel}
+      <Welcome />
+    {/if}
+    <Panel />
+    <Map />
   {/if}
-  {#if $uiWelcomePanel}
-    <Welcome />
-  {/if}
-  <Panel />
-  <Map />
 </main>
 
 <style>

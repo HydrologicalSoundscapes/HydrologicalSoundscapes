@@ -1,4 +1,5 @@
 <script>
+  import { _ } from "svelte-i18n";
   import {
     uiWelcomePanel,
     uiTutorial,
@@ -14,7 +15,7 @@
       src="/images/hydrosound_icon_96.png"
       alt="Hydrological soundscapes icon"
     />
-    <h2>Welcome to Hydrological Soundscapes!</h2>
+    <h2>{`${$_("welcome")} ${$_("title")}!`}</h2>
   </div>
   <div>
     <About />

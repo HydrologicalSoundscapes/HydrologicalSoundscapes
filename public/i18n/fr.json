@@ -1,0 +1,32 @@
+{
+  "app_description": {
+    "why": "Cette application permet d'explorer la diversité des régimes hydrologiques grâce à de la visualization et de la sonification de données.",
+    "how": {
+      "1": "En cliquant sur une des stations hydrometriques qui mesurent le débit des rivières dans le monde entier, vous pouvez",
+      "2": "visualiser",
+      "3": "le régime hydrologique dans des graphiques à barres et",
+      "4": "écouter",
+      "5": "sa musique créée à partir des données."
+    },
+    "what": "Quatre variables hydrologiques sont utilisées pour caractériser le régime hydrologique:",
+    "average_flow": {
+      "1": "Le débit moyen",
+      "2": "contrôle le tempo de la musique."
+    },
+    "monthly_mean_flow": {
+      "1": "Les débits mensuels",
+      "2": "contrôlent la hauteur et le volume des notes du piano."
+    },
+    "monthly_max_flow": {
+      "1": "Les fréquences des maximums annuels",
+      "2": "contrôlent de façon similaire les notes de la basse."
+    },
+    "monthly_min_flow": {
+      "1": "Les fréquences des minimums annuels",
+      "2": "contrôlent les notes du",
+      "3": "hang.",
+      "4": "https://fr.wikipedia.org/wiki/Hang"
+    },
+    "headphone": "Des écouteurs ou un casque sont recommendés pour profiter pleinnement de cette application!"
+  }
+}
