@@ -71,7 +71,6 @@
     });
   }
   function computeMaxClusterRadius(z) {
-    console.log("zoom_level", z);
     if (z < 6) {
       return 80;
     }
@@ -120,11 +119,10 @@
     map.addLayer(marker_cluster);
   }
   $: {
-    if ($centerStation && $datasetStore) {
+    if ($centerStation && $datasetStore && map) {
       map.setView([$centerStation.info.lat, $centerStation.info.lon], 3, {
         animate: false,
       });
-      console.log(map);
       populateMap($datasetStore, $centerStation.info.index);
       const example_pin = L.marker(
         [$centerStation.info.lat, $centerStation.info.lon],
@@ -132,7 +130,6 @@
           icon: icon_hidden,
         }
       ).addTo(map);
-      console.log(example_pin);
       example_pin._icon.id = "pin-example";
     }
   }
