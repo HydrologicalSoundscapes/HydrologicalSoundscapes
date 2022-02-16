@@ -60,48 +60,6 @@
       </div>
     </div>
 
-    <label for="pitch" class="main-label">{`Low/high pitch mapping:`}</label>
-    <div class="section" id="pitch">
-      <div class="group">
-        <input
-          type="checkbox"
-          name="inverted-pitch"
-          id="inverted-pitch"
-          bind:checked={$configuration.inverted_pitch}
-        />
-        <label for="inverted-pitch">{`Inverted pitch (piano only)`}</label>
-      </div>
-    </div>
-
-    <label for="speed" class="main-label">
-      {`Playing speed: ${($configuration.bpm / 3).toFixed(0)}bpm`}
-    </label>
-    <div class="section" id="speed">
-      <div class="group">
-        <input
-          type="checkbox"
-          name="bpm-auto"
-          id="bpm-auto"
-          bind:checked={$configuration.bpm_auto}
-        />
-        <label for="bpm-auto">{`Mapped to streamflow average`}</label>
-      </div>
-      {#if !$configuration.bpm_auto}
-        <label for="bpm">{`Select a speed:`}</label>
-        <div class="group">
-          <input
-            type="range"
-            name="bpm"
-            id="bpm"
-            bind:value={$configuration.bpm}
-            min="180"
-            max="600"
-            step="3"
-          />
-        </div>
-      {/if}
-    </div>
-
     <label for="arrangement" class="main-label">
       {`Select a music scale:`}
     </label>
@@ -134,6 +92,48 @@
           <label for={pat.id}>{pat.label}</label>
         </div>
       {/each}
+    </div>
+
+    <label for="speed" class="main-label">
+      {`Playing speed: ${($configuration.bpm / 3).toFixed(0)}bpm`}
+    </label>
+    <div class="section" id="speed">
+      <div class="group">
+        <input
+          type="checkbox"
+          name="bpm-auto"
+          id="bpm-auto"
+          bind:checked={$configuration.bpm_auto}
+        />
+        <label for="bpm-auto">{`Mapped to streamflow average`}</label>
+      </div>
+      {#if !$configuration.bpm_auto}
+        <label for="bpm">{`Select a speed:`}</label>
+        <div class="group">
+          <input
+            type="range"
+            name="bpm"
+            id="bpm"
+            bind:value={$configuration.bpm}
+            min="180"
+            max="600"
+            step="3"
+          />
+        </div>
+      {/if}
+    </div>
+
+    <label for="pitch" class="main-label">{`Low/high pitch mapping:`}</label>
+    <div class="section" id="pitch">
+      <div class="group">
+        <input
+          type="checkbox"
+          name="inverted-pitch"
+          id="inverted-pitch"
+          bind:checked={$configuration.inverted_pitch}
+        />
+        <label for="inverted-pitch">{`Inverted pitch (piano only)`}</label>
+      </div>
     </div>
   </div>
 </div>
