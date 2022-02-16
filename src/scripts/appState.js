@@ -143,7 +143,7 @@ export const mapStore = writable(null);
 
 export const uiOptionPanel = writable(false);
 export const uiPlotPanel = writable(true);
-export const uiWelcomePanel = writable(false);
+export const uiWelcomePanel = writable(true);
 export const uiTutorial = writable(false);
 export const uiInfoPanel = writable(false);
 
