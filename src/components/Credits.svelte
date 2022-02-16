@@ -1,20 +1,31 @@
+<script>
+  import { _ } from "svelte-i18n";
+</script>
+
 <div class="container">
   <div class="block">
-    <div class="financial">
-      This project has received funding from ...
-      <!-- the European Union’s Horizon 2020
-    research and innovation programme under the Marie Sklodowska-Curie grant
-    agreement No
-    <a href="https://cordis.europa.eu/project/id/835496">835496</a>. -->
+    <div class="funding">
+      <p>
+        {$_("app_credits.funding.1")}
+        <a href="https://cordis.europa.eu/project/id/835496" target="_blank"
+          >{$_("app_credits.funding.2")}</a
+        >
+      </p>
+      <img src="./images/eu_icon.svg" alt="European Union Logo" height="100" />
     </div>
-    <div class="data">The hydrological data used in this app are from ...</div>
+    <div class="data">
+      {$_("app_credits.data.1")}
+      <a href="https://doi.org/10.1594/PANGAEA.887470" target="_blank">
+        {$_("app_credits.data.2")}
+      </a>
+    </div>
   </div>
   <div class="block">
     <div class="materials">
-      Piano and bass samples sounds are from <a
-        href="http://theremin.music.uiowa.edu/"
-        target="_blank">http://theremin.music.uiowa.edu/</a
-      >
+      {$_("app_credits.samples")}
+      <a href="http://theremin.music.uiowa.edu/" target="_blank"
+        >http://theremin.music.uiowa.edu/
+      </a>
     </div>
     <div class="src">
       This app is Open Source and available under the MIT (?) licence. Source
@@ -23,25 +34,22 @@
         target="_blank">Github</a
       >
     </div>
-    <div class="origine">
-      This app was imagined by <a href="https://globxblog.inrae.fr/about">
-        Benjamin Renard
+    <div class="designed">
+      {$_("app_credits.designed.1")}
+      Ivan Horner
+      {$_("app_credits.designed.2")}
+      <a href="https://globxblog.inrae.fr/" target="_blank">Benjamin Renard</a>
+    </div>
+    <div class="coded">
+      {$_("app_credits.coded")}
+      <a href="https://ihdev.fr" target="_blank"> Ivan Horner (ihdev.fr) </a> ; {$_(
+        "app_credits.source"
+      )}
+      <a href="https://github.com/IvanHeriver/HydrologicalSoundscapes">
+        Github
       </a>
-      who expored hydrological data sonification quite a bit using R (see for example
-      the
-      <a href="https://github.com/benRenard/sequenceR"> sequenceR </a> package).
-      It came to life thanks to his motivation and initiative.
     </div>
-    <div class="sonification">
-      The data sonification was for the most part based on previous work from
-      Benjamin Renard to which Ivan Horner brought some contributions.
-    </div>
-    <div class="ihdev">
-      The app was coded by <a href="https://ihdev.fr" target="_blank">
-        Ivan Horner (ihdev.fr)
-      </a>, free-lance developer dedicated to the valorization and vulgarization
-      of science.
-    </div>
+    <div class="source" />
   </div>
 </div>
 
@@ -61,5 +69,12 @@
   }
   div {
     font-size: 0.8rem;
+  }
+  .funding {
+    display: flex;
+    align-items: center;
+  }
+  .funding p {
+    max-width: 500px;
   }
 </style>

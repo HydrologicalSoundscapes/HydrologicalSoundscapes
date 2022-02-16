@@ -1,6 +1,7 @@
 <script>
   import { currentStation, currentStationPS } from "../scripts/appState";
   import { slide } from "svelte/transition";
+  import { _ } from "svelte-i18n";
   let plot_mean_container,
     plot_max_container,
     plot_min_container,
@@ -45,26 +46,27 @@
     </div>
     <div class="plots">
       <div class="mean">
-        <label for="mean">Monthly flow (in % of total annual flow)</label>
+        <!-- <label for="mean">Monthly flow (in % of total annual flow)</label> -->
+        <label for="mean">{$_("charts.monthly_mean_flow")}</label>
         <div id="mean" class="plot" bind:this={plot_mean_container} />
       </div>
       <div class="max">
-        <label for="mean">Annual largest flood falls in ...</label>
+        <label for="mean">{$_("charts.monthly_max_flow")}</label>
         <div id="max" class="plot" bind:this={plot_max_container} />
       </div>
       <div class="min">
-        <label for="mean">Annual lowest flow falls in ...</label>
+        <label for="mean">{$_("charts.monthly_min_flow")}</label>
         <div id="min" class="plot" bind:this={plot_min_container} />
       </div>
       <div class="size">
-        <label for="size">Average flow (in m<sup>3</sup>/s)</label>
+        <label for="size">{@html $_("charts.average_flow")}</label>
         <div id="size" class="plot" bind:this={plot_size_container} />
       </div>
     </div>
   </div>
   <!-- {:else} -->
   <div class="no-data">
-    <p>Click on a hydrometric station on the map</p>
+    <p>{$_("charts.select_station")}</p>
   </div>
   <!-- {/if} -->
 </div>

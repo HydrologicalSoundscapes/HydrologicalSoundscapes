@@ -6,6 +6,7 @@ import {
   centerStation,
   mapStore,
 } from "./appState";
+import { _ } from "svelte-i18n";
 
 import { get } from "svelte/store";
 
@@ -61,8 +62,7 @@ const STEPS = [
         return m;
       });
     },
-    text: `On this map, the pins represent hydrometric stations monitoring
-     catchments from all around the world.`,
+    text: "tutorial.1",
   },
   {
     highlight: { selector: "#pin-example", circle: true },
@@ -82,8 +82,7 @@ const STEPS = [
       console.log("memory", memory);
       return null;
     },
-    text: `A click on a hydrometric station (one of the pins) will select it an load
-     the associated data you can then visually and musically explore.`,
+    text: "tutorial.2",
   },
   {
     highlight: { selector: "#plots-panel", circle: false },
@@ -91,8 +90,7 @@ const STEPS = [
       togglePanels(true, false, false);
       return null;
     },
-    text: `Here is the bar charts panel where you can see average/max/min monthly
-     flows as well as the overall average flow.`,
+    text: "tutorial.3",
   },
   {
     highlight: { selector: "#toggle-plots", circle: true },
@@ -102,7 +100,7 @@ const STEPS = [
         togglePanels(false, false, false);
       };
     },
-    text: `You can click here to show/hide the bar charts panel.`,
+    text: "tutorial.4",
   },
   {
     highlight: { selector: "#sound-controller", circle: true },
@@ -110,9 +108,7 @@ const STEPS = [
       togglePanels(true, false, false);
       return null;
     },
-    text: `Here, you can play/pause and stop the music once a station is selected.
-     As the music plays, the bar charts will update to highlight which
-      month you're currently listening to.`,
+    text: "tutorial.5",
   },
   {
     highlight: { selector: "#toggle-options", circle: true },
@@ -122,11 +118,10 @@ const STEPS = [
         togglePanels(false, false, false);
       };
     },
-    text: `There are different options you can adjust. 
-    A click here shows/hides the panel with all the options.`,
+    text: "tutorial.6",
   },
   {
-    text: "All done! You're good to go!",
+    text: "tutorial.7",
   },
 ];
 
@@ -310,7 +305,8 @@ export class Tutorial {
       );
     }
     // update tutorial text
-    this.explaination_element.textContent = STEPS[this.step].text;
+    // this.explaination_element.textContent = STEPS[this.step].text;
+    this.explaination_element.textContent = get(_)(STEPS[this.step].text);
     this.on_change();
   }
 }

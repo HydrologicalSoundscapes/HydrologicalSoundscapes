@@ -4,7 +4,7 @@
 </script>
 
 <div class="container">
-  <label for="language">Language de l'application: </label>
+  <label for="language"> {$_("languages.select")}: </label>
   <select name="language" id="language" bind:value={$locale}>
     {#each languages as l}
       <option value={l.id} selected={$locale === l.id}

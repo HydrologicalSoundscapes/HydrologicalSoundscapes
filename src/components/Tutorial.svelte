@@ -38,7 +38,6 @@
   <div class="details">
     <div>
       <div class="explaination" bind:this={explaination_element} />
-      <!-- <div class="actions" hidden={$soundDownloadProgress !== 1}> -->
       <div class="actions">
         <button
           on:click={() => {

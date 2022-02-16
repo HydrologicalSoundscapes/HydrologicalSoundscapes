@@ -2,6 +2,7 @@
   import { ARRANGEMENTS, PATTERNS } from "../scripts/soundsUtils";
   import { configuration } from "../scripts/appState";
   import { slide } from "svelte/transition";
+  import { _ } from "svelte-i18n";
 </script>
 
 <div class="container" transition:slide>
@@ -9,7 +10,7 @@
   <h2 hidden>Options</h2>
 
   <div class="options">
-    <label for="volume" class="main-label">{`General volume:`}</label>
+    <label for="volume" class="main-label">{`${$_("options.volume")}:`}</label>
     <input
       type="range"
       name="volume"
@@ -20,7 +21,9 @@
       step="0.01"
     />
 
-    <label for="which" class="main-label">{`Toggle instruments: `}</label>
+    <label for="which" class="main-label"
+      >{`${$_("options.toggle_instruments.label")}: `}</label
+    >
     <div class="section" id="which">
       <div class="group">
         <input
@@ -29,7 +32,7 @@
           id="which-med"
           bind:checked={$configuration.med}
         />
-        <label for="which-med">{`Average streamflow (piano)`}</label>
+        <label for="which-med">{$_("options.toggle_instruments.piano")}</label>
       </div>
       <div class="group">
         <input
@@ -38,7 +41,7 @@
           id="which-max"
           bind:checked={$configuration.max}
         />
-        <label for="which-max">{`Max streamflow (bass)`}</label>
+        <label for="which-max">{$_("options.toggle_instruments.bass")}</label>
       </div>
       <div class="group">
         <input
@@ -47,7 +50,7 @@
           id="which-min"
           bind:checked={$configuration.min}
         />
-        <label for="which-min">{`Min streamflow (hang drum)`}</label>
+        <label for="which-min">{$_("options.toggle_instruments.hang")}</label>
       </div>
       <div class="group">
         <input
@@ -56,12 +59,12 @@
           id="which-drum"
           bind:checked={$configuration.drum}
         />
-        <label for="which-drum">{`Drums`}</label>
+        <label for="which-drum">{$_("options.toggle_instruments.drum")}</label>
       </div>
     </div>
 
     <label for="arrangement" class="main-label">
-      {`Select a music scale:`}
+      {$_("options.music_scales.label")}
     </label>
     <div class="section" id="arrangement">
       {#each ARRANGEMENTS as arr}
@@ -73,12 +76,14 @@
             value={arr.id}
             bind:group={$configuration.arrangement}
           />
-          <label for={arr.id}>{arr.label}</label>
+          <label for={arr.id}>{$_(`options.music_scales.${arr.id}`)}</label>
         </div>
       {/each}
     </div>
 
-    <label for="drum" class="main-label">{`Select a drum pattern: `}</label>
+    <label for="drum" class="main-label"
+      >{$_("options.drum_pattern.label")}</label
+    >
     <div class="section" id="drum">
       {#each PATTERNS as pat}
         <div class="group">
@@ -89,13 +94,15 @@
             value={pat.id}
             bind:group={$configuration.drum_pattern}
           />
-          <label for={pat.id}>{pat.label}</label>
+          <label for={pat.id}>{$_(`options.drum_pattern.${pat.id}`)}</label>
         </div>
       {/each}
     </div>
 
     <label for="speed" class="main-label">
-      {`Playing speed: ${($configuration.bpm / 3).toFixed(0)}bpm`}
+      {`${$_("options.tempo.label")}: ${($configuration.bpm / 3).toFixed(
+        0
+      )} bpm`}
     </label>
     <div class="section" id="speed">
       <div class="group">
@@ -105,10 +112,10 @@
           id="bpm-auto"
           bind:checked={$configuration.bpm_auto}
         />
-        <label for="bpm-auto">{`Mapped to streamflow average`}</label>
+        <label for="bpm-auto">{$_("options.tempo.mapped")}</label>
       </div>
       {#if !$configuration.bpm_auto}
-        <label for="bpm">{`Select a speed:`}</label>
+        <label for="bpm">{`${$_("options.tempo.select")}: `}</label>
         <div class="group">
           <input
             type="range"
@@ -123,7 +130,7 @@
       {/if}
     </div>
 
-    <label for="pitch" class="main-label">{`Low/high pitch mapping:`}</label>
+    <label for="pitch" class="main-label">{$_("options.pitch_invert.1")}</label>
     <div class="section" id="pitch">
       <div class="group">
         <input
@@ -132,7 +139,7 @@
           id="inverted-pitch"
           bind:checked={$configuration.inverted_pitch}
         />
-        <label for="inverted-pitch">{`Inverted pitch (piano only)`}</label>
+        <label for="inverted-pitch">{$_("options.pitch_invert.2")}</label>
       </div>
     </div>
   </div>
