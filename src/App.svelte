@@ -19,11 +19,11 @@
     document.removeEventListener("click", initToneJS);
   }
   onMount(async () => {
+    await init_i18n();
+    is_ready = true;
     downloadDataset();
     loadSamples();
     document.addEventListener("click", initToneJS);
-    await init_i18n();
-    is_ready = true;
   });
 
   let is_ready = false;
