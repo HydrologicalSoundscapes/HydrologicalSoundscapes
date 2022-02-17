@@ -4,6 +4,7 @@
   import Credits from "./Credits.svelte";
   import { slide } from "svelte/transition";
   import { uiTutorial, uiTutorialReady } from "../scripts/appState";
+  import { _ } from "svelte-i18n";
 </script>
 
 <div class="container" transition:slide>
@@ -12,10 +13,10 @@
       src="/images/hydrosound_icon_96.png"
       alt="Hydrological soundscapes icon"
     />
-    <h2>Hydrological Soundscapes</h2>
+    <h2>{$_("title")}</h2>
   </div>
   <LocaleSwitcher />
-  <h3>Description</h3>
+  <h3>{$_("app_description.label")}</h3>
 
   <About />
   <div class="tutorial">
@@ -24,10 +25,10 @@
       on:click={() => {
         $uiTutorial = true;
       }}
-      disabled={!$uiTutorialReady}>Tutorial</button
+      disabled={!$uiTutorialReady}>{$_("app_description.tutorial_btn")}</button
     >
   </div>
-  <h3>Acknowledgment</h3>
+  <h3>{$_("app_credits.label")}</h3>
   <Credits />
 </div>
 

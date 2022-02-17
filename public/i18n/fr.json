@@ -12,6 +12,7 @@
     "start_btn": "Démarrer"
   },
   "app_description": {
+    "label": "Déscription",
     "why": "Cette application permet d'explorer la diversité des régimes hydrologiques grâce à de la visualisation et de la sonification de données.",
     "how": {
       "1": "En cliquant sur une des stations hydrométriques qui mesurent le débit des rivières dans le monde entier, vous pouvez",
@@ -39,9 +40,11 @@
       "3": "hang.",
       "4": "https://fr.wikipedia.org/wiki/Hang"
     },
-    "headphone": "Des écouteurs ou un casque sont recommandés pour profiter pleinement de cette application!"
+    "headphone": "Des écouteurs ou un casque sont recommandés pour profiter pleinement de cette application!",
+    "tutorial_btn": "Tutoriel"
   },
   "app_credits": {
+    "label": "Crédits",
     "funding": {
       "1": "Ce projet a reçu un financement du programme européen Horizon2020 pour la recherche et l'innovation, sous la convention de financement Marie Sklodowska-Curie No",
       "2": "835496"

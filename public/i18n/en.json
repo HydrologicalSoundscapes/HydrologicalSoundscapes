@@ -12,6 +12,7 @@
     "start_btn": "Get started"
   },
   "app_description": {
+    "label": "Description",
     "why": "This app allows exploring the diversity of river hydrological regimes thanks to data visualisation and sonification.",
     "how": {
       "1": "By clicking on one of the thousand hydrometric stations measuring river flow all around the world, you can",
@@ -39,9 +40,11 @@
       "3": "hang drum.",
       "4": "https://en.wikipedia.org/wiki/Hang_(instrument)"
     },
-    "headphone": "Headphones are recommended to fully enjoy this app!"
+    "headphone": "Headphones are recommended to fully enjoy this app!",
+    "tutorial_btn": "Tutorial"
   },
   "app_credits": {
+    "label": "Credits",
     "funding": {
       "1": "This project has received funding from from the European Union’s Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No",
       "2": "835496"
