@@ -27,6 +27,8 @@
         >http://theremin.music.uiowa.edu/
       </a>
     </div>
+  </div>
+  <div class="block">
     <div class="designed">
       {$_("app_credits.designed.1")}
       Ivan Horner
